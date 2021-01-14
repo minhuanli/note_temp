@@ -644,3 +644,26 @@ hr.slender {
   content: "\eae4";
 }
 /*-- End of Icomoon icon font section --*/
+
+/*-- Progress bar setting --*/
+.progress {
+  height: 1.5rem;
+  width: 100%;
+  background-color: #e0dfdf;
+  position: relative;
+}
+.progress:before {
+  content: attr(data-label);
+  font-size: 1.0rem;
+  font-weight: bold;
+  position: absolute;
+  text-align: center;
+  top: 0.25rem;
+  left: 0;
+  right: 0;
+}
+.progress .value {
+  background-color: #ecabb4;
+  display: inline-block;
+  height: 100%;
+}
