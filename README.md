@@ -17,6 +17,7 @@ If you want to test your changes locally before pushing your changes to the `mas
 2) `rm -r _site/`  # remove the existing compiled site
 3) `jekyll serve`  # this creates a running server
 4) Open your web browser to where the server is running and check the changes you made.
+5) Once you are ok with the current format, commit and push your changes to the `master` branch, then run `rake` locally. This will move the complied contents to `gh-pages` branch and publish it. see [ref](https://github.com/clayh53/tufte-jekyll/issues/69) 
 
 ### Notes about writing math equations
 
