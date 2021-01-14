@@ -1,11 +1,11 @@
 baseurl: /notes
-title: Research and learning notes
+title: Notes
 subtitle: My personal notes of some research and learning topics
 author: Minhuan Li
 emailme: mailto:minhuanli@g.harvard.edu
 simple_search: http://google.com/search
 description: Research and learning notes
-name: research-notes
+name: notes
 markdown: kramdown
 highlighter: rouge
 markdown_ext: "markdown,mkdown,mkdn,mkd,md"

@@ -2,7 +2,7 @@
 
 This project contains my research notes based on a Tufte them Jekyll. I forked and modified the theme from [tufte-jekyll site](https://github.com/clayh53/tufte-jekyll). 
 
-The complied site is: <minhuanli.github.io/research-notes/>
+The complied site is: <minhuanli.github.io/notes/>
 
 ## Contributing
 
