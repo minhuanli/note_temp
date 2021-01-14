@@ -3,7 +3,6 @@
     <nav class="group">
 	<a href="{{site.baseurl}}/"><img class="badge" src="{{site.baseurl}}/assets/img/einstein.png" alt="CH"></a>
 	<a href="{{ site.baseurl }}/">Home</a>
-    <a href="http://minhuanli.github.io">Main Blog</a>
     {% assign pages_list = site.pages %}
       {% for node in pages_list %}
         {% if node.title != null %}
@@ -13,5 +12,6 @@
         {% endif %}
       {% endfor %}
     <a href="http://github.com/minhuanli/research-notes">GitHub</a>
+    <a href="http://minhuanli.github.io">Main Blog</a>
 	</nav>
 </header>
