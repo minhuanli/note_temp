@@ -7,6 +7,10 @@ permalink: /am105/part1/
 ---
 
 [Back]({{ 'am105' | relative_url }})
+
+* listnotshown
+{:toc}
+
 ### 1. Classification of Differential Equations
 
 Only ordinary derivatives appear in the differential equation, and it is said to be an **ordinary differential equation (ODE)**, like:
@@ -33,7 +37,13 @@ $$
 F(\cdot)= a_{0}(t) y^{(n)}+a_{1}(t) y^{(n-1)}+\cdots+a_{n}(t) y+g(t) = 0\tag{1.4}
 $$
 
-This ODE is said to be **linear**. An equation which is not in the form of equation (1.4) is **nonlinear**.
+This ODE is said to be **linear**. An equation which is not in the form of equation (1.4) is **nonlinear**, like an oscillating pendulum system in physics:
+
+$$
+\frac{d^{2} \theta}{d t^{2}}+\frac{g}{L} \sin \theta=0 \tag{1.5}
+$$
+
+The $$\sin\theta$$ term is nonliear.
 
 ### 2. Order and Solutions
 The order of a differential equation is the order of the highest derivative that appears in the equation. Generally speaking, 
@@ -50,5 +60,9 @@ $$
 \phi^{(n)}(t)=f\left(t, \phi(t), \phi^{\prime}(t), \ldots, \phi^{(n-1)}(t)\right)\tag{2.2}
 $$
 
-for every $$t$$ in $$\alpha< t < \beta$$. Need to investigate the **existence** and **uniqueness** of solutions of differential equations. 
+for every $$t$$ in $$\alpha< t < \beta$$. 
+
+**Existence** and **uniqueness** are two important questions of differential equation solutions that we are interested in. Existence is the qeustion to answer if the equation has a solution, and uniqueness is trying to answer how many solutions it has. In general, solutions of differential equations contain one or more arbitrary constants of integration. So a following third question, which is also important, is how can we actually determine a solution of a differential equation? We need the help of initial value or boundary conditions.
+
+### 3. First-Order ODE: Integrating Factors
 

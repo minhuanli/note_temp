@@ -17,7 +17,10 @@ myself and take notes here. Hope I could be a good TF.
 
 My notes list:
 
-1. [Part 1]({{ '/am105/part1/'' | relative_url }}), basics knowledges, according to lecture 1-3.
+|    | Content | Coverage | Link |
+|:--:|:------------|:--------:| :---:|
+|Part1|Classification, Order, linear IVP,<br>Existence and Uniqueness, stability| Lecture 1-3| [html]({{ '/am105/part1/'' | relative_url }})|
+
 
 The syllabus of the AM105 is, according to Zhigang's notes:
 
