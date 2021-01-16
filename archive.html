@@ -9,7 +9,7 @@ title: archive
 {% if site.JB.posts_collate.provider == "custom" %}
   {% include custom/posts_collate %}
 {% else %}
-  {% for post in posts_collate  %}
+  {% for post in posts_collate reversed %}
   {% if post.layout == "post" and post.title != null %}
           <hr class="slender">
           <a href="{{ post.url | prepend: site.baseurl }}"><h3 class="contrast" style="margin-bottom: 0rem">{{ post.title }}</h3></a>

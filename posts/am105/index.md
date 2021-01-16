@@ -3,7 +3,7 @@ layout: post
 title: ODEs and PDEs
 date: 2021-01-13
 progress: 5%
-permalink: am105
+permalink: /am105/
 ---
 
 I will serve as a TF for Harvard AM105, ODEs and PDEs, lectured by Zhigang Suo and Ethan Levian this spring term. 
@@ -15,6 +15,10 @@ To get familiar with related English terminologies and more mathematical details
 {% sidenote '2' 'Haberman, Richard. *Applied partial differential equations* 2003' %}
 myself and take notes here. Hope I could be a good TF. 
 
+My notes list:
+
+1. [Part 1]({{ '/am105/part1/'' | relative_url }}), basics knowledges, according to lecture 1-3.
+
 The syllabus of the AM105 is, according to Zhigang's notes:
 
 1. Intro, Boyce book 1.3
@@ -25,7 +29,7 @@ The syllabus of the AM105 is, according to Zhigang's notes:
 6. Repeated and complex roots, Boyce book 3.4, 3.5
 7. Undetermined coefficients, Forcing. Boyce book 3.6, 3.8, 3.9
 8. Systems of ODEs, Boyce book 7.5, 7.6
-9. Repeated and complex eigenvalues, Boyce b**ook 7.6, 7.8
+9. Repeated and complex eigenvalues, Boyce book 7.6, 7.8
 10. Nonlinear systems, Boyce book 9.1-9.3
 11. Series expansions and BVP, Boyce book 5.2, 5.3
 12. Regular Singular points and Euler equations, Boyce book 5.4, 5.5
