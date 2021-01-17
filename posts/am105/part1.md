@@ -2,7 +2,7 @@
 layout: post
 title: ODE and PDE, Basics
 date: 2021-01-15
-progress: 30%
+progress: 50%
 permalink: /am105/part1/
 ---
 
@@ -43,7 +43,7 @@ $$
 \frac{d^{2} \theta}{d t^{2}}+\frac{g}{L} \sin \theta=0 \tag{1.5}
 $$
 
-The $$\sin\theta$$ term is nonliear.
+The $$\sin\theta$$ term is nonlinear.
 
 ### 2. Order and Solutions
 The order of a differential equation is the order of the highest derivative that appears in the equation. Generally speaking, 
@@ -64,5 +64,73 @@ for every $$t$$ in $$\alpha< t < \beta$$.
 
 **Existence** and **uniqueness** are two important questions of differential equation solutions that we are interested in. Existence is the qeustion to answer if the equation has a solution, and uniqueness is trying to answer how many solutions it has. In general, solutions of differential equations contain one or more arbitrary constants of integration. So a following third question, which is also important, is how can we actually determine a solution of a differential equation? We need the help of initial value or boundary conditions.
 
-### 3. First-Order ODE: Integrating Factors
+### 3. First-Order Linear ODE: Integrating Factors
+Let's dive into a discussion about how to solve first-order linear ODE. In general, a first-order linear ODE can be written in the form:
+
+$$
+P(t) \frac{d y}{d t}+Q(t) y=G(t)\tag{3.1}
+$$
+
+where $$P$$, $$Q$$, and $$G$$ are given as functions of independent variable $$t$$. Trivially, as long as $$P(t)\ne 0$${% sidenote '1' 'or it is not a first-order ODE' %}, the equation (3.1) can be converted into the following form by dividing both sides by $$P(t)$$:
+
+$$
+\frac{d y}{d t}+p(t) y=g(t)\tag{3.2}
+$$
+
+In some case, a first-order linear ODE can be solved easily by integrating the equation, like{% sidenote '2' 'Boyce book, Page 25, Section 2.1, Example 1' %}:
+
+$$
+\left(4+t^{2}\right) \frac{d y}{d t}+2 t y=4 t\tag{3.3}
+$$
+
+can be solved immediately:
+
+$$
+(3.3)\implies\frac{d}{d t}\left(\left(4+t^{2}\right) y\right)=4 t\implies\left(4+t^{2}\right) y=2 t^{2}+c\\
+\implies y=\frac{2 t^{2}}{4+t^{2}}+\frac{c}{4+t^{2}}
+$$
+
+The above solution method requires the linear ODEs have the property that their left-hand sides can be written as the derivative of the product of y and some other function, meaning a ODE in form (3.1) satisfies: 
+
+$$
+\frac{d}{dt}[P(t)y]=P(t)\frac{dy}{dt}+Q(t)y \implies \frac{dP(t)}{dt}=Q(t)\tag{3.4}
+$$
+
+Unfortunately, most first-order linear differential equations do **not** have such property. However, as discovered by Leibniz, we can multiply the differential equation by a certain function $$\mu(t)$$:
+
+$$
+P(t) \frac{d y}{d t}+Q(t) y=G(t)\\
+\implies P(t)\mu(t) \frac{d y}{d t}+Q(t)\mu(t) y=G(t)\mu(t) \tag{3.5}
+$$
+
+then the new linear ODE could satisify the property (3.4), such that:
+
+$$
+\frac{d}{dt}[P(t)\mu(t)]=Q(t)\mu(t)\tag{3.6}
+$$
+
+Then the new ODE (3.5) can be solved with the immediate integrating method. The function $$\mu(t)$$ is called **integrating factors** and our task now shifts to finding a function $$\mu(t)$$ to make equation (3.6) true. 
+
+Rewrite the equation (3.6) with the product rule for derivatives{% sidenote '3' 'think about the conditions to make the following deductions true.' %}:
+
+$$
+P(t)\frac{d}{dt}\mu(t) + \mu(t)\frac{d}{dt}P(t) = Q(t)\mu(t)\\[2ex]
+\implies [Q(t)-\frac{d}{dt}P(t)]\mu(t) = P(t)\frac{d}{dt}\mu(t)\\[2ex]
+\implies \frac{Q(t)}{P(t)} - \frac{1}{P(t)}\frac{dP(t)}{dt} = \frac{1}{\mu(t)}\frac{d\mu(t)}{dt}\\[2ex]
+\implies \frac{Q(t)}{P(t)}dt - \frac{dP(t)}{P(t)} = \frac{d\mu(t)}{\mu(t)}\\
+\implies \int \frac{Q(t)}{P(t)} dt - \ln P(t) + \text{Const} = \ln \mu(t) \tag{3.7}
+$$
+
+So we have the integrating factor form: 
+
+$$
+\mu(t) = Ce^{\int \frac{Q(t)}{P(t)} dt - \ln P(t)}\tag{3.8}
+$$
+
+where C is a constant. If we use the ODE form (3.2), or where $$P(t) = 1$$ and $$Q(t)=p(t)$$, then the integrating factor is{% sidenote '4' 'This is the same as Boyce book Page 28, Equation 30' %}:
+
+$$
+\mu(t) = Ce^{\int p(t)dt}\tag{3.9}
+$$
+
 
