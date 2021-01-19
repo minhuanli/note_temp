@@ -1,6 +1,6 @@
 ---
 layout: post
-title: ODE and PDE, Basics I
+title: "ODE and PDE, Basics I"
 date: 2021-01-15
 progress: 100%
 permalink: /am105/part1/
@@ -163,4 +163,7 @@ y(0)=1 \tag{4.3}
 $$
 
 Take this into (4.2), we could simply solve $$c=1$$. This can be illustrated with the figure
-{% marginfigure '1' 'https://cdn.mathpix.com/snip/images/zd6fcJZlGZlP2E6yykznEb9-sZMyRfmBPAjQ98XysLc.original.fullsize.png' 'Integral curves of equation (4.1); the green curve is the particular solution satisfying the initial condition' %}. As all the curves satisfy the solution (4.2), but only the green one meets the initial value $$y(0)=1$$.
+
+{% maincolumn 'https://cdn.mathpix.com/snip/images/zd6fcJZlGZlP2E6yykznEb9-sZMyRfmBPAjQ98XysLc.original.fullsize.png' 'Integral curves of equation (4.1); the green curve is the particular solution satisfying the initial condition' %}
+
+As all the curves satisfy the solution (4.2), but only the green one meets the initial value $$y(0)=1$$.
