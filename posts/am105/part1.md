@@ -1,8 +1,8 @@
 ---
 layout: post
-title: ODE and PDE, Basics
+title: ODE and PDE, Basics I
 date: 2021-01-15
-progress: 50%
+progress: 100%
 permalink: /am105/part1/
 ---
 
@@ -111,7 +111,7 @@ $$
 
 Then the new ODE (3.5) can be solved with the immediate integrating method. The function $$\mu(t)$$ is called **integrating factors** and our task now shifts to finding a function $$\mu(t)$$ to make equation (3.6) true. 
 
-Rewrite the equation (3.6) with the product rule for derivatives{% sidenote '3' 'think about the conditions to make the following deductions true.' %}:
+Rewrite the equation (3.6) with the product rule for derivatives{% sidenote '3' 'Think about the conditions to make the following deductions true.' %}:
 
 $$
 P(t)\frac{d}{dt}\mu(t) + \mu(t)\frac{d}{dt}P(t) = Q(t)\mu(t)\\[2ex]
@@ -133,4 +133,34 @@ $$
 \mu(t) = Ce^{\int p(t)dt}\tag{3.9}
 $$
 
+Multiply both side of Equation (3.2) by (3.9) then integrate, we can find a general solution to equation (3.3){% sidenote 'ques-' 'Think about if and when could this general solution fail?' %}:
 
+$$
+y=\frac{1}{\mu(t)}\left(\int_{t_{0}}^{t} \mu(s) g(s) d s+c\right)\tag{3.10}
+$$
+
+where we have to intergrate out $$\mu(t)$$ by equation (3.9) {% sidenote '5' 'You can drop the constant C in equation (3.9) at the moment' %}, then use (3.10). The lower limit $$t_0$$ as well as the constant $$c$$ is determined by given initial value.
+
+### 4. Initial value problem (IVP)
+As you might have mentioned above, direct solving of differential equations always involves some undertermined constants. The ituition for this phenomenon is, a differention operation applied to any constant would always give 0, so you can't tell the difference about two constants from a differentiated equations. This is usually solved by the given initial value.
+
+Think about the example 5 on Boyce book page 30, we want to solve the equation:
+
+$$
+2y'+ty=2\tag{4.1}
+$$
+
+With the intergrating factor tool we established last section, the solution is:
+
+$$
+y=e^{-t^{2} / 4} \int_{0}^{t} e^{s^{2} / 4} d s+c e^{-t^{2} / 4}\tag{4.2}
+$$
+
+See, an undetermined constant $$c$$ here. So here we need another fact, which is called **Initial Value**{% sidenote '7' 'or boundary condition in higher dimensional, or more physics-related, problems' %}, like: 
+
+$$
+y(0)=1 \tag{4.3}
+$$
+
+Take this into (4.2), we could simply solve $$c=1$$. This can be illustrated with the figure
+{% marginfigure '1' 'https://cdn.mathpix.com/snip/images/zd6fcJZlGZlP2E6yykznEb9-sZMyRfmBPAjQ98XysLc.original.fullsize.png' 'Integral curves of equation (4.1); the green curve is the particular solution satisfying the initial condition' %}. As all the curves satisfy the solution (4.2), but only the green one meets the initial value $$y(0)=1$$.

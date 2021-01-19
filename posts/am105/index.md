@@ -19,7 +19,7 @@ My notes list:
 
 |    | Content | Coverage | Link |
 |:--:|:------------|:--------:| :---:|
-|Part1|Classification, order, integrating factors, <br>IVP, stability| Lecture 1-3| [html]({{ '/am105/part1/' | relative_url }})|
+|Part1|Classification, order, integrating factors, IVP| Lecture 1-3| [html]({{ '/am105/part1/' | relative_url }})|
 
 
 The syllabus of the AM105 is, according to Zhigang's notes:
