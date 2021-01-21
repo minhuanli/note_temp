@@ -669,3 +669,8 @@ hr.slender {
 }
 
 @media screen and (max-width: 760px) { .progress {width: 90%} }
+
+/*-- special syntax setting --*/
+.example { background-color: #d9fad9; border: 1px solid #75fa75} /* example */
+.pset { background-color: #d4effa; border: 1px solid #73b1fa} /* pset */
+.discussion { background-color: #fce4ea; border: 1px solid #f6558e} /* discussion */
