@@ -77,6 +77,7 @@ $$
 \frac{d y}{d t}+p(t) y=g(t)\tag{3.2}
 $$
 
+<p class='redbox'>
 In some case, a first-order linear ODE can be solved easily by integrating the equation, like{% sidenote '2' 'Boyce book, Page 25, Section 2.1, Example 1' %}:
 
 $$
@@ -89,6 +90,7 @@ $$
 (3.3)\implies\frac{d}{d t}\left(\left(4+t^{2}\right) y\right)=4 t\implies\left(4+t^{2}\right) y=2 t^{2}+c\\
 \implies y=\frac{2 t^{2}}{4+t^{2}}+\frac{c}{4+t^{2}}
 $$
+</p>
 
 The above solution method requires the linear ODEs have the property that their left-hand sides can be written as the derivative of the product of y and some other function, meaning a ODE in form (3.1) satisfies: 
 

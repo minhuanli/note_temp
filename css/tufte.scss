@@ -274,7 +274,10 @@ img { max-width: 100%; }
                          font-size: 1.0rem;
                          line-height: 1.96; //changed to bring line heights into rational pattern
                          vertical-align: baseline;
-                         position: relative; }
+                         position: relative;
+                         .mjx-math {
+                                  font-size: 1.0rem;
+                                  } }
 
 
 li .sidenote, li .marginnote{ margin-right: -80%; } //added to allow for the fact that lists are indented and marginnotes and sidenotes push to right
@@ -298,7 +301,9 @@ blockquote .sidenote, blockquote .marginnote { margin-right: -79% }
                    color: $contrast-color;
                    top: 0rem; } //removed superscripting for numerical reference in sidenote
 
-p, footer, div.table-wrapper,  .MJXc-display { width: 55%; }
+
+
+p, footer, div.table-wrapper, .MJXc-display { width: 55%; }
 
 div.table-wrapper, table { overflow-x: auto; } //changed all overflow values to 'auto' so scroll bars appear only as needed
 
@@ -308,7 +313,7 @@ div.table-wrapper, table { overflow-x: auto; } //changed all overflow values to 
                                        figure { max-width: 90%; }
                                        figcaption, figure.fullwidth figcaption { margin-right: 0%;
                                                                                  max-width: none; }
-                                       blockquote p, blockquote footer, div.epigraph > blockquote > footer,.MJXc-display {  width: 80%;
+                                       blockquote p, blockquote footer, div.epigraph > blockquote > footer,.MJXc-display {  width: 90%;
                                                                           padding-left: 5%;
                                                                           padding-right: 5%;
                                                                         }}
@@ -670,7 +675,33 @@ hr.slender {
 
 @media screen and (max-width: 760px) { .progress {width: 90%} }
 
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;}
+
 /*-- special syntax setting --*/
-.example { background-color: #d9fad9; border: 1px solid #75fa75} /* example */
-.pset { background-color: #d4effa; border: 1px solid #73b1fa} /* pset */
-.discussion { background-color: #fce4ea; border: 1px solid #f6558e} /* discussion */
+.greenbox { padding-left: 0.5rem; padding-right: 0.5rem; padding-top: 0.4rem; padding-bottom: 0.4rem; background-color: #faf7f7; 
+    border-width: 5px 1px 1px 1px;
+    border-style: solid dashed dashed;
+    border-color: #328c0b;
+    font-size: 1.2rem;
+    .MJXc-display {width: 90%;}}
+.redbox { padding-left: 0.5rem; padding-right: 0.5rem; padding-top: 0.4rem; padding-bottom: 0.4rem; background-color: #faf7f7; 
+    border-width: 5px 1px 1px 1px;
+    border-style: solid dashed dashed;
+    border-color: #b51d34;
+    font-size: 1.2rem;
+    .MJXc-display {width: 90%;}}
+.orangebox { padding-left: 0.5rem; padding-right: 0.5rem; padding-top: 0.4rem; padding-bottom: 0.4rem; background-color: #fbfcf2; 
+    border-width: 5px 1px 1px 1px;
+    border-style: solid dashed dashed;
+    border-color: #ff9100;
+    font-size: 1.2rem;
+    .MJXc-display {width: 90%;}} /* pset */
+.bluebox { padding-left: 0.5rem; padding-right: 0.5rem; padding-top: 0.4rem; padding-bottom: 0.4rem; background-color: #f5f7ff; 
+    border-width: 5px 1px 1px 1px;
+    border-style: solid dashed dashed;
+    border-color: #2037a8;
+    font-size: 1.2rem;
+    .MJXc-display {width: 90%;}} /* discussion */

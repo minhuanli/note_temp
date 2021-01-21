@@ -4,7 +4,7 @@ title: archive
 ---
 <h1 class="content-listing-header sans">ARCHIVE</h1>
 <ul class="content-listing ">
-{% assign posts_collate = site.pages %}
+{% assign posts_collate = site.pages | sort:"date" %}
 
 {% if site.JB.posts_collate.provider == "custom" %}
   {% include custom/posts_collate %}
