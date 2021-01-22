@@ -2,7 +2,7 @@
 layout: post
 title: ODEs and PDEs
 date: 2021-01-13
-progress: 5%
+progress: 100%
 permalink: /am105/
 ---
 

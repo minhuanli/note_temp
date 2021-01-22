@@ -1,14 +1,14 @@
 ---
 layout: post
-title: "ELBO, from EM algorithm"
+title: "ELBO and EM algorithm"
 date: 2021-01-21
-progress: 80%
+progress: 100%
 permalink: /stat/elbo/
 ---
 
-ELBO, which stands for Evidence Lower Bound Objective, is an everyday terminology in statistical learning field. This is a note based on Harvard AM207 course{% sidenote '1' '20 Fall, taught by Weiwei Pan' %} about what it is and how to understand. Expectation-Maximization (EM) algorithm will also be covered as an example to make the logic more fluent.
+ELBO, which stands for Evidence Lower Bound Objective, is an everyday terminology in statistical learning field. This is a note based on Harvard AM207 course{% sidenote '1' '20 Fall, taught by Weiwei Pan' %} about what it is and how to understand. Expectation-Maximization (EM) algorithm will also be covered as an example to make the logic more fluent.<!--more-->
 
-Generally speaking, ELBO, as its name indicates, is a lower bound to a true learning obejctive in a latent model inference task. It is like a trade-off output of accuracy and computational feasibility, which turns out to be good in practice. But as it is not 100% accurate, there are still many active researches try to find better substitutes{% sidenote '2' 'see my blog about [paper tvo](https://minhuanli.github.io/2021/01/20/tvo/)' %}.
+Generally speaking, ELBO, as its name indicates, is a lower bound to a true learning obejctive in a latent model inference task. It is like a trade-off output of accuracy and computational feasibility, which turns out to be good in practice. But as it is not 100% accurate, there are still many active researches trying to find better substitutes{% sidenote '2' 'see my blog about [paper tvo](https://minhuanli.github.io/2021/01/20/tvo/)' %}.
 
 * listnotshown
 {: toc}
@@ -53,14 +53,20 @@ $$\begin{aligned}
 Look at the numerator of the last step {% marginnote '7' 'The term $$\underset{z_n\sim P\left(z_{n} \mid \theta\right)}{\mathbb{E}}\left[P\left(y_{n} \mid z_{n}, \phi\right)\right]$$ itself can be calcualted in a MC estimate approach' %}, the gradient operator and the expectation operator are not commutable, as the $$\mathbb{E}$$ has to do with the parameter $$\theta$$. So the direct gradient of the evidence $$l_y(\theta,\phi)$$ is almost computational impossible, we have to think another way out.
 
 ### ELBO via an auxillary distribution
-Here is how we construct ELBO, the main idea is to make the expectation operator irrelevant to the parameter $$\theta$$ by introducing an auxillary distribution $$q(z)$$:
+Here is how we construct ELBO, the main idea is to make the expectation operator irrelevant to the parameter $$\theta$$ by introducing an auxillary distribution $$q(z)$$: {% marginnote 'mn3' 'At the last step of deduction, we exchange $$\log$$ and $$\mathbb{E}$$, so $$q(Z)$$ can not be cancelled out. Then the maximization has to be taken over $$q (Z)$$ too.' %}
 
 $$
-\begin{aligned}\underset{\theta, \phi}{\mathrm{max}}\; l_y(\theta, \phi) &= \underset{\theta, \phi, q}{\mathrm{max}}\; \log \prod_{n=1}^N\int_{\Omega_Z} \left(\frac{p(y_n, z_n|\theta, \phi)}{q(z_n)}q(z_n)\right) dz\\&= \underset{\theta, \phi, q}{\mathrm{max}}\; \log\,\prod_{n=1}^N\mathbb{E}_{Z\sim q(Z)} \left[  \frac{p(y_n, Z|\theta, \phi)}{q(Z)}\right]\\&= \underset{\theta, \phi, q}{\mathrm{max}}\; \sum_{n=1}^N \log \mathbb{E}_{Z\sim q(Z)} \left[\,\left( \frac{p(y_n, Z|\theta, \phi)}{q(Z)}\right)\right]\\&\geq \underset{\theta, \phi, q}{\mathrm{max}}\; \underbrace{\sum_{n=1}^N\mathbb{E}_{Z_n\sim q(Z)} \left[  \log\,\left(\frac{p(y_n, Z_n|\theta, \phi)}{q(Z_n)}\right)\right]}_{ELBO(\theta, \phi, q)}, \quad (\text{Jensen's Inequality})\\\end{aligned}\tag{6}
+\begin{aligned}\underset{\theta, \phi}{\mathrm{max}}\; l_y(\theta, \phi) &= \underset{\theta, \phi}{\mathrm{max}}\; \log \prod_{n=1}^N\int_{\Omega_Z} \left(\frac{p(y_n, z_n|\theta, \phi)}{q(z_n)}q(z_n)\right) dz\\&= \underset{\theta, \phi}{\mathrm{max}}\; \log\,\prod_{n=1}^N\mathbb{E}_{Z\sim q(Z)} \left[  \frac{p(y_n, Z|\theta, \phi)}{q(Z)}\right]\\&= \underset{\theta, \phi}{\mathrm{max}}\; \sum_{n=1}^N \log \mathbb{E}_{Z\sim q(Z)} \left[\,\left( \frac{p(y_n, Z|\theta, \phi)}{q(Z)}\right)\right]\\&\geq \underset{\theta, \phi, q}{\mathrm{max}}\; \underbrace{\sum_{n=1}^N\mathbb{E}_{Z_n\sim q(Z)} \left[  \log\,\left(\frac{p(y_n, Z_n|\theta, \phi)}{q(Z_n)}\right)\right]}_{ELBO(\theta, \phi, q)}, \quad (\text{Jensen's Inequality})\\\end{aligned}\tag{6}
 $$
 
-See, ELBO is the lower bound to our true evidence $$l_y(\theta,\phi)$$, so when we change to maximize the ELBO, we are in some degree maximize the evidence. And as the expectation $$\mathbb{E}_{Z_n\sim q(Z)}$$ in ELBO is no more related to $$\theta$$, it is computational feasible.
+See, ELBO is the lower bound to our true evidence $$l_y(\theta,\phi)$$, so when we change to maximize the ELBO, we are in some degree maximize the evidence. And as the expectation $$\mathbb{E}_{Z_n\sim q(Z)}$$ in ELBO is no more related to $$\theta$$, so we can gradient ELBO as the expectation operator and the gradient operator with respect to parameters are commutable:
 
+$$\begin{aligned}
+\nabla_{\theta, \phi} ELBO(\theta, \phi, q) &= \nabla_{\theta, \phi} \sum_{n=1}^N\mathbb{E}_{Z_n\sim q(Z)} \left[  \log\,\left(\frac{p(y_n, Z_n|\theta, \phi)}{q(Z_n)}\right)\right]
+\\ &= \sum_{n=1}^N\mathbb{E}_{Z_n\sim q(Z)}\left[\nabla_{\theta, \phi}  \log\,\left(\frac{p(y_n, Z_n|\theta, \phi)}{q(Z_n)}\right)\right]
+\end{aligned}\tag{7}$$
+
+We still have to maximize ELBO with respect to $$q(z)$$, whose gradient is not commutable with the expectation operator. We will show how to solve this in the next section, an EM alogorithm.
 <p class='orangebox'>
 Clearly, miaximizing the ELBO is not equal to maximizing the evidence. When ELBO is maximized, we can say the \(l_y(\theta,\phi)\) is as big, but can still be far from optimized, like the following picture:
 
@@ -69,5 +75,28 @@ Clearly, miaximizing the ELBO is not equal to maximizing the evidence. When ELBO
 
 
 ### Maximize ELBO -- EM algorithm
-You can tell from equation (6), that we have to maximize $ELBO$ with respect to 
+As mentioned above, ELBO has to be maximized with respect to $$\theta,\phi$$ and $$q$$. As they are not correlated{% sidenote 'meanfield' 'This is the same idea of mean field assumption in variational inference' %}, we can optimize them in a coordinate ascent manner: optimize over degrees of freedom one by one. For a MLE task over a latent model, this is usually called **EM (Expectation Maximization) algorithm:** {% marginfigure 'EM' 'https://s3.us-west-2.amazonaws.com/secure.notion-static.com/19e580d0-1940-429d-98ab-dac24ff454bf/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210122%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210122T025832Z&X-Amz-Expires=86400&X-Amz-Signature=aa215b19cbaeb9dd46544d629298b0705c298b941a3a2b76755fab7fbf954861&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22' 'An illustration of the iterative EM algorithm to maximize ELBO' %}
 
+<p class='bluebox'>
+<i style="font-weight: bold">M-Step</i>: Maximize \(\theta,\phi\), fix \(q^*\)<br>
+This is solved as discussed in equation (7)
+$$\begin{aligned}\theta^*, \phi^* &= \underset{\theta, \phi}{\mathrm{max}}\; ELBO(\theta, \phi, q) = \underset{\theta, \phi}{\mathrm{max}}\; \sum_{n=1}^N\mathbb{E}_{Z_n\sim q(Z)} \left[  \log\,\left(\frac{p(y_n, Z_n|\theta, \phi)}{q(Z_n)}\right)\right]\\&= \underset{\theta, \phi}{\mathrm{max}}\;  \sum_{n=1}^N \int_{\Omega_Z} \log\,\left(\frac{p(y_n, z_n|\theta, \phi)}{q(z_n)}\right)q(z_n) dz_n\\&= \underset{\theta, \phi}{\mathrm{max}}\; \sum_{n=1}^N \int_{\Omega_Z} \log\,\left(p(y_n, z_n|\theta, \phi)\right) q(z_n)dz_n - \underbrace{\int_{\Omega_Z} \log \left(q(z_n)\right)q(z_n) dz_n}_{\text{constant with respect to }\theta, \phi}\\&\equiv \underset{\theta, \phi}{\mathrm{max}}\;\sum_{n=1}^N \int_{\Omega_Z} \log\,\left(p(y_n, z_n|\theta, \phi)\right) q(z_n)dz_n\\&= \underset{\theta, \phi}{\mathrm{max}}\;\sum_{n=1}^N \mathbb{E}_{Z_n\sim q(Z)} \left[ \log\left(p(y_n, z_n|\theta, \phi)\right)\right]\end{aligned}$$
+</p>
+<p class='bluebox'>
+<i style="font-weight: bold">E-Step</i>: Maximize \(q\), fix \(\theta^*,\phi^*\)<br>
+Rather than optimizing the ELBO with respect to q, which seems hard (as the gradient is not commutable with the expectation operator), we will argue that optimizing the ELBO is equivalent to optimizing another function of q, one whose optimum is easy for us to compute.
+$$\begin{aligned}l_y(\theta, \phi) &- ELBO(\theta, \phi, q) \\&= \sum_{n=1}^N \log p(y_n| \theta, \phi) - \sum_{n=1}^N \int_{\Omega_Z} \log\left(\frac{p(y_n, z_n|\theta, \phi)}{q(z_n)}\right)q(z_n) dz_n\\&=  \sum_{n=1}^N \int_{\Omega_Z} \log\left(p(y_n| \theta, \phi)\right) q(z_n) dz_n - \sum_{n=1}^N \int_{\Omega_Z} \log\left(\frac{p(y_n, z_n|\theta, \phi)}{q(z_n)}\right)q(z_n) dz_n\\&=  \sum_{n=1}^N \int_{\Omega_Z}  \left(\log\left(p(y_n| \theta, \phi)\right) - \log\left(\frac{p(y_n, z_n|\theta, \phi)}{q(z_n)}\right) \right)q(z_n) dz_n\\&= \sum_{n=1}^N \int_{\Omega_Z}  \log\left(\frac{p(y_n| \theta, \phi)q(z_n)}{p(y_n, z_n|\theta, \phi)} \right)q(z_n) dz_n\\&= \sum_{n=1}^N \int_{\Omega_Z}  \log\left(\frac{q(z_n)}{p(z_n| y_n, \theta, \phi)} \right)q(z_n) dz_n \\&= \sum_{n=1}^N D_{\text{KL}} \left[ q(z_n) \| p(z_n| y_n, \theta, \phi)\right].\end{aligned}$$
+As \(l_y(\theta, \phi)\) is not a function of \(q\), so maximize the ELBO with respect to \(q\) is equivalent to minimize the KL divergence between \(q\) and posterior:
+$$\underset{q}{\mathrm{argmax}}\, ELBO(\theta^*, \phi^*, q) = \underset{q}{\mathrm{argmin}}\sum_{n=1}^N D_{\text{KL}} \left[ q(z_n) \| p(z_n| y_n, \theta^*, \phi^*)\right].$$
+So we could just choose \(q^*\) to be the posterior{% sidenote 'pos' 'Sometimes the posterior is intractable as it involves an integration over the whole latent space, e.g. VAE. We have to use variational inference tools to approximate the posterior.' %}:
+$$\begin{aligned}q^*(z_n) &= \underset{q}{\mathrm{argmax}}\; ELBO(\theta^*, \phi^*, q) \\&= \underset{q}{\mathrm{argmin}}\sum_{n=1}^N D_{\text{KL}} \left[ q(z_n) \| p(z_n| y_n, \theta^*, \phi^*)\right] \\&= p(z_n| y_n, \theta^*, \phi^*)\end{aligned}$$
+</p>
+1. **Initialization**: pick $$\theta_0$$, $$\phi_0$$
+2. Repeat $$i = 1,\dots,I$$ times:<br>
+    **E-step**:
+    $$q_{\text{new}}(Z_n) = \underset{q}{\mathrm{argmax}}\; ELBO(\theta_{\text{old}}, \phi_{\text{old}}, q) = p(Z_n|Y_n, \theta_{\text{old}}, \phi_{\text{old}})$$<br>
+    **M-step**:
+    $$\begin{aligned}
+    \theta_{\text{new}}, \phi_{\text{new}} &= \underset{\theta, \phi}{\mathrm{argmax}}\; ELBO(\theta, \phi, q_{\text{new}})\\
+    &= \underset{\theta, \phi}{\mathrm{argmax}}\; \sum_{n=1}^N\mathbb{E}_{Z_n\sim p(Z_n|Y_n, \theta_{\text{old}}, \phi_{\text{old}})}\left[\log \left( p(y_n, Z_n | \phi, \theta\right) \right].
+    \end{aligned}$$
