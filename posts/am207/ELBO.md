@@ -14,7 +14,7 @@ Generally speaking, ELBO, as its name indicates, is a lower bound to a true lear
 {: toc}
 
 ### Problem Setup, MLE of a Latent Model
-Let's setup the problem with some notations, say we have the following latent model {% marginfigure '3' 'https://s3.us-west-2.amazonaws.com/secure.notion-static.com/110f7214-4843-4306-8072-4e643d938646/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210121%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210121T161651Z&X-Amz-Expires=86400&X-Amz-Signature=fbf1b60b970aa1118ff0c85e1d727447c9cf02309bd12770dd01874cbfd32390&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22' 'A graphic representation of the latent model, points are parameters, hollow circle is latent variable and solid circle is observed variable' %}: 
+Let's setup the problem with some notations, say we have the following latent model {% marginfigure '3' '/posts/am207/graphic_model.png' 'A graphic representation of the latent model, points are parameters, hollow circle is latent variable and solid circle is observed variable' %}: 
 $$
 \begin{aligned}
 Z_n &\sim P(Z | \theta) \\
@@ -70,12 +70,12 @@ We still have to maximize ELBO with respect to $$q(z)$$, whose gradient is not c
 <p class='orangebox'>
 Clearly, miaximizing the ELBO is not equal to maximizing the evidence. When ELBO is maximized, we can say the \(l_y(\theta,\phi)\) is as big, but can still be far from optimized, like the following picture:
 
-<img class='center' src="https://s3.us-west-2.amazonaws.com/secure.notion-static.com/3e8943dc-98b5-4b2b-969c-0b75a173c90b/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210121%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210121T212512Z&X-Amz-Expires=86400&X-Amz-Signature=1febeed4272cc17d3364e07455df40f6c65dd4124f0763c3c50603c272fbc5e0&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22" width="90%">
+<img class='center' src="https://s3.us-west-2.amazonaws.com/secure.notion-static.com/3e8943dc-98b5-4b2b-969c-0b75a173c90b/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210124%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210124T034125Z&X-Amz-Expires=86400&X-Amz-Signature=ce7dfd6c5e266e234d575f1028dc7405c891e6d59c8435be6c456b7f03d1a027&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22" width="90%">
 </p>
 
 
 ### Maximize ELBO -- EM algorithm
-As mentioned above, ELBO has to be maximized with respect to $$\theta,\phi$$ and $$q$$. As they are not correlated{% sidenote 'meanfield' 'This is the same idea of mean field assumption in variational inference' %}, we can optimize them in a coordinate ascent manner: optimize over degrees of freedom one by one. For a MLE task over a latent model, this is usually called **EM (Expectation Maximization) algorithm:** {% marginfigure 'EM' 'https://s3.us-west-2.amazonaws.com/secure.notion-static.com/19e580d0-1940-429d-98ab-dac24ff454bf/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAT73L2G45O3KS52Y5%2F20210122%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20210122T025832Z&X-Amz-Expires=86400&X-Amz-Signature=aa215b19cbaeb9dd46544d629298b0705c298b941a3a2b76755fab7fbf954861&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22' 'An illustration of the iterative EM algorithm to maximize ELBO' %}
+As mentioned above, ELBO has to be maximized with respect to $$\theta,\phi$$ and $$q$$. As they are not correlated{% sidenote 'meanfield' 'This is the same idea of mean field assumption in variational inference' %}, we can optimize them in a coordinate ascent manner: optimize over degrees of freedom one by one. For a MLE task over a latent model, this is usually called **EM (Expectation Maximization) algorithm:** {% marginfigure 'EM' '/posts/am207/elbo_iterative.png' 'An illustration of the iterative EM algorithm to maximize ELBO' %}
 
 <p class='bluebox'>
 <i style="font-weight: bold">M-Step</i>: Maximize \(\theta,\phi\), fix \(q^*\)<br>
