@@ -25,3 +25,4 @@ ODE and PDE Notes
 |:--:|:------------|:---:|
 |Intro|Description of the motivation and syllabus| [html](am105)|
 |Basics I|Classification, order, integrating factors, IVP| [html](am105/part1/)|
+|Tutorial 1|Solve Differential Equation with Sympy| [html]({{ '/posts/am105/sympy_tutorial' | relative_url }})|

@@ -13,6 +13,8 @@ permalink: /articles/:short_year/:title
 timezone: America/New_York
 excerpt_separator: <!--more-->  # you can specify your own separator, of course.
 exclude: ['Gemfile', 'Gemfile.lock', 'Rakefile', 'README.md']
+plugins:
+  - jekyll-jupyter-notebook
 post:
   template: _post.txt
   extension: md
