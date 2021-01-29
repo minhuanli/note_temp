@@ -328,6 +328,14 @@ pre { width: 52.5%; //, pre code, p pre code are both selectors in tufte.css - t
 
 .full-width { .sidenote, .sidenote-number, .marginnote { display: none; } }
 
+.full-width { table { width: 60%; } }
+
+@media (max-width: 1000px) {.full-width { table { width: 70%; } } }
+
+@media (max-width: 900px) {.full-width { table { width: 80%; } } }
+
+@media (max-width: 760px) {.full-width { table { width: 88%; } } }
+
 span.newthought { font-variant: small-caps;
                   font-size: 1.2em;
                   letter-spacing: 0.05rem; }
@@ -709,3 +717,4 @@ hr.slender {
     font-size: 1.2rem;
     .MJXc-display {width: 90%;};
     .mjx-math {font-size: 1.2rem;}} /* discussion */
+

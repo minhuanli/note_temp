@@ -8,6 +8,9 @@ permalink: /funmath/gaussian/
 
 Some math tricks related to gaussain intergrations.
 
+* listnotshown
+{:toc}
+
 ### Saddle point integration
 
 Target integration function: $$I= \int dx \exp{[N\phi(x)]}$$, $$N$$ is large. we can expand $$\phi(x)$$ at its maximum point{% sidenote 'id1' "$$\phi'(x_{max})=0$$" %}:

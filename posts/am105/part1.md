@@ -6,8 +6,6 @@ progress: 100%
 permalink: /am105/part1/
 ---
 
-[Back]({{ 'am105' | relative_url }})
-
 * listnotshown
 {:toc}
 
