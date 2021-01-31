@@ -2,7 +2,7 @@
 layout: post
 title: "Gaussain Related Intergration Trick"
 date: 2021-01-27
-progress: 10%
+progress: 20%
 permalink: /funmath/gaussian/
 ---
 
@@ -27,3 +27,12 @@ Try yourself with saddle point integration trick to prove that:
 $$\log N !=N \log N-N+\frac{1}{2} \log (2 \pi N)$$
 
 </p>
+
+
+### Linearize term
+
+This trick appears in the replica trick to solve the Gardner's capacity:
+
+$$
+e^{-\frac{q}{2}(\sum_au_a)^2} = \int \frac{dt}{\sqrt{2\pi}}e^{-t^2/2+it\sqrt{q}\sum_{a=1}^nu_a} 
+$$
