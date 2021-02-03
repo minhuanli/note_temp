@@ -5,6 +5,7 @@ date: 2021-01-15
 progress: 100%
 permalink: /am105/part1/
 ---
+[Content](https://minhuanli.github.io/notes/)
 
 * listnotshown
 {:toc}

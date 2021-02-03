@@ -5,6 +5,7 @@ date: 2021-01-13
 progress: 100%
 permalink: /am105/
 ---
+[Content](https://minhuanli.github.io/notes/)
 
 I will serve as a TF for Harvard AM105, ODEs and PDEs, lectured by Zhigang Suo and Ethan Levian this spring term. 
 My previous learning experience of these topics is formalized by a physics-centered course 

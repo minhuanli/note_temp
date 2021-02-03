@@ -5,7 +5,7 @@ date: 2021-01-28
 progress: 100%
 permalink: /am105/part2/
 ---
-
+[Content](https://minhuanli.github.io/notes/)
 * listnotshown
 {:toc}
 
@@ -20,10 +20,26 @@ $$
 where $$M$$ and $$N$$ are two functions of $$x$$ and $$y$$. Let's say, when $$M$$ is a function of $$x$$ and $$N$$ is the function of $$y$$ only, equation (1) becomes:
 
 $$
-M(x)d(x) + N(y)dy = 0 \tag{2}
+M(x)dx + N(y)dy = 0 \tag{2}
 $$
 
+<p class='bluebox'>
+Not quite easy actually, details here:
+
+$$
+\begin{aligned}
+M(x)dx + N(y)dy &= 0 \\[2ex]
+\implies \frac{d H_1(x)}{dx}dx + \frac{dN(y)}{dy}dy &= 0 \\
+\implies dH_1(x) + dH_2(y) &= 0 \\
+\implies d(H_1(x) + H_2(y)) &= 0 \\
+\implies H_1(x) + H_2(y) &= c
+\end{aligned}
+$$
+</p>
+
 This can be easily integrated to solution:
+
+
 
 $$
 H_{1}(x)+H_{2}(y)=c \tag{3}
@@ -63,3 +79,23 @@ $$
 Constant is determined by some boudnary condistions
 
 </p>
+
+
+### 2. Existence and Uniqueness Theorem
+
+<p class='bluebox'>
+For a <i style="font-weight: bold;">first-order linear equation</i>, as long as functions \(p\) and \(g\) are <i class='contrast'>continuous</i> on an open interval \(I, \alpha< t < \beta\) with \(t=t_0\) inside, there exists a <i class='contrast'>unique</i> function \(y=\phi(t)\) satisfies:
+
+$$y'+p(t)y=g(t)$$
+
+for each \(t\) in \(I\), and also satisfies initial condition \(phi(t_0) = y_0\) when an arbitary initial value \(y_0\) is given. 
+</p>
+
+<p class='bluebox'>
+For a <i style="font-weight: bold;">first-order non-linear equation</i>, as long as functions \(f\) and \(\partial f/\partial y\) are <i class='contrast'>continuous</i> in some open rectangle \( \alpha< t < \beta, \gamma < y < \delta\) with \( (t_0,y_0) \) inside, there exists a <i class='contrast'>unique</i> function \(y=\phi(t)\) in some interval \( t_{0}-h< t < t_{0}+h \){% sidenote 'illu' 'say, a small interval around initial point \(t=t_0\)' %} containing \(\alpha < t < \beta\) satisfies:
+
+$$y' = f(t,y), \quad \text{with } \phi(t_0) = y_0$$
+
+</p>
+
+One note here: breaking of the conditions in the above two theorems does not mean there is no solutions, there could possibally be multiple solutions{% sidenote '1' 'See B&D Book, Chap 2.4, Example 2, Page 53.' %}.
