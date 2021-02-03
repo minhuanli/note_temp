@@ -28,6 +28,7 @@ This is my personal site based on Tufte-theme Jekyll, used to record my research
 |Basics I|Classification, order, integrating factors, IVP|1-2| [html](am105/part1/)|
 |Tutorial I|Solve Differential Equation with Sympy|| [html]({{ '/posts/am105/sympy_tutorial' | relative_url }})|
 |Basics II|Seperable differential equation, Existence and Uniqueness Theorem| 3-4|[html](am105/part2/)|
+|Numerical I|Direction Field, Euler's Method| 4|[html](am105/part3/)|
 
 
 ### <i class='contrast'>Others</i>
