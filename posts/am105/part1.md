@@ -168,3 +168,5 @@ Take this into (4.2), we could simply solve $$c=1$$. This can be illustrated wit
 {% maincolumn 'https://cdn.mathpix.com/snip/images/zd6fcJZlGZlP2E6yykznEb9-sZMyRfmBPAjQ98XysLc.original.fullsize.png' 'Integral curves of equation (4.1); the green curve is the particular solution satisfying the initial condition' %}
 
 As all the curves satisfy the solution (4.2), but only the green one meets the initial value $$y(0)=1$$.
+
+[Next](https://minhuanli.github.io/notes/am105/part2/)

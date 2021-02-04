@@ -99,3 +99,5 @@ $$y' = f(t,y), \quad \text{with } \phi(t_0) = y_0$$
 </p>
 
 One note here: breaking of the conditions in the above two theorems does not mean there is no solutions, there could possibally be multiple solutions{% sidenote '1' 'See B&D Book, Chap 2.4, Example 2, Page 53.' %}.
+
+[Next](https://minhuanli.github.io/notes/am105/part3/)
