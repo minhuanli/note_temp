@@ -11,7 +11,7 @@ permalink: /am105/part3/
 {:toc}
 
 
-### 0. Direction Field
+### 1. Direction Field
 
 Direction fields are valuable tools in studying the solutions of differential equations of the form:
 
@@ -31,7 +31,7 @@ $$
 <img class='center' src='https://raw.githubusercontent.com/minhuanli/imagehost/master/img/direction_field.png' width="70%"> 
 </p>
 
-### 1. Euler's Method
+### 2. Euler's Method
 
 For a first-order IVP given $$f$$ and $$\partial f /\partial y$$ are continuous:
 
@@ -55,7 +55,7 @@ From the diretive fied plotted above, we could imagine that if we have a fine en
 3. Iteratively move the point further like above:
     <br>$$y_n = y_{n-1}+f(t_{n-1},y_{n-1})\Delta t$$
 
-Now you have the a bunch of points $$(t_i,y_i), i = 0, \dots,n$$, starting from initial value $$(t_0,y_0)$$. Connect them with segemental lines, then you have one numerical approximation.
+Now you have the a bunch of points $$(t_i,y_i), i = 0, \dots,n$$, starting from initial value $$(t_0,y_0)$$. Connect them with segemental lines, then you have one numerical approximation. The local truncation error level is $$O(h^2)$$.
 
 <p class='redbox'>
 Example from B&D book section 2.7, example 1, page 78. Use Euler's method to solve:
