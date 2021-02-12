@@ -29,7 +29,8 @@ This is my personal site based on Tufte-theme Jekyll, used to record my research
 |Tutorial I|Solve Differential Equation with Sympy|| [html]({{ '/posts/am105/sympy_tutorial' | relative_url }})|
 |Basics II|Seperable differential equation, Existence and Uniqueness Theorem| 3-4|[html](am105/part2/)|
 |Numerical I|Direction Field, Euler's Method| 4|[html](am105/part3/)|
-|Numerical II|Improved Euler Method, Runge-Kutta Method| 4|[html](am105/part4/)|
+|Numerical II|Improved Euler Method, Runge-Kutta Method| 5|[html](am105/part4/)|
+|Homogeneous ODEs|Superposition, Wronskian, Constant Coefficients| 6|[html](am105/part5/)|
 
 ### <i class='contrast'>Others</i>
 
