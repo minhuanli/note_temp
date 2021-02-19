@@ -31,6 +31,7 @@ This is my personal site based on Tufte-theme Jekyll, used to record my research
 |Numerical I|Direction Field, Euler's Method| 4|[html](am105/part3/)|
 |Numerical II|Improved Euler Method, Runge-Kutta Method| 5|[html](am105/part4/)|
 |Homogeneous ODEs|Superposition, Wronskian, Constant Coefficients| 6|[html](am105/part5/)|
+|Non-homogeneous ODEs|Methods of undetermined coefficients, Variation of parameters| 7|[html](am105/part6/)|
 
 ### <i class='contrast'>Others</i>
 

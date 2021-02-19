@@ -73,13 +73,13 @@ It falls into three types:
     y=c_{1} e^{r_{1} t}+c_{2} e^{r_{2} t}\tag{7}
     $$
 
-2. $$r_1$$ and $$r_2$$ are complex numbers{% sidenote '2' 'negative discriminant' %}, the general solution of equation (5) is:
+2. $$r_1$$ and $$r_2$$ are complex numbers{% sidenote '3' 'negative discriminant' %}, the general solution of equation (5) is:
     
     $$
     y=c_{1} e^{\lambda t} \cos (\mu t)+c_{2} e^{\lambda t} \sin (\mu t)\tag{8}
     $$
 
-3. $$r_1=r_2$$ {% sidenote '3' 'zero discriminant' %}, the general solution is:
+3. $$r_1=r_2$$ {% sidenote '4' 'zero discriminant' %}, the general solution is:
 
     $$
     y=c_{1} e^{r_{1} t}+c_{2} t e^{r_{1} t}\tag{9}
