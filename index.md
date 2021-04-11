@@ -30,8 +30,8 @@ This is my personal site based on Tufte-theme Jekyll, used to record my research
 |Basics II|Seperable differential equation, Existence and Uniqueness Theorem| 3-4|[html](am105/part2/)|
 |Numerical I|Direction Field, Euler's Method| 4|[html](am105/part3/)|
 |Numerical II|Improved Euler Method, Runge-Kutta Method| 5|[html](am105/part4/)|
-|Homogeneous ODEs|Superposition, Wronskian, Constant Coefficients| 6|[html](am105/part5/)|
-|Non-homogeneous ODEs|Methods of undetermined coefficients, Variation of parameters| 7|[html](am105/part6/)|
+|Homogeneous 2nd ODEs|Superposition, Wronskian, Constant Coefficients| 6|[html](am105/part5/)|
+|Non-homogeneous 2nd ODEs|Methods of undetermined coefficients, Variation of parameters, Forced Vibration| 7|[html](am105/part6/)|
 
 ### <i class='contrast'>Others</i>
 
