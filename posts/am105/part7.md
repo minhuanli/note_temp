@@ -2,7 +2,7 @@
 layout: post
 title: "ODE and PDE, Systems of ODEs"
 date: 2021-04-11
-progress: 25%
+progress: 60%
 permalink: /am105/part7/
 ---
 [Content](https://minhuanli.github.io/notes/)
@@ -49,3 +49,13 @@ $$
 
 If each of the functions $$g_{1}(t), \ldots, g_{n}(t)$$ is zero for all $$t$$ in the interval $$I$$, then the system
 (4) is said to be <i class='contrast'>homogeneous</i>; otherwise, it is <i class='contrast'>nonhomogeneous</i>.
+
+A homogeneous first-order linear system can be further expressed in a matrice form:
+
+$$
+\mathbf{x}^{\prime}=\mathbf{A x} \tag{5}$$
+
+### 2. Homogeneous Linear System with Constant Coefficients
+The general solution to $$\mathbf{x}^{\prime}=\mathbf{A x}$$ is $$\mathbf{x} = \mathbf{\xi}e^{rt}$$
+
+
