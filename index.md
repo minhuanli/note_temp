@@ -24,14 +24,15 @@ This is my personal site based on Tufte-theme Jekyll, used to record my research
 
 |  Title  | Content | Range| Link |
 |:--:|:------------|:---:|:---:|
-|Intro|Motivation and Syllabus|| [html](am105)|
-|Basics I|Classification, order, integrating factors, IVP|1-2| [html](am105/part1/)|
-|Tutorial I|Solve Differential Equation with Sympy|| [html]({{ '/posts/am105/sympy_tutorial' | relative_url }})|
-|Basics II|Seperable differential equation, Existence and Uniqueness Theorem| 3-4|[html](am105/part2/)|
-|Numerical I|Direction Field, Euler's Method| 4|[html](am105/part3/)|
-|Numerical II|Improved Euler Method, Runge-Kutta Method| 5|[html](am105/part4/)|
-|Homogeneous 2nd ODEs|Superposition, Wronskian, Constant Coefficients| 6|[html](am105/part5/)|
-|Non-homogeneous 2nd ODEs|Methods of undetermined coefficients, Variation of parameters, Forced Vibration| 7|[html](am105/part6/)|
+|Intro|Motivation and Syllabus|W-0| [html](am105)|
+|Basics I|Classification, order, integrating factors, IVP|W-1| [html](am105/part1/)|
+|Tutorial I|Solve Differential Equation with Sympy|W-2| [html]({{ '/posts/am105/sympy_tutorial' | relative_url }})|
+|Basics II|Seperable differential equation, Existence and Uniqueness Theorem| W-2|[html](am105/part2/)|
+|Numerical I|Direction Field, Euler's Method| W-3|[html](am105/part3/)|
+|Numerical II|Improved Euler Method, Runge-Kutta Method| W-3 |[html](am105/part4/)|
+|Linear Homogeneous 2nd ODEs|Superposition, Wronskian, Constant Coefficients| W-4|[html](am105/part5/)|
+|Linear Non-homogeneous 2nd ODEs|Methods of undetermined coefficients, Variation of parameters, Forced Vibration| W-4|[html](am105/part6/)|
+|Systems of ODEs|Systems of first-order ODEs, Homogeneous linear system with constant coefficients| W-5|[html](am105/part7/)|
 
 ### <i class='contrast'>Others</i>
 

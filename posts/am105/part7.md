@@ -2,7 +2,7 @@
 layout: post
 title: "ODE and PDE, Systems of ODEs"
 date: 2021-04-11
-progress: 60%
+progress: 100%
 permalink: /am105/part7/
 ---
 [Content](https://minhuanli.github.io/notes/)
@@ -56,6 +56,66 @@ $$
 \mathbf{x}^{\prime}=\mathbf{A x} \tag{5}$$
 
 ### 2. Homogeneous Linear System with Constant Coefficients
-The general solution to $$\mathbf{x}^{\prime}=\mathbf{A x}$$ is $$\mathbf{x} = \mathbf{\xi}e^{rt}$$
+The general solution to $$\mathbf{x}^{\prime}=\mathbf{A x}$$ is $$\mathbf{x} = \mathbf{\xi}e^{rt}$$, where $$r$$ is an eigenvalue and $$\boldsymbol{\xi}$$ an associated eigenvector of the coefficient matrix $$\mathbf{A}$$.
+
+- **Real and different eigenvalues**
+
+If the $$n$$ eigenvalues of matrix $$\mathbf{A}$$ are all real and different. Thus, associated with each eigenvalue $$r_{i}$$ is a real eigenvector $$\boldsymbol{\xi}^{(i)}$$, and the $$n$$ eigenvectors $$\boldsymbol{\xi}^{(1)}, \ldots, \boldsymbol{\xi}^{(n)}$$ are linearly independent. The corresponding general solution of the differential system equation (5) is:
+
+$$
+\mathbf{x}=c_{1} \boldsymbol{\xi}^{(1)} e^{r_{1} t}+\cdots+c_{n} \boldsymbol{\xi}^{(n)} e^{r_{n} t} \tag{6}
+$$
+
+- **Complex-valued eigenvalues**
+
+Suppose that there is one pair of complex conjugate eigenvalues of $$\mathbf{A}$$, $$r_{1}=\lambda+i \mu$$ and $$r_{2}=\lambda-i \mu .$$ Then the corresponding eigenvectors $$\boldsymbol{\xi}^{(1)}$$ and $$\boldsymbol{\xi}^{(2)}$$ are also complex conjugates. Let us write $$\boldsymbol{\xi}^{(1)}=\mathbf{a}+i \mathbf{b}$$, where $$\mathbf{a}$$ and $$\mathbf{b}$$ are real; then we can write: $$\mathbf{x}^{(1)}(t)=\mathbf{u}(t)+i \mathbf{v}(t)$$, where:
+
+$$
+\begin{array}{l}
+\mathbf{u}(t)=e^{\lambda t}(\mathbf{a} \cos (\mu t)-\mathbf{b} \sin (\mu t)) \\
+\mathbf{v}(t)=e^{\lambda t}(\mathbf{a} \sin (\mu t)+\mathbf{b} \cos (\mu t))
+\end{array}
+$$
+
+Assume all other eigenvalues $$r_3,\dots,r_n$$ are real and distinct, then the general solution is:
+
+$$
+\mathbf{x}=c_{1} \mathbf{u}(t)+c_{2} \mathbf{v}(t)+c_{3} \boldsymbol{\xi}^{(3)} e^{r_{3} t}+\cdots+c_{n} \boldsymbol{\xi}^{(n)} e^{r_{n} t} \tag{7}
+$$
+
+- **Repeated eigenvalues**
+
+When the matrix $$\mathbf{A}$$ has a repeated eigenvalue, say that $$r=\rho$$ is an $$m$$-fold eigenvalue. In this event, there are two possibilities: either there are $$m$$ linearly independent eigenvectors corresponding to the eigenvalue $$\rho$$, or else, there are fewer than $$m$$ linearly independent eigenvectors.
+
+In the first case, it makes no difference that the eigenvalue $$r = \rho$$ is repeated as the distinct case, still has the general solution like equation (6).
+
+In the second case, if the matrix $$\mathbf{A}$$ is not Hermitian{% sidenote '1' 'for example $$\mathbf{A}= 
+\left(\begin{array}{rr}
+1 & -1 \\
+1 & 3
+\end{array}\right)
+$$' %}, then there may be fewer than $$m$$ idependent eigenvevtors corresponding to the eigenvalue $$\rho$$. We have dealt with similar situations for linear equation [here](../part5/#4-constant-coefficients-homogeneous-odes). 
+
+Suppose that $$r=\rho$$ is a <i class='contrast'>double</i> eigenvalue of $$\mathbf{A}$$, but that there is only one corresponding eigenvector $$\boldsymbol{\xi} .$$ Then one solution is:
+
+$$
+\mathbf{x}^{(1)}(t)=\boldsymbol{\xi} e^{\rho t}
+$$
+
+We need to find a second solution:
+
+$$
+\mathbf{x}^{(2)}(t)=\boldsymbol{\xi} t e^{\rho t}+\boldsymbol{\eta} e^{\rho t}
+$$
+
+where $$\eta$${% sidenote '2' 'The vector $$\eta$$ is called a generalized eigenvector of the matrix $$\mathbf{A}$$ corresponding to the eigenvalue $$\rho$$.' %} is determined from:
+
+$$
+(\mathbf{A}-\rho \mathbf{I}) \boldsymbol{\eta}=\boldsymbol{\xi}
+$$
+
+
+
+
 
 
