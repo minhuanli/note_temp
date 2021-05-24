@@ -171,10 +171,46 @@ blockquote footer {  font-size: 1.1rem;
 .sans { font-family: $sans-font;
         letter-spacing: .03em; }
 
-pre, pre code, p code, p pre code { font-family: $code-font;  // removed .code 'class' since code is an actual html tag
-        font-size: 1.2rem;                   // also added p code, p pre code and pre selector to account for Markdown parsing
-        line-height: 1.71428571;        // of triple backticks plus rationalized line-heights and margins
-        margin-top: 1.71428571rem; }
+code,
+pre {
+  font-family: $code-font;
+}
+code {
+  padding: .15em .15em;
+  font-size: 75%;
+  color: #a00000;
+  background-color: #f6f6f6;
+  border-radius: 3px;
+}
+pre {
+  display: block;
+  margin-top: 0;
+  margin-bottom: 0;
+  //width: 120%;
+  padding: 0rem;
+  font-size: .8rem;
+  line-height: 1.4;
+  white-space: pre;
+  white-space: pre-wrap;
+  word-break: break-all;
+  word-wrap: break-word;
+  background-color: #f6f6f6;
+}
+pre code {
+  padding: 1.0rem;
+  font-size: 100%;
+  color: inherit;
+  background-color: #f6f6f6;
+  display: block;
+}
+
+// pre, pre code, p code, p pre code { font-family: $code-font;  // removed .code 'class' since code is an actual html tag
+//         font-size: 0.9rem;                   // also added p code, p pre code and pre selector to account for Markdown parsing
+//         line-height: 1.71428571;        // of triple backticks plus rationalized line-heights and margins
+//         margin-top: 1.71428571rem;
+//         display: block;
+//         background-color: lightcyan;
+//        }
 
 
 h1 code, h2 code, h3 code { font-size: 0.80em; } //left in for no real reason
