@@ -22,4 +22,46 @@
 		],
 		"description": "Set contrast Env"
 	},
+	
+	"red box env": {
+		"prefix": "redbox",
+		"body": [
+			"<p class='redbox'>"
+			"$1"
+			"</p>"
+		],
+		"description": "Set Redbox Env"
+	},
+	
+	"orange box env": {
+		"prefix": "orangebox",
+		"body": [
+			"<p class='orangebox'>"
+			"$1"
+			"</p>"
+		],
+		"description": "Set Orangebox Env"
+	},
+	
+	"blue box env": {
+		"prefix": "bluebox",
+		"body": [
+			"<p class='bluebox'>"
+			"$1"
+			"</p>"
+		],
+		"description": "Set Bluebox Env"
+	},
+	
+	"green box env": {
+		"prefix": "greenbox",
+		"body": [
+			"<p class='greenbox'>"
+			"$1"
+			"</p>"
+		],
+		"description": "Set Greenbox Env"
+	},
+	
+
 }
