@@ -13,6 +13,11 @@ This is my personal site based on Tufte-theme Jekyll, used to record my research
 |:--:|:------------|:---:|
 |ELBO and EM algorithm| A note about how to understand ELBO and EM algorithm| [html](stat/elbo/)|
 
+### <i class='contrast'>Crystallography Notes</i>
+
+|  Title  | Content | Link |
+|:--:|:------------|:---:|
+|From Molecular Model to Structural Factor| A note about how to calculate $$F_p$$ from a protein model| [html](xtal/fcalc/)|
 
 ### <i class='contrast'>Fun Math</i>
 
