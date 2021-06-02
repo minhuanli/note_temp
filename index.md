@@ -38,6 +38,7 @@ This is my personal site based on Tufte-theme Jekyll, used to record my research
 |Linear Homogeneous 2nd ODEs|Superposition, Wronskian, Constant Coefficients| W-4|[html](am105/part5/)|
 |Linear Non-homogeneous 2nd ODEs|Methods of undetermined coefficients, Variation of parameters, Forced Vibration| W-4|[html](am105/part6/)|
 |Systems of ODEs|Systems of first-order ODEs, Homogeneous linear system with constant coefficients| W-5|[html](am105/part7/)|
+|Critical Points|Classification of critical points, local linearization| W-6|[html](am105/part8/)|
 
 ### <i class='contrast'>Others</i>
 
