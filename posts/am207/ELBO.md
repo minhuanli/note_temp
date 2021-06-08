@@ -93,9 +93,9 @@ $$\begin{aligned}q^*(z_n) &= \underset{q}{\mathrm{argmax}}\; ELBO(\theta^*, \phi
 </p>
 1. **Initialization**: pick $$\theta_0$$, $$\phi_0$$
 2. Repeat $$i = 1,\dots,I$$ times:<br>
-    **E-step**:
+    **E-step**:<br>
     $$q_{\text{new}}(Z_n) = \underset{q}{\mathrm{argmax}}\; ELBO(\theta_{\text{old}}, \phi_{\text{old}}, q) = p(Z_n|Y_n, \theta_{\text{old}}, \phi_{\text{old}})$$<br>
-    **M-step**:
+    **M-step**:<br>
     $$\begin{aligned}
     \theta_{\text{new}}, \phi_{\text{new}} &= \underset{\theta, \phi}{\mathrm{argmax}}\; ELBO(\theta, \phi, q_{\text{new}})\\
     &= \underset{\theta, \phi}{\mathrm{argmax}}\; \sum_{n=1}^N\mathbb{E}_{Z_n\sim p(Z_n|Y_n, \theta_{\text{old}}, \phi_{\text{old}})}\left[\log \left( p(y_n, Z_n | \phi, \theta\right) \right].

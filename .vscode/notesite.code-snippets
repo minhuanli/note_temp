@@ -62,6 +62,24 @@
 		],
 		"description": "Set Greenbox Env"
 	},
+
+	"bold env": {
+		"prefix": "bold",
+		"body": [
+			"<i style='font-weight: bold'>$1</i>"
+		],
+		"description": "Set bold Env"
+	},
+
+	"image env": {
+		"prefix": "image",
+		"body": [
+			"<img class='center' src='$1' width='90%'>"
+		],
+		"description": "Set image Env"
+	},
+
+
 	
 
 }
