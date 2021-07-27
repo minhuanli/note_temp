@@ -4,6 +4,7 @@ title: "ODE and PDE, Basics II"
 date: 2021-01-28
 progress: 100%
 permalink: /am105/part2/
+comments: true
 ---
 [Content](https://minhuanli.github.io/notes/)
 * listnotshown

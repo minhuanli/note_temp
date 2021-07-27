@@ -4,6 +4,7 @@ title: "ODE and PDE, Numerical Approximations I"
 date: 2021-02-03
 progress: 100%
 permalink: /am105/part3/
+comments: true
 ---
 [Content](https://minhuanli.github.io/notes/)
 

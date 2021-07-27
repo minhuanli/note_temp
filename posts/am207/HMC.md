@@ -4,6 +4,7 @@ title: "Hamiltonian Monte Carlo"
 date: 2021-06-05
 progress: 100%
 permalink: /stat/HMC/
+comments: true
 ---
 
 Hamiltonian monte carlo is a physics-inspired sampling algorithm. This is a note based on Harvard AM207 course{% sidenote '1' '20 Fall, taught by Weiwei Pan' %} about the HMC motivation and algorithm.

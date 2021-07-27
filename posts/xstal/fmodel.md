@@ -4,6 +4,7 @@ title: "From Molecular Model to Sturctural Factor"
 date: 2021-05-21
 progress: 100%
 permalink: /xtal/fcalc/
+comments: true
 ---
 
 {% epigraph 'Go back to definition!' 'George Polya' 'How to solve it' %}

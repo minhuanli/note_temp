@@ -4,6 +4,7 @@ title: "ODE and PDE, Systems of ODEs"
 date: 2021-04-11
 progress: 100%
 permalink: /am105/part7/
+comments: true
 ---
 [Content](https://minhuanli.github.io/notes/)
 

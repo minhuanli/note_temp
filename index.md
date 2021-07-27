@@ -4,7 +4,6 @@ layout: full-width
 
 This is my personal site based on Tufte-theme Jekyll, used to record my research notes. 
 
-
 ### <i class='contrast'>Statistical Learning Notes</i>
 
 |  Title  | Content | Link |

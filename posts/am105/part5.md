@@ -4,6 +4,7 @@ title: "ODE and PDE, Homogeneous ODEs"
 date: 2021-02-13
 progress: 100%
 permalink: /am105/part5/
+comments: true
 ---
 [Content](https://minhuanli.github.io/notes/)
 

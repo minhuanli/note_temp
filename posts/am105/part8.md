@@ -4,6 +4,7 @@ title: "ODE and PDE, Critial Points and Linearization"
 date: 2021-06-01
 progress: 100%
 permalink: /am105/part8/
+comments: true
 ---
 [Content](https://minhuanli.github.io/notes/)
 

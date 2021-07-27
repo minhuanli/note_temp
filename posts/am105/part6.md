@@ -4,6 +4,7 @@ title: "ODE and PDE, Nonhomogeneous ODEs"
 date: 2021-02-18
 progress: 100%
 permalink: /am105/part6/
+comments: true
 ---
 [Content](https://minhuanli.github.io/notes/)
 

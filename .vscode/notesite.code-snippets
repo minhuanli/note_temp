@@ -15,71 +15,53 @@
 	// 	],
 	// 	"description": "Log output to console"
 	// }
-	"Set contrast env": {
-		"prefix": "contrast",
+	"Set Epigraph Env": {
+		"prefix": "epigraph",
 		"body": [
-			"<i class='contrast'>$1</i>"
+			"{% epigraph '${1:text}' '${2:author}' '${3:source}' %}"
 		],
-		"description": "Set contrast Env"
-	},
-	
-	"red box env": {
-		"prefix": "redbox",
-		"body": [
-			"<p class='redbox'>"
-			"$1"
-			"</p>"
-		],
-		"description": "Set Redbox Env"
-	},
-	
-	"orange box env": {
-		"prefix": "orangebox",
-		"body": [
-			"<p class='orangebox'>"
-			"$1"
-			"</p>"
-		],
-		"description": "Set Orangebox Env"
-	},
-	
-	"blue box env": {
-		"prefix": "bluebox",
-		"body": [
-			"<p class='bluebox'>"
-			"$1"
-			"</p>"
-		],
-		"description": "Set Bluebox Env"
-	},
-	
-	"green box env": {
-		"prefix": "greenbox",
-		"body": [
-			"<p class='greenbox'>"
-			"$1"
-			"</p>"
-		],
-		"description": "Set Greenbox Env"
+		"description": "Set Epigraph Env"
 	},
 
-	"bold env": {
-		"prefix": "bold",
+"Set Margin Figure": {
+		"prefix": "marginfigure",
 		"body": [
-			"<i style='font-weight: bold'>$1</i>"
+			"{% marginfigure '${1:id}' '${2:url}' '${3:text}' %}"
 		],
-		"description": "Set bold Env"
+		"description": "Set Margin Figure"
 	},
 
-	"image env": {
-		"prefix": "image",
+"Set Fullwidth Figure": {
+		"prefix": "fullfigure",
 		"body": [
-			"<img class='center' src='$1' width='90%'>"
+			"{% fullwidth '${1:url}' '${2:text}' %}"
 		],
-		"description": "Set image Env"
+		"description": "Set fullwidth Figure"
 	},
 
+"Set mainfigure Figure": {
+		"prefix": "mainfigure",
+		"body": [
+			"{% maincolumn '${1:url}' '${2:text}' %}"
+		],
+		"description": "Set maincolumn Figure"
+	},
+
+"Set sidenote": {
+		"prefix": "sidenote",
+		"body": [
+			"{% sidenote '${1:id}' '${2:note}' %}"
+		],
+		"description": "Set sidenote"
+	},
+
+"Set marginnote": {
+		"prefix": "marginnote",
+		"body": [
+			"{% marginnote '${1:id}' '${2:note}' %}"
+		],
+		"description": "Set marginnote"
+	},	
 
 	
-
 }

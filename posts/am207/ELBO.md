@@ -4,6 +4,7 @@ title: "ELBO and EM algorithm"
 date: 2021-01-21
 progress: 100%
 permalink: /stat/elbo/
+comments: true
 ---
 
 ELBO, which stands for Evidence Lower Bound Objective, is an everyday terminology in statistical learning field. This is a note based on Harvard AM207 course{% sidenote '1' '20 Fall, taught by Weiwei Pan' %} about what it is and how to understand. Expectation-Maximization (EM) algorithm will also be covered as an example to make the logic more fluent.<!--more-->
@@ -13,7 +14,7 @@ Generally speaking, ELBO, as its name indicates, is a lower bound to a true lear
 * listnotshown
 {: toc}
 
-### Problem Setup, MLE of a Latent Model
+### <i class='contrast'>Problem Setup, MLE of a Latent Model</i>
 Let's setup the problem with some notations, say we have the following latent model {% marginfigure '3' 'https://raw.githubusercontent.com/minhuanli/imagehost/master/img/graphic_model.png' 'A graphic representation of the latent model, points are parameters, hollow circle is latent variable and solid circle is observed variable' %}: 
 $$
 \begin{aligned}
@@ -43,7 +44,7 @@ $$\begin{aligned}
 \phi_{M L E}, \theta_{M L E}&=\arg\max_{\theta, \phi} l_{y}(\theta, \phi) \\&= \arg\max _{\theta, \phi} \sum_{n=1}^{N} \log \underset{z_n\sim P\left(z_{n} \mid \theta\right)}{\mathbb{E}}\left[P\left(y_{n} \mid z_{n}, \phi\right)\right]\end{aligned}\tag{4}
 $$
 
-### The computational trouble
+### <i class='contrast'>The computational trouble</i>
 As our inference target can be foramlized as a maximization task in equation (4), the practical solution to such issue involves gradient calculation, say we have to gradient $$l_y(\theta,\phi)$$ with respect to $$\theta,\phi$$: 
 
 $$\begin{aligned}
@@ -52,7 +53,7 @@ $$\begin{aligned}
 
 Look at the numerator of the last step {% marginnote '7' 'The term $$\underset{z_n\sim P\left(z_{n} \mid \theta\right)}{\mathbb{E}}\left[P\left(y_{n} \mid z_{n}, \phi\right)\right]$$ itself can be calcualted in a MC estimate approach' %}, the gradient operator and the expectation operator are not commutable, as the $$\mathbb{E}$$ has to do with the parameter $$\theta$$. So the direct gradient of the evidence $$l_y(\theta,\phi)$$ is almost computational impossible, we have to think another way out.
 
-### ELBO via an auxillary distribution
+### <i class='contrast'>ELBO via an auxillary distribution</i>
 Here is how we construct ELBO, the main idea is to make the expectation operator irrelevant to the parameter $$\theta$$ by introducing an auxillary distribution $$q(z)$$: {% marginnote 'mn3' 'At the last step of deduction, we exchange $$\log$$ and $$\mathbb{E}$$, so $$q(Z)$$ can not be cancelled out. Then the maximization has to be taken over $$q (Z)$$ too.' %}
 
 $$
@@ -74,7 +75,7 @@ Clearly, miaximizing the ELBO is not equal to maximizing the evidence. When ELBO
 </p>
 
 
-### Maximize ELBO -- EM algorithm
+### <i class='contrast'>Maximize ELBO -- EM algorithm</i>
 As mentioned above, ELBO has to be maximized with respect to $$\theta,\phi$$ and $$q$$. As they are not correlated{% sidenote 'meanfield' 'This is the same idea of mean field assumption in variational inference' %}, we can optimize them in a coordinate ascent manner: optimize over degrees of freedom one by one. For a MLE task over a latent model, this is usually called **EM (Expectation Maximization) algorithm:** {% marginfigure 'EM' 'https://raw.githubusercontent.com/minhuanli/imagehost/master/img/elbo_iterative.png' 'An illustration of the iterative EM algorithm to maximize ELBO' %}
 
 <p class='bluebox'>
