@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>From Molecular Model to Sturctural Factor &middot; Minhuan Li</title>
+  <meta name="description" content="Research and learning notes">
+
+  <!-- Google Fonts loaded here depending on setting in _data/options.yml true loads font, blank does not-->
+  
+    <link href='//fonts.googleapis.com/css?family=Lato:400,400italic' rel='stylesheet' type='text/css'>
+  
+  
+  <!-- Load up MathJax script if needed ... specify in /_data/options.yml file-->
+  
+    <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: [
+      "MathMenu.js",
+      "MathZoom.js",
+      "AssistiveMML.js",
+      "a11y/accessibility-menu.js"
+    ],
+    jax: ["input/TeX", "output/CommonHTML"],
+    TeX: {
+      extensions: [
+        "AMSmath.js",
+        "AMSsymbols.js",
+        "noErrors.js",
+        "noUndefined.js",
+      ]
+    }
+  });
+</script>
+
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+ <!--   <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+  
+
+  <link rel="stylesheet" type="text/css" href="/notes/css/tufte.css">
+  <!-- <link rel="stylesheet" type="text/css" href="/notes/css/print.css" media="print"> -->
+
+  <link rel="canonical" href="/notes/xtal/fcalc/">
+
+  <link rel="alternate" type="application/rss+xml" title="Notes" href="/notes/feed.xml" />
+</head>
+
+  <body>
+    <!--- Header and nav template site-wide -->
+<header>
+    <nav class="group">
+	<a href="/notes/"><img class="badge" src="/notes/assets/img/einstein.png" alt="CH"></a>
+	<a href="/notes/">Home</a>
+    
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+              <a href="/notes/archive">archive</a>
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    <a href="http://github.com/minhuanli/notes">GitHub</a>
+    <a href="http://minhuanli.github.io">Main Blog</a>
+	</nav>
+</header>
+    <article class="group">
+      <h1>From Molecular Model to Sturctural Factor</h1>
+<p class="subtitle">May 21, 2021</p>
+
+
+  <div class="progress" data-label="100% Complete">
+    <span class="value" style="width:100%;"></span>
+  </div>
+
+
+<div class="epigraph"><blockquote><p>Go back to definition!</p><footer>George Polya, <cite>How to solve it</cite></footer></blockquote></div>
+
+<p>In general, the following equation calculate the complex x-ray scattering factors from molecular models<label for="1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="1" class="margin-toggle" /><span class="sidenote">Usually a PDB file, with infos of space group, atom type, atom position, iso/aniso B-factor, and occupancy in an asymmetric unit. </span><label for="2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="2" class="margin-toggle" /><span class="sidenote">Rupp’s textbook, P279 </span>:</p>
+
+\[F_{p} (\vec{h}) = \sum_G \sum_j O_j \cdot f_{\vec{h},j}\cdot\text{DWF}(\vec{h})\cdot\exp{[2\pi i \vec{h}\cdot(\mathbf{R}_G\vec{x}_j+\vec{T}_G)]} \tag{1}\]
+
+<p>where:</p>
+
+<ol>
+  <li>
+    <p>subscript \(p\) of \(F_p\) stands for “protein”, as there is extra correction from solvent;</p>
+  </li>
+  <li>
+    <p>\(\vec{h}\) is the reciprocal index \([h,k,l]\);</p>
+  </li>
+  <li>
+    <p>\(G\) is the index of symmetry operations (appears as rotation matrix \(\mathbf{R}_G\) and translation vector \(\vec{T}_G\)) belonging to the space group;</p>
+  </li>
+  <li>
+    <p>\(j\) is the index of atom; \(O_j\) is the occupancy value the atom \(j\);</p>
+  </li>
+  <li>
+    <p>\(f_{\vec{h},j}\) is the atomic scattering factor of atom \(j\) at reciprocal space site \([h,k,l]\);</p>
+  </li>
+  <li>
+    <p>DWF is the debye-waller factor or B-factor, either isotropic or anisotropic</p>
+  </li>
+  <li>
+    <p>\(\vec{x}_j\) is the <i class="contrast">fractional</i> coordinates<label for="3" class="margin-toggle sidenote-number"></label><input type="checkbox" id="3" class="margin-toggle" /><span class="sidenote">In contrast to cartesian coordinates. </span> of atom \(j\) in the unit cell.</p>
+  </li>
+</ol>
+
+<p>I will cover discussions on practical calculation of some nontrivial terms mentioned above.</p>
+
+<ul id="markdown-toc">
+  <li><a href="#space-group-and-symmetry-operations" id="markdown-toc-space-group-and-symmetry-operations"><i class="contrast">Space group and symmetry operations</i></a></li>
+  <li><a href="#atomic-structure-factor" id="markdown-toc-atomic-structure-factor"><i class="contrast">Atomic Structure Factor</i></a></li>
+  <li><a href="#isotropic-and-anisotropic-debye-waller-factor" id="markdown-toc-isotropic-and-anisotropic-debye-waller-factor"><i class="contrast">Isotropic and Anisotropic Debye-Waller Factor</i></a></li>
+</ul>
+
+<h3 id="space-group-and-symmetry-operations"><i class="contrast">Space group and symmetry operations</i></h3>
+
+<p>As the atoms contained in the PDB file is an asymmetry unit, we have to apply all necessary symmetry operations on the asyymetry unit to complete the unit cell. The symmetry operations list is fully determined by the space group info, which is usually recorded as <code class="language-plaintext highlighter-rouge">CRYST1</code> entry in PDB file. For example in <a href="https://www.rcsb.org/structure/6QJI"><code class="language-plaintext highlighter-rouge">6QJI</code></a>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>CRYST1   61.970   61.970  228.365  90.00  90.00 120.00 P 31 1 2
+</code></pre></div></div>
+<p>where the space group is \(P3_112\), with operations<label for="4" class="margin-toggle sidenote-number"></label><input type="checkbox" id="4" class="margin-toggle" /><span class="sidenote">See Rupp Textbook P226 about how to translate Hermann-Mauguin symbol into list of operations. </span>:</p>
+<ol>
+  <li>
+    <p>x, y, z</p>
+  </li>
+  <li>
+    <p>-y, x-y, z+1/3</p>
+  </li>
+  <li>
+    <p>-x+y, -x, z+2/3</p>
+  </li>
+  <li>
+    <p>-y, -x, -z+2/3</p>
+  </li>
+  <li>
+    <p>-x+y, y, -z+1/3</p>
+  </li>
+  <li>
+    <p>x, x-y, -z</p>
+  </li>
+</ol>
+
+<p>Each operation can be represented as a rotation matrix \(\mathbf{R}_G\) and a transliation vector \(\vec{T}_G\), like for the opearation 2, (-y, x-y, z+1/3):</p>
+
+\[\mathbf{R}_G=\left[\begin{array}{rrr}
+0 &amp; -1 &amp; 0\\
+1 &amp; -1 &amp; 0 \\
+0 &amp; 0 &amp; 1
+\end{array}\right] \quad \vec{T}_G = [0,0,1/3]\]
+
+<p><code class="language-plaintext highlighter-rouge">gemmi</code> provides a good API to generate a complete list of operations based on the space group symbol:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">symmetry</span> <span class="o">=</span> <span class="n">gemmi</span><span class="p">.</span><span class="n">SpaceGroup</span><span class="p">(</span><span class="s">"P 31 1 2"</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">operations</span> <span class="o">=</span> <span class="nb">list</span><span class="p">[</span><span class="n">symmetry</span><span class="p">.</span><span class="n">operations</span><span class="p">()]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="k">print</span><span class="p">(</span><span class="n">operations</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">operations</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">rot</span><span class="p">,</span> <span class="n">operations</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">tran</span><span class="p">)</span>
+<span class="o">&lt;</span><span class="n">gemmi</span><span class="p">.</span><span class="n">Op</span><span class="p">(</span><span class="s">"-y,x-y,z+1/3"</span><span class="p">)</span><span class="o">&gt;</span> <span class="p">[[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">24</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">24</span><span class="p">,</span> <span class="o">-</span><span class="mi">24</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">24</span><span class="p">]]</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">8</span><span class="p">]</span>
+</code></pre></div></div>
+
+<h3 id="atomic-structure-factor"><i class="contrast">Atomic Structure Factor</i></h3>
+<p>Each atom will contribute to the overall structural factor based on its atom type, which is abstracted into an atomic scattering factor \(f_{\vec{h},j}\). Here we approximate<label for="5" class="margin-toggle sidenote-number"></label><input type="checkbox" id="5" class="margin-toggle" /><span class="sidenote">drop the anomalous scattering </span> the actual atomic structural factor with a wavelength-independent one \(f_{\vec{h},j} \approx f^0_{\vec{h},j}\) and present with an empirical function:</p>
+
+\[f_{\vec{h},j}^0 = \sum_{i=1}^4a_i\cdot\exp[-b_i \cdot (\sin \theta/\lambda)^2] + c \tag{2}\]
+
+<p>The nine parameters \(a_i, b_i,c\) are the Cromer-Mann coefficients<label for="6" class="margin-toggle sidenote-number"></label><input type="checkbox" id="6" class="margin-toggle" /><span class="sidenote">can be found at International Tables for crystallography, Volume C </span> for each atom type.  And</p>
+
+\[\sin\theta/\lambda = d^*_{hkl}/2 \tag{3}\]
+
+<p>where:</p>
+
+\[\begin{aligned}
+d_{h k l}^{*}&amp;=\frac{1}{d_{h k l}}\\ &amp;=\left(h^{2} a^{* 2}+k^{2} b^{* 2}+l^{2} c^{2}+2 h k a^{*} b^{*} \cos \gamma^{*}+2 h l a^{*} c^{*} \cos \beta^{*}+2 k l b c^{*} \cos \alpha^{*}\right)^{1 / 2}
+\end{aligned}\]
+
+<p>The annotations with superscript \(*\) are geometry parameters of the reciprocal cell<label for="7" class="margin-toggle sidenote-number"></label><input type="checkbox" id="7" class="margin-toggle" /><span class="sidenote">see Rupp’s textbook P747-748 for a complete transformation equations </span>.</p>
+
+<p>Practically, we can create a search list based on the ITC tables from scratch and take each \(d^*_{hkl}\) in, or we can also use the good API <code class="language-plaintext highlighter-rouge">gemmi</code> provides for a neat calculation:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">atom_O</span> <span class="o">=</span> <span class="n">gemmi</span><span class="p">.</span><span class="n">Element</span><span class="p">(</span><span class="s">'O'</span><span class="p">)</span>
+<span class="n">atom_O</span><span class="p">.</span><span class="n">it92</span><span class="p">.</span><span class="n">calculate_sf</span><span class="p">(</span><span class="n">dr_sq</span><span class="o">/</span><span class="mi">4</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="isotropic-and-anisotropic-debye-waller-factor"><i class="contrast">Isotropic and Anisotropic Debye-Waller Factor</i></h3>
+<p>Atoms in crystal lattice or in a molecule are not fixed to a absolutely rigid positions, but they will vibrate around a mean position. The atoms can also be displaced because of disorder. As a restult, in each unit cell the atoms tend to be at a slightly different position. To account for the additional phase difference from this effect, an extra gaussian, wavelength-dependent term is introduced, called Debye-Waller factor, usually parameterized with B-factor in crystallography field.</p>
+
+<p>Generally, \(\text{DWF}(\vec{h})= \exp[-2\pi\langle((\mathbf{O}^{-1})^T\vec{h}\cdot \vec{u})\rangle]\)<label for="8" class="margin-toggle sidenote-number"></label><input type="checkbox" id="8" class="margin-toggle" /><span class="sidenote">\(\mathbf{O}^{-1}\) is the deorthogoniazation matrix of the unit cell, see Rupp’s textbook P746. </span>, where \(\vec{u}\) is the displacement vector of the atom.</p>
+
+<p>In isotropic case, the displacement vector \(\vec{u}\) is replaced with the isotropic amplitude \(u\) related to B-factor via:</p>
+
+\[B=8\pi^2\langle u^2\rangle\]
+
+<p>So the DWF becomes a standard Gaussian B-factor exponential:</p>
+
+\[\text{DWF}_{iso}(\vec{h}) = \exp[-B_{iso}(\sin\theta/\lambda)^2] \tag{4}\]
+
+<p>The isotropic B-factors are recorded in each <code class="language-plaintext highlighter-rouge">ATOM</code> entry of the PDB file, for example the <code class="language-plaintext highlighter-rouge">51.55</code> in the following line copied from <code class="language-plaintext highlighter-rouge">3I4W</code>:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ATOM      1  N   GLU A 305       2.491 -15.524  -5.091  1.00 51.55           N  
+</code></pre></div></div>
+
+<p>In anisotropic case, the displacement is usually parameterized with a symmetric matrix \(U\), transforming the DWF into:</p>
+
+\[\begin{aligned}
+\text{DWF}_{aniso}(\vec{h})=\exp[-2\pi^2(&amp;U^{11}h^2a^{*2}+ U^{22}k^2b^{*2} + U^{33}l^2c^{*2} 
+\\+ &amp; 2U^{12}hka^*b^*\cos\gamma^*  
+\\+ &amp; 2U^{13}hla^*c^*\cos\beta^* 
+\\+ &amp; 2U^{23}klb^*c^*\cos\alpha^* )]
+\end{aligned} \tag{5}\]
+
+<p>For atoms with anisotropic displacement info, the 6 elements of matrix \(U\) are recorded in the <code class="language-plaintext highlighter-rouge">ANISOU</code> entry following the <code class="language-plaintext highlighter-rouge">ATOM</code> entry in PDB file (multiplied by \(10^4\)), for example:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ATOM      1  N   ASP A 306       5.898  73.370  26.068  1.00 60.22           N
+ANISOU    1  N   ASP A 306     9135   7719   6029   1853  -1562   -620       N
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">60.22</code> value in the isotropic B-factor place is the isotropic B-factor equivalent \(B_{eq} = \frac{8\pi^2}{3}(U^{11}+U^{22}+U^{33})\).</p>
+
+
+
+
+  <h3>Comments</h3>
+  <div id="disqus_thread"></div>
+<script>
+    /**
+    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+    /*
+    var disqus_config = function () {
+    this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+    this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    */
+    (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = 'https://minhuanli-blog.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+
+
+    </article>
+    <span class="print-footer">From Molecular Model to Sturctural Factor - May 21, 2021 - Minhuan Li</span>
+    <footer>
+  <hr class="slender">
+  <ul class="footer-links">
+    <li><a href="mailto:minhuanli@g.harvard.edu"><span class="icon-mail3"></span></a></li>
+    
+      <li>
+        <a href="https://github.com/minhuanli"><span class="icon-github"></span></a>
+      </li>
+      
+  </ul>
+<div class="credits">
+<span>&copy; 2021 &nbsp;Minhuan Li &middot; <a href="//minhuanli.github.io">Main Blog</a></span></br> <br>
+Icon credit to <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>. Site created with <a href="//jekyllrb.com">Jekyll</a> using the <a href="//github.com/clayh53/tufte-jekyll">Tufte theme</a>.
+</div>  
+</footer>
+  </body>
+</html>

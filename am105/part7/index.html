@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>ODE and PDE, Systems of ODEs &middot; Minhuan Li</title>
+  <meta name="description" content="Research and learning notes">
+
+  <!-- Google Fonts loaded here depending on setting in _data/options.yml true loads font, blank does not-->
+  
+    <link href='//fonts.googleapis.com/css?family=Lato:400,400italic' rel='stylesheet' type='text/css'>
+  
+  
+  <!-- Load up MathJax script if needed ... specify in /_data/options.yml file-->
+  
+    <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: [
+      "MathMenu.js",
+      "MathZoom.js",
+      "AssistiveMML.js",
+      "a11y/accessibility-menu.js"
+    ],
+    jax: ["input/TeX", "output/CommonHTML"],
+    TeX: {
+      extensions: [
+        "AMSmath.js",
+        "AMSsymbols.js",
+        "noErrors.js",
+        "noUndefined.js",
+      ]
+    }
+  });
+</script>
+
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+ <!--   <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+  
+
+  <link rel="stylesheet" type="text/css" href="/notes/css/tufte.css">
+  <!-- <link rel="stylesheet" type="text/css" href="/notes/css/print.css" media="print"> -->
+
+  <link rel="canonical" href="/notes/am105/part7/">
+
+  <link rel="alternate" type="application/rss+xml" title="Notes" href="/notes/feed.xml" />
+</head>
+
+  <body>
+    <!--- Header and nav template site-wide -->
+<header>
+    <nav class="group">
+	<a href="/notes/"><img class="badge" src="/notes/assets/img/einstein.png" alt="CH"></a>
+	<a href="/notes/">Home</a>
+    
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+              <a href="/notes/archive">archive</a>
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    <a href="http://github.com/minhuanli/notes">GitHub</a>
+    <a href="http://minhuanli.github.io">Main Blog</a>
+	</nav>
+</header>
+    <article class="group">
+      <h1>ODE and PDE, Systems of ODEs</h1>
+<p class="subtitle">April 11, 2021</p>
+
+
+  <div class="progress" data-label="100% Complete">
+    <span class="value" style="width:100%;"></span>
+  </div>
+
+
+<p><a href="https://minhuanli.github.io/notes/">Content</a></p>
+
+<ul id="markdown-toc">
+  <li><a href="#1-systems-of-first-order-linear-equations" id="markdown-toc-1-systems-of-first-order-linear-equations">1. Systems of first-order linear equations</a></li>
+  <li><a href="#2-homogeneous-linear-system-with-constant-coefficients" id="markdown-toc-2-homogeneous-linear-system-with-constant-coefficients">2. Homogeneous Linear System with Constant Coefficients</a></li>
+</ul>
+
+<h3 id="1-systems-of-first-order-linear-equations">1. Systems of first-order linear equations</h3>
+
+<p>Equations of higher order can always be transformed into systems of first order equations. To transform an arbitray \(n^{th}\) order equation:</p>
+
+\[y^{(n)}=F\left(t, y, y^{\prime}, \ldots, y^{(n-1)}\right)\tag{1}\]
+
+<p>into a system of \(n\) first-order differential equations by introducing the variables \(x_{1}, x_{2}, \ldots, x_{n}\) defined by:</p>
+
+\[x_{1}=y, x_{2}=y^{\prime}, x_{3}=y^{\prime \prime}, \ldots, x_{n}=y^{(n-1)} \tag{2}\]
+
+<p>It follows immediately that:</p>
+
+\[\begin{array}{c}
+x_{1}^{\prime}=x_{2} \\
+x_{2}^{\prime}=x_{3} \\
+\vdots\\
+x_{n-1}^{\prime}=x_{n} \\
+x_{n}^{\prime}=F\left(t, x_{1}, x_{2}, \ldots, x_{n}\right) 
+\end{array} \tag{3}\]
+
+<p>A more general case of such n first-order <strong>linear</strong> differential equation has the form:</p>
+
+\[\begin{aligned}
+x_{1}^{\prime} &amp;=p_{11}(t) x_{1}+\cdots+p_{1 n}(t) x_{n}+g_{1}(t), \\
+x_{2}^{\prime} &amp;=p_{21}(t) x_{1}+\cdots+p_{2 n}(t) x_{n}+g_{2}(t), \\
+&amp;\vdots \\
+x_{n}^{\prime} &amp;=p_{n 1}(t) x_{1}+\cdots+p_{n n}(t) x_{n}+g_{n}(t) .
+\end{aligned} \tag{4}\]
+
+<p>If each of the functions \(g_{1}(t), \ldots, g_{n}(t)\) is zero for all \(t\) in the interval \(I\), then the system
+(4) is said to be <i class="contrast">homogeneous</i>; otherwise, it is <i class="contrast">nonhomogeneous</i>.</p>
+
+<p>A homogeneous first-order linear system can be further expressed in a matrice form:</p>
+
+\[\mathbf{x}^{\prime}=\mathbf{A x} \tag{5}\]
+
+<h3 id="2-homogeneous-linear-system-with-constant-coefficients">2. Homogeneous Linear System with Constant Coefficients</h3>
+<p>The general solution to \(\mathbf{x}^{\prime}=\mathbf{A x}\) is \(\mathbf{x} = \mathbf{\xi}e^{rt}\), where \(r\) is an eigenvalue and \(\boldsymbol{\xi}\) an associated eigenvector of the coefficient matrix \(\mathbf{A}\).</p>
+
+<ul>
+  <li><strong>Real and different eigenvalues</strong></li>
+</ul>
+
+<p>If the \(n\) eigenvalues of matrix \(\mathbf{A}\) are all real and different. Thus, associated with each eigenvalue \(r_{i}\) is a real eigenvector \(\boldsymbol{\xi}^{(i)}\), and the \(n\) eigenvectors \(\boldsymbol{\xi}^{(1)}, \ldots, \boldsymbol{\xi}^{(n)}\) are linearly independent. The corresponding general solution of the differential system equation (5) is:</p>
+
+\[\mathbf{x}=c_{1} \boldsymbol{\xi}^{(1)} e^{r_{1} t}+\cdots+c_{n} \boldsymbol{\xi}^{(n)} e^{r_{n} t} \tag{6}\]
+
+<ul>
+  <li><strong>Complex-valued eigenvalues</strong></li>
+</ul>
+
+<p>Suppose that there is one pair of complex conjugate eigenvalues of \(\mathbf{A}\), \(r_{1}=\lambda+i \mu\) and \(r_{2}=\lambda-i \mu .\) Then the corresponding eigenvectors \(\boldsymbol{\xi}^{(1)}\) and \(\boldsymbol{\xi}^{(2)}\) are also complex conjugates. Let us write \(\boldsymbol{\xi}^{(1)}=\mathbf{a}+i \mathbf{b}\), where \(\mathbf{a}\) and \(\mathbf{b}\) are real; then we can write: \(\mathbf{x}^{(1)}(t)=\mathbf{u}(t)+i \mathbf{v}(t)\), where:</p>
+
+\[\begin{array}{l}
+\mathbf{u}(t)=e^{\lambda t}(\mathbf{a} \cos (\mu t)-\mathbf{b} \sin (\mu t)) \\
+\mathbf{v}(t)=e^{\lambda t}(\mathbf{a} \sin (\mu t)+\mathbf{b} \cos (\mu t))
+\end{array}\]
+
+<p>Assume all other eigenvalues \(r_3,\dots,r_n\) are real and distinct, then the general solution is:</p>
+
+\[\mathbf{x}=c_{1} \mathbf{u}(t)+c_{2} \mathbf{v}(t)+c_{3} \boldsymbol{\xi}^{(3)} e^{r_{3} t}+\cdots+c_{n} \boldsymbol{\xi}^{(n)} e^{r_{n} t} \tag{7}\]
+
+<ul>
+  <li><strong>Repeated eigenvalues</strong></li>
+</ul>
+
+<p>When the matrix \(\mathbf{A}\) has a repeated eigenvalue, say that \(r=\rho\) is an \(m\)-fold eigenvalue. In this event, there are two possibilities: either there are \(m\) linearly independent eigenvectors corresponding to the eigenvalue \(\rho\), or else, there are fewer than \(m\) linearly independent eigenvectors.</p>
+
+<p>In the first case, it makes no difference that the eigenvalue \(r = \rho\) is repeated as the distinct case, still has the general solution like equation (6).</p>
+
+<p>In the second case, if the matrix \(\mathbf{A}\) is not Hermitian<label for="1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="1" class="margin-toggle" /><span class="sidenote">for example \(\mathbf{A}= 
+\left(\begin{array}{rr}
+1 &amp; -1 \\
+1 &amp; 3
+\end{array}\right)\) </span>, then there may be fewer than \(m\) idependent eigenvevtors corresponding to the eigenvalue \(\rho\). We have dealt with similar situations for linear equation <a href="../part5/#4-constant-coefficients-homogeneous-odes">here</a>.</p>
+
+<p>Suppose that \(r=\rho\) is a <i class="contrast">double</i> eigenvalue of \(\mathbf{A}\), but that there is only one corresponding eigenvector \(\boldsymbol{\xi} .\) Then one solution is:</p>
+
+\[\mathbf{x}^{(1)}(t)=\boldsymbol{\xi} e^{\rho t}\]
+
+<p>We need to find a second solution:</p>
+
+\[\mathbf{x}^{(2)}(t)=\boldsymbol{\xi} t e^{\rho t}+\boldsymbol{\eta} e^{\rho t}\]
+
+<p>where \(\eta\)<label for="2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="2" class="margin-toggle" /><span class="sidenote">The vector \(\eta\) is called a generalized eigenvector of the matrix \(\mathbf{A}\) corresponding to the eigenvalue \(\rho\). </span> is determined from:</p>
+
+\[(\mathbf{A}-\rho \mathbf{I}) \boldsymbol{\eta}=\boldsymbol{\xi}\]
+
+
+
+
+
+  <h3>Comments</h3>
+  <div id="disqus_thread"></div>
+<script>
+    /**
+    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+    /*
+    var disqus_config = function () {
+    this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+    this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    */
+    (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = 'https://minhuanli-blog.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+
+
+    </article>
+    <span class="print-footer">ODE and PDE, Systems of ODEs - April 11, 2021 - Minhuan Li</span>
+    <footer>
+  <hr class="slender">
+  <ul class="footer-links">
+    <li><a href="mailto:minhuanli@g.harvard.edu"><span class="icon-mail3"></span></a></li>
+    
+      <li>
+        <a href="https://github.com/minhuanli"><span class="icon-github"></span></a>
+      </li>
+      
+  </ul>
+<div class="credits">
+<span>&copy; 2021 &nbsp;Minhuan Li &middot; <a href="//minhuanli.github.io">Main Blog</a></span></br> <br>
+Icon credit to <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>. Site created with <a href="//jekyllrb.com">Jekyll</a> using the <a href="//github.com/clayh53/tufte-jekyll">Tufte theme</a>.
+</div>  
+</footer>
+  </body>
+</html>

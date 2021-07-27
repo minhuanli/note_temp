@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>ODEs and PDEs &middot; Minhuan Li</title>
+  <meta name="description" content="Research and learning notes">
+
+  <!-- Google Fonts loaded here depending on setting in _data/options.yml true loads font, blank does not-->
+  
+    <link href='//fonts.googleapis.com/css?family=Lato:400,400italic' rel='stylesheet' type='text/css'>
+  
+  
+  <!-- Load up MathJax script if needed ... specify in /_data/options.yml file-->
+  
+    <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: [
+      "MathMenu.js",
+      "MathZoom.js",
+      "AssistiveMML.js",
+      "a11y/accessibility-menu.js"
+    ],
+    jax: ["input/TeX", "output/CommonHTML"],
+    TeX: {
+      extensions: [
+        "AMSmath.js",
+        "AMSsymbols.js",
+        "noErrors.js",
+        "noUndefined.js",
+      ]
+    }
+  });
+</script>
+
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+ <!--   <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+  
+
+  <link rel="stylesheet" type="text/css" href="/notes/css/tufte.css">
+  <!-- <link rel="stylesheet" type="text/css" href="/notes/css/print.css" media="print"> -->
+
+  <link rel="canonical" href="/notes/am105/">
+
+  <link rel="alternate" type="application/rss+xml" title="Notes" href="/notes/feed.xml" />
+</head>
+
+  <body>
+    <!--- Header and nav template site-wide -->
+<header>
+    <nav class="group">
+	<a href="/notes/"><img class="badge" src="/notes/assets/img/einstein.png" alt="CH"></a>
+	<a href="/notes/">Home</a>
+    
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+              <a href="/notes/archive">archive</a>
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    <a href="http://github.com/minhuanli/notes">GitHub</a>
+    <a href="http://minhuanli.github.io">Main Blog</a>
+	</nav>
+</header>
+    <article class="group">
+      <h1>ODEs and PDEs</h1>
+<p class="subtitle">January 13, 2021</p>
+
+
+  <div class="progress" data-label="100% Complete">
+    <span class="value" style="width:100%;"></span>
+  </div>
+
+
+<p><a href="https://minhuanli.github.io/notes/">Content</a></p>
+
+<p>I will serve as a TF for Harvard AM105, ODEs and PDEs, lectured by Zhigang Suo and Ethan Levian this spring term. 
+My previous learning experience of these topics is formalized by a physics-centered course 
+<em>Mathematical Physics Method</em> (数学物理方法) given in Chinese, which covered topics from complex analysis to solutions of special ODE/PDEs. 
+AM105 is a more mathematics-centered course focusing on ODEs and PDEs. 
+To get familiar with related English terminologies and more mathematical details, I will spend some time reviewing the textbooks
+<label for="1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="1" class="margin-toggle" /><span class="sidenote">Boyce, William E., Richard C. DiPrima, and Hugo Villagómez Velázquez. <em>Elementary differential equations and boundary value problems</em> 2017 </span>
+<label for="2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="2" class="margin-toggle" /><span class="sidenote">Haberman, Richard. <em>Applied partial differential equations</em> 2003 </span>
+myself and take notes here. Hope I could be a good TF.</p>
+
+<p>The syllabus of the AM105 is, according to Zhigang’s notes:</p>
+
+<ol>
+  <li>Intro, Boyce book 1.3</li>
+  <li>Initial value problem (linear), Boyce book 2.1-2.3</li>
+  <li>Existence and uniqueness, aprroximation, linearization stability. Boyce book 2.4-2.5</li>
+  <li>Numerical methods, Boyce book 2.7, 8.1</li>
+  <li>Numerical methods, Boyce book 8.2, 8.3</li>
+  <li>Repeated and complex roots, Boyce book 3.4, 3.5</li>
+  <li>Undetermined coefficients, Forcing. Boyce book 3.6, 3.8, 3.9</li>
+  <li>Systems of ODEs, Boyce book 7.5, 7.6</li>
+  <li>Repeated and complex eigenvalues, Boyce book 7.6, 7.8</li>
+  <li>Nonlinear systems, Boyce book 9.1-9.3</li>
+  <li>Series expansions and BVP, Boyce book 5.2, 5.3</li>
+  <li>Regular Singular points and Euler equations, Boyce book 5.4, 5.5</li>
+  <li>Solutions near a singular point. Boyce book 5.6</li>
+  <li>Inner products and orthogonality, Fourier series, even and odd functions. Boyce book 10.1, 11.1, 10.3, 10.4</li>
+  <li>Fourier series, SL-problem, boyce book 11.1, Haberman book 5.1, 5.3</li>
+  <li>Intro to PDE</li>
+  <li>Diffusion as a random walk</li>
+  <li>Diffusion and separation of variables, Helmholtz eigenvalue problem</li>
+  <li>Laplace equation</li>
+  <li>Advection diffusion</li>
+  <li>Wave Equation</li>
+  <li>Combined effects: advection, diffusion, growth and decay</li>
+</ol>
+
+
+
+
+
+
+
+    </article>
+    <span class="print-footer">ODEs and PDEs - January 13, 2021 - Minhuan Li</span>
+    <footer>
+  <hr class="slender">
+  <ul class="footer-links">
+    <li><a href="mailto:minhuanli@g.harvard.edu"><span class="icon-mail3"></span></a></li>
+    
+      <li>
+        <a href="https://github.com/minhuanli"><span class="icon-github"></span></a>
+      </li>
+      
+  </ul>
+<div class="credits">
+<span>&copy; 2021 &nbsp;Minhuan Li &middot; <a href="//minhuanli.github.io">Main Blog</a></span></br> <br>
+Icon credit to <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>. Site created with <a href="//jekyllrb.com">Jekyll</a> using the <a href="//github.com/clayh53/tufte-jekyll">Tufte theme</a>.
+</div>  
+</footer>
+  </body>
+</html>

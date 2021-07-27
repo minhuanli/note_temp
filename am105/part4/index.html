@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>ODE and PDE, Numerical Approximations II &middot; Minhuan Li</title>
+  <meta name="description" content="Research and learning notes">
+
+  <!-- Google Fonts loaded here depending on setting in _data/options.yml true loads font, blank does not-->
+  
+    <link href='//fonts.googleapis.com/css?family=Lato:400,400italic' rel='stylesheet' type='text/css'>
+  
+  
+  <!-- Load up MathJax script if needed ... specify in /_data/options.yml file-->
+  
+    <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: [
+      "MathMenu.js",
+      "MathZoom.js",
+      "AssistiveMML.js",
+      "a11y/accessibility-menu.js"
+    ],
+    jax: ["input/TeX", "output/CommonHTML"],
+    TeX: {
+      extensions: [
+        "AMSmath.js",
+        "AMSsymbols.js",
+        "noErrors.js",
+        "noUndefined.js",
+      ]
+    }
+  });
+</script>
+
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+ <!--   <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+  
+
+  <link rel="stylesheet" type="text/css" href="/notes/css/tufte.css">
+  <!-- <link rel="stylesheet" type="text/css" href="/notes/css/print.css" media="print"> -->
+
+  <link rel="canonical" href="/notes/am105/part4/">
+
+  <link rel="alternate" type="application/rss+xml" title="Notes" href="/notes/feed.xml" />
+</head>
+
+  <body>
+    <!--- Header and nav template site-wide -->
+<header>
+    <nav class="group">
+	<a href="/notes/"><img class="badge" src="/notes/assets/img/einstein.png" alt="CH"></a>
+	<a href="/notes/">Home</a>
+    
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+              <a href="/notes/archive">archive</a>
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    <a href="http://github.com/minhuanli/notes">GitHub</a>
+    <a href="http://minhuanli.github.io">Main Blog</a>
+	</nav>
+</header>
+    <article class="group">
+      <h1>ODE and PDE, Numerical Approximations II</h1>
+<p class="subtitle">February 12, 2021</p>
+
+
+  <div class="progress" data-label="100% Complete">
+    <span class="value" style="width:100%;"></span>
+  </div>
+
+
+<p><a href="https://minhuanli.github.io/notes/">Content</a></p>
+
+<ul id="markdown-toc">
+  <li><a href="#1-improved-euler-method" id="markdown-toc-1-improved-euler-method">1. Improved Euler Method</a></li>
+  <li><a href="#2-runge-kutta-method" id="markdown-toc-2-runge-kutta-method">2. Runge-Kutta Method</a></li>
+</ul>
+
+<h3 id="1-improved-euler-method">1. Improved Euler Method</h3>
+
+<p>As we know before, local truncation error is of \(O(h^2)\) for normal Euler Method. However, we can’t simply decrease the step size \(h\) to reduce the local truncation error, because of the rounding error and limited computational resources. So we need some other approximate approaches to give good results even if the step size is not small enough. They actually all center around how to approximate the integration (slope).</p>
+
+<p>First is the improved Euler method, given the ODE in form:</p>
+
+\[\frac{d y}{d t}=f(t, y), \quad y(t_0) = y_0\tag{1}\]
+
+<p>We use the average of the two endpoints of the definite integral instead of the left endpoint:</p>
+
+\[\begin{aligned}
+y_{n+1} &amp;=y_{n}+\frac{f\left(t_{n}, y_{n}\right)+f\left(t_{n+1}, y_{n+1}\right)}{2} h \\
+y_{n+1}=y_{n}+&amp; \frac{f\left(t_{n}, y_{n}\right)+f\left(t_{n}+h, y_{n}+h f\left(t_{n}, y_{n}\right)\right)}{2} h \\
+y_{n+1} &amp;=y_{n}+\frac{f_{n}+f\left(t_{n}+h, y_{n}+h f_{n}\right)}{2} h
+\end{aligned} \tag{2}\]
+
+<p>The local truncation error is of order \(O(h^3)\), on orde magnitude smaller than normal Euler method.</p>
+
+<h3 id="2-runge-kutta-method">2. Runge-Kutta Method</h3>
+
+<p>The Euler formula and improved Euler formula are part of what is called the Runge-Kutta class of methods. This method is now called classic fourth-order four-square Runge-Kutta method. This method can be summarized for equation (1), as:</p>
+
+\[y_{n+1}=y_{n}+h\left(\frac{k_{n 1}+2 k_{n 2}+2 k_{n 3}+k_{n 4}}{6}\right) \tag{3}\]
+
+<p>where</p>
+
+\[\begin{aligned}
+k_{n 1} &amp;=f\left(t_{n}, y_{n}\right) \\
+k_{n 2} &amp;=f\left(t_{n}+\frac{1}{2} h, y_{n}+\frac{1}{2} h k_{n 1}\right) \\
+k_{n 3} &amp;=f\left(t_{n}+\frac{1}{2} h, y_{n}+\frac{1}{2} h k_{n 2}\right) \\
+k_{n 4} &amp;=f\left(t_{n}+h, y_{n}+h k_{n 3}\right)
+\end{aligned} \tag{4}\]
+
+<p>The local truncation error is of order \(O(h^5)\), much smaller.</p>
+
+<p class="redbox">
+The comparison of improved Euler method and Runge-Kutta method to approximate the solution for:
+
+$$y^{\prime}=1-t+4 y, \quad y(0)=1$$
+
+<img class="center" src="https://raw.githubusercontent.com/minhuanli/imagehost/master/img/Screen%20Shot%202021-02-12%20at%205.19.34%20PM.png" width="100%" /> 
+
+
+Note also that the Runge-Kutta method with \(h = 0.2\), or 40 evaluations of \(f\), produces a value at \(t = 2\) with an error of \(1.40%\), which is only slightly greater than the error in the improved Euler method with \(h = 0.025\), or 160 evaluations of \(f\). Thus we see again that a more accurate algorithm is more efficient; it produces better results with similar effort, or similar results with less effort.
+</p>
+
+
+
+
+  <h3>Comments</h3>
+  <div id="disqus_thread"></div>
+<script>
+    /**
+    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+    /*
+    var disqus_config = function () {
+    this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+    this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    */
+    (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = 'https://minhuanli-blog.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+
+
+    </article>
+    <span class="print-footer">ODE and PDE, Numerical Approximations II - February 12, 2021 - Minhuan Li</span>
+    <footer>
+  <hr class="slender">
+  <ul class="footer-links">
+    <li><a href="mailto:minhuanli@g.harvard.edu"><span class="icon-mail3"></span></a></li>
+    
+      <li>
+        <a href="https://github.com/minhuanli"><span class="icon-github"></span></a>
+      </li>
+      
+  </ul>
+<div class="credits">
+<span>&copy; 2021 &nbsp;Minhuan Li &middot; <a href="//minhuanli.github.io">Main Blog</a></span></br> <br>
+Icon credit to <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>. Site created with <a href="//jekyllrb.com">Jekyll</a> using the <a href="//github.com/clayh53/tufte-jekyll">Tufte theme</a>.
+</div>  
+</footer>
+  </body>
+</html>

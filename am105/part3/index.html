@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>ODE and PDE, Numerical Approximations I &middot; Minhuan Li</title>
+  <meta name="description" content="Research and learning notes">
+
+  <!-- Google Fonts loaded here depending on setting in _data/options.yml true loads font, blank does not-->
+  
+    <link href='//fonts.googleapis.com/css?family=Lato:400,400italic' rel='stylesheet' type='text/css'>
+  
+  
+  <!-- Load up MathJax script if needed ... specify in /_data/options.yml file-->
+  
+    <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: [
+      "MathMenu.js",
+      "MathZoom.js",
+      "AssistiveMML.js",
+      "a11y/accessibility-menu.js"
+    ],
+    jax: ["input/TeX", "output/CommonHTML"],
+    TeX: {
+      extensions: [
+        "AMSmath.js",
+        "AMSsymbols.js",
+        "noErrors.js",
+        "noUndefined.js",
+      ]
+    }
+  });
+</script>
+
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+ <!--   <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+  
+
+  <link rel="stylesheet" type="text/css" href="/notes/css/tufte.css">
+  <!-- <link rel="stylesheet" type="text/css" href="/notes/css/print.css" media="print"> -->
+
+  <link rel="canonical" href="/notes/am105/part3/">
+
+  <link rel="alternate" type="application/rss+xml" title="Notes" href="/notes/feed.xml" />
+</head>
+
+  <body>
+    <!--- Header and nav template site-wide -->
+<header>
+    <nav class="group">
+	<a href="/notes/"><img class="badge" src="/notes/assets/img/einstein.png" alt="CH"></a>
+	<a href="/notes/">Home</a>
+    
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+              <a href="/notes/archive">archive</a>
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    <a href="http://github.com/minhuanli/notes">GitHub</a>
+    <a href="http://minhuanli.github.io">Main Blog</a>
+	</nav>
+</header>
+    <article class="group">
+      <h1>ODE and PDE, Numerical Approximations I</h1>
+<p class="subtitle">February 3, 2021</p>
+
+
+  <div class="progress" data-label="100% Complete">
+    <span class="value" style="width:100%;"></span>
+  </div>
+
+
+<p><a href="https://minhuanli.github.io/notes/">Content</a></p>
+
+<ul id="markdown-toc">
+  <li><a href="#1-direction-field" id="markdown-toc-1-direction-field">1. Direction Field</a></li>
+  <li><a href="#2-eulers-method" id="markdown-toc-2-eulers-method">2. Euler’s Method</a></li>
+</ul>
+
+<h3 id="1-direction-field">1. Direction Field</h3>
+
+<p>Direction fields are valuable tools in studying the solutions of differential equations of the form:</p>
+
+\[\frac{d y}{d t}=f(t, y)\tag{1}\]
+
+<p>where \(f\) is a given function of the two variables \(t\) and \(y\), sometimes referred to as the <strong>rate function</strong>. A direction field for equations (1) can be constructed by evaluating \(f\) at each point of a rectangular grid. At each point of the grid, a short line segment is drawn whose slope is the value of \(f\) at that point. Each line segment is tangent to the graph of the solution passing through that point. The plots give you a general intuition about what does the solution look like.</p>
+
+<p class="redbox">
+Like example on B&amp;D book, page 5, the direction field of equation:
+
+$$
+\frac{d p}{d t}=\frac{p}{2}-450
+$$
+
+<img class="center" src="https://raw.githubusercontent.com/minhuanli/imagehost/master/img/direction_field.png" width="70%" /> 
+</p>
+
+<h3 id="2-eulers-method">2. Euler’s Method</h3>
+
+<p>For a first-order IVP given \(f\) and \(\partial f /\partial y\) are continuous:</p>
+
+\[\frac{d y}{d t}=f(t, y), \quad y\left(t_{0}\right)=y_{0} \tag{2}\]
+
+<p>there are two facts driving the numerical approximations approaches:<label for="1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="1" class="margin-toggle" /><span class="sidenote">from existence and uniqueness theorem </span></p>
+
+<ol>
+  <li>
+    <p>There is a unique solution \(y=\phi(t)\) in some interval around \(t=t_0\)</p>
+  </li>
+  <li>
+    <p>It is usually not possible to find the \(\phi\) by symbolic manipulations.</p>
+  </li>
+</ol>
+
+<p>From the diretive fied plotted above, we could imagine that if we have a fine enough grid, it presents a reasonable approximation of the solution, which motivates the Euler’s method as numerical approximation to equation (2)’s solution<label for="2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="2" class="margin-toggle" /><span class="sidenote">The formalized approximation here is \(f'(t) = \frac{f(t+\Delta t)-f(t)}{\Delta t}\). There are many forms of this truncation approximation, with different levels of error. </span>:</p>
+
+<ol>
+  <li>
+    <p>Start from the initial point \((t_0, y_0)\)</p>
+  </li>
+  <li>
+    <p>Move a small step further \(t_1 = t_0 + \Delta t\):
+<br />\(y_1 = y_0+f(t_0,y_0)\Delta t\)</p>
+  </li>
+  <li>
+    <p>Iteratively move the point further like above:
+ <br />\(y_n = y_{n-1}+f(t_{n-1},y_{n-1})\Delta t\)</p>
+  </li>
+</ol>
+
+<p>Now you have the a bunch of points \((t_i,y_i), i = 0, \dots,n\), starting from initial value \((t_0,y_0)\). Connect them with segemental lines, then you have one numerical approximation. The local truncation error level is \(O(h^2)\).</p>
+
+<p class="redbox">
+Example from B&amp;D book section 2.7, example 1, page 78. Use Euler's method to solve:
+
+$$
+\frac{d y}{d t}=3-2 t-0.5 y, \quad y(0)=1
+$$
+
+Evaluate at five points \((0,0.2,0.4,0.6,0.8,1.0)\):
+
+<img class="center" src="https://raw.githubusercontent.com/minhuanli/imagehost/master/img/Screen%20Shot%202021-02-03%20at%205.16.18%20PM.png" width="70%" />
+
+You can see the error gap grows larger as \(t\) increases, because the truncation error is accumulating.
+</p>
+
+
+
+
+
+  <h3>Comments</h3>
+  <div id="disqus_thread"></div>
+<script>
+    /**
+    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+    /*
+    var disqus_config = function () {
+    this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+    this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    */
+    (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = 'https://minhuanli-blog.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+
+
+    </article>
+    <span class="print-footer">ODE and PDE, Numerical Approximations I - February 3, 2021 - Minhuan Li</span>
+    <footer>
+  <hr class="slender">
+  <ul class="footer-links">
+    <li><a href="mailto:minhuanli@g.harvard.edu"><span class="icon-mail3"></span></a></li>
+    
+      <li>
+        <a href="https://github.com/minhuanli"><span class="icon-github"></span></a>
+      </li>
+      
+  </ul>
+<div class="credits">
+<span>&copy; 2021 &nbsp;Minhuan Li &middot; <a href="//minhuanli.github.io">Main Blog</a></span></br> <br>
+Icon credit to <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>. Site created with <a href="//jekyllrb.com">Jekyll</a> using the <a href="//github.com/clayh53/tufte-jekyll">Tufte theme</a>.
+</div>  
+</footer>
+  </body>
+</html>

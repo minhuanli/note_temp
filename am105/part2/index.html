@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>ODE and PDE, Basics II &middot; Minhuan Li</title>
+  <meta name="description" content="Research and learning notes">
+
+  <!-- Google Fonts loaded here depending on setting in _data/options.yml true loads font, blank does not-->
+  
+    <link href='//fonts.googleapis.com/css?family=Lato:400,400italic' rel='stylesheet' type='text/css'>
+  
+  
+  <!-- Load up MathJax script if needed ... specify in /_data/options.yml file-->
+  
+    <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: [
+      "MathMenu.js",
+      "MathZoom.js",
+      "AssistiveMML.js",
+      "a11y/accessibility-menu.js"
+    ],
+    jax: ["input/TeX", "output/CommonHTML"],
+    TeX: {
+      extensions: [
+        "AMSmath.js",
+        "AMSsymbols.js",
+        "noErrors.js",
+        "noUndefined.js",
+      ]
+    }
+  });
+</script>
+
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+ <!--   <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+  
+
+  <link rel="stylesheet" type="text/css" href="/notes/css/tufte.css">
+  <!-- <link rel="stylesheet" type="text/css" href="/notes/css/print.css" media="print"> -->
+
+  <link rel="canonical" href="/notes/am105/part2/">
+
+  <link rel="alternate" type="application/rss+xml" title="Notes" href="/notes/feed.xml" />
+</head>
+
+  <body>
+    <!--- Header and nav template site-wide -->
+<header>
+    <nav class="group">
+	<a href="/notes/"><img class="badge" src="/notes/assets/img/einstein.png" alt="CH"></a>
+	<a href="/notes/">Home</a>
+    
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+              <a href="/notes/archive">archive</a>
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    <a href="http://github.com/minhuanli/notes">GitHub</a>
+    <a href="http://minhuanli.github.io">Main Blog</a>
+	</nav>
+</header>
+    <article class="group">
+      <h1>ODE and PDE, Basics II</h1>
+<p class="subtitle">January 28, 2021</p>
+
+
+  <div class="progress" data-label="100% Complete">
+    <span class="value" style="width:100%;"></span>
+  </div>
+
+
+<p><a href="https://minhuanli.github.io/notes/">Content</a></p>
+<ul id="markdown-toc">
+  <li><a href="#1-separable-differential-equations" id="markdown-toc-1-separable-differential-equations">1. Separable Differential Equations</a></li>
+  <li><a href="#2-existence-and-uniqueness-theorem" id="markdown-toc-2-existence-and-uniqueness-theorem">2. Existence and Uniqueness Theorem</a></li>
+</ul>
+
+<h3 id="1-separable-differential-equations">1. Separable Differential Equations</h3>
+
+<p>Set \(x\) as the independent variable and \(y\) is a function of \(x\), we can generally write the first-order differential equation in the following form:</p>
+
+\[M(x, y)+N(x, y) \frac{d y}{d x}=0\tag{1}\]
+
+<p>where \(M\) and \(N\) are two functions of \(x\) and \(y\). Let’s say, when \(M\) is a function of \(x\) and \(N\) is the function of \(y\) only, equation (1) becomes:</p>
+
+\[M(x)dx + N(y)dy = 0 \tag{2}\]
+
+<p class="bluebox">
+Not quite easy actually, details here:
+
+$$
+\begin{aligned}
+M(x)dx + N(y)dy &amp;= 0 \\[2ex]
+\implies \frac{d H_1(x)}{dx}dx + \frac{dN(y)}{dy}dy &amp;= 0 \\
+\implies dH_1(x) + dH_2(y) &amp;= 0 \\
+\implies d(H_1(x) + H_2(y)) &amp;= 0 \\
+\implies H_1(x) + H_2(y) &amp;= c
+\end{aligned}
+$$
+</p>
+
+<p>This can be easily integrated to solution:</p>
+
+\[H_{1}(x)+H_{2}(y)=c \tag{3}\]
+
+<p>where \(H_{1}(x) = \int M(x) dx\) and \(H_{2}(y) = \int N(y) dy\). The constant \(c\) is determined by the initial value.</p>
+
+<p class="redbox">
+An example, we want to solve the following first-order differential equation:
+
+$$
+\frac{d y}{d x}=\frac{x^{2}}{1-y^{2}}
+$$
+
+which is apparently separable.<br />
+
+<i class="contrast">Solution:</i><br />
+
+Rewrite it in the form of equation (2):
+
+$$
+-x^{2}dx+\left(1-y^{2}\right)dy=0
+$$
+
+So:
+
+$$
+H_{1}(x) = \int (-x^2) dx = -\frac{1}{3}x^3 + c_1 \\ H_{2}(y) = \int (1-y^2) dy = y-\frac{1}{3}y^3 + c_2
+$$
+
+We have:
+
+$$
+-\frac{1}{3}x^3 + y - \frac{1}{3}y^3 = c
+$$
+
+Constant is determined by some boudnary condistions
+
+</p>
+
+<h3 id="2-existence-and-uniqueness-theorem">2. Existence and Uniqueness Theorem</h3>
+
+<p class="bluebox">
+For a <i style="font-weight: bold;">first-order linear equation</i>, as long as functions \(p\) and \(g\) are <i class="contrast">continuous</i> on an open interval \(I, \alpha&lt; t &lt; \beta\) with \(t=t_0\) inside, there exists a <i class="contrast">unique</i> function \(y=\phi(t)\) satisfies:
+
+$$y'+p(t)y=g(t)$$
+
+for each \(t\) in \(I\), and also satisfies initial condition \(phi(t_0) = y_0\) when an arbitary initial value \(y_0\) is given. 
+</p>
+
+<p class="bluebox">
+For a <i style="font-weight: bold;">first-order non-linear equation</i>, as long as functions \(f\) and \(\partial f/\partial y\) are <i class="contrast">continuous</i> in some open rectangle \( \alpha&lt; t &lt; \beta, \gamma &lt; y &lt; \delta\) with \( (t_0,y_0) \) inside, there exists a <i class="contrast">unique</i> function \(y=\phi(t)\) in some interval \( t_{0}-h&lt; t &lt; t_{0}+h \)<label for="illu" class="margin-toggle sidenote-number"></label><input type="checkbox" id="illu" class="margin-toggle" /><span class="sidenote">say, a small interval around initial point \(t=t_0\) </span> containing \(\alpha &lt; t &lt; \beta\) satisfies:
+
+$$y' = f(t,y), \quad \text{with } \phi(t_0) = y_0$$
+
+</p>
+
+<p>One note here: breaking of the conditions in the above two theorems does not mean there is no solutions, there could possibally be multiple solutions<label for="1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="1" class="margin-toggle" /><span class="sidenote">See B&amp;D Book, Chap 2.4, Example 2, Page 53. </span>.</p>
+
+<p><a href="https://minhuanli.github.io/notes/am105/part3/">Next</a></p>
+
+
+
+
+  <h3>Comments</h3>
+  <div id="disqus_thread"></div>
+<script>
+    /**
+    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+    /*
+    var disqus_config = function () {
+    this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+    this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    */
+    (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = 'https://minhuanli-blog.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+
+
+    </article>
+    <span class="print-footer">ODE and PDE, Basics II - January 28, 2021 - Minhuan Li</span>
+    <footer>
+  <hr class="slender">
+  <ul class="footer-links">
+    <li><a href="mailto:minhuanli@g.harvard.edu"><span class="icon-mail3"></span></a></li>
+    
+      <li>
+        <a href="https://github.com/minhuanli"><span class="icon-github"></span></a>
+      </li>
+      
+  </ul>
+<div class="credits">
+<span>&copy; 2021 &nbsp;Minhuan Li &middot; <a href="//minhuanli.github.io">Main Blog</a></span></br> <br>
+Icon credit to <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>. Site created with <a href="//jekyllrb.com">Jekyll</a> using the <a href="//github.com/clayh53/tufte-jekyll">Tufte theme</a>.
+</div>  
+</footer>
+  </body>
+</html>

@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>ELBO and EM algorithm &middot; Minhuan Li</title>
+  <meta name="description" content="Research and learning notes">
+
+  <!-- Google Fonts loaded here depending on setting in _data/options.yml true loads font, blank does not-->
+  
+    <link href='//fonts.googleapis.com/css?family=Lato:400,400italic' rel='stylesheet' type='text/css'>
+  
+  
+  <!-- Load up MathJax script if needed ... specify in /_data/options.yml file-->
+  
+    <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: [
+      "MathMenu.js",
+      "MathZoom.js",
+      "AssistiveMML.js",
+      "a11y/accessibility-menu.js"
+    ],
+    jax: ["input/TeX", "output/CommonHTML"],
+    TeX: {
+      extensions: [
+        "AMSmath.js",
+        "AMSsymbols.js",
+        "noErrors.js",
+        "noUndefined.js",
+      ]
+    }
+  });
+</script>
+
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+ <!--   <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+  
+
+  <link rel="stylesheet" type="text/css" href="/notes/css/tufte.css">
+  <!-- <link rel="stylesheet" type="text/css" href="/notes/css/print.css" media="print"> -->
+
+  <link rel="canonical" href="/notes/stat/elbo/">
+
+  <link rel="alternate" type="application/rss+xml" title="Notes" href="/notes/feed.xml" />
+</head>
+
+  <body>
+    <!--- Header and nav template site-wide -->
+<header>
+    <nav class="group">
+	<a href="/notes/"><img class="badge" src="/notes/assets/img/einstein.png" alt="CH"></a>
+	<a href="/notes/">Home</a>
+    
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+              <a href="/notes/archive">archive</a>
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    <a href="http://github.com/minhuanli/notes">GitHub</a>
+    <a href="http://minhuanli.github.io">Main Blog</a>
+	</nav>
+</header>
+    <article class="group">
+      <h1>ELBO and EM algorithm</h1>
+<p class="subtitle">January 21, 2021</p>
+
+
+  <div class="progress" data-label="100% Complete">
+    <span class="value" style="width:100%;"></span>
+  </div>
+
+
+<p>ELBO, which stands for Evidence Lower Bound Objective, is an everyday terminology in statistical learning field. This is a note based on Harvard AM207 course<label for="1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="1" class="margin-toggle" /><span class="sidenote">20 Fall, taught by Weiwei Pan </span> about what it is and how to understand. Expectation-Maximization (EM) algorithm will also be covered as an example to make the logic more fluent.<!--more--></p>
+
+<p>Generally speaking, ELBO, as its name indicates, is a lower bound to a true learning obejctive in a latent model inference task. It is like a trade-off output of accuracy and computational feasibility, which turns out to be good in practice. But as it is not 100% accurate, there are still many active researches trying to find better substitutes<label for="2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="2" class="margin-toggle" /><span class="sidenote">see my blog about <a href="https://minhuanli.github.io/2021/01/20/tvo/">paper tvo</a> </span>.</p>
+
+<ul id="markdown-toc">
+  <li><a href="#problem-setup-mle-of-a-latent-model" id="markdown-toc-problem-setup-mle-of-a-latent-model"><i class="contrast">Problem Setup, MLE of a Latent Model</i></a></li>
+  <li><a href="#the-computational-trouble" id="markdown-toc-the-computational-trouble"><i class="contrast">The computational trouble</i></a></li>
+  <li><a href="#elbo-via-an-auxillary-distribution" id="markdown-toc-elbo-via-an-auxillary-distribution"><i class="contrast">ELBO via an auxillary distribution</i></a></li>
+  <li><a href="#maximize-elbo--em-algorithm" id="markdown-toc-maximize-elbo--em-algorithm"><i class="contrast">Maximize ELBO – EM algorithm</i></a></li>
+</ul>
+
+<h3 id="problem-setup-mle-of-a-latent-model"><i class="contrast">Problem Setup, MLE of a Latent Model</i></h3>
+<p>Let’s setup the problem with some notations, say we have the following latent model <label for="3" class="margin-toggle">⊕</label><input type="checkbox" id="3" class="margin-toggle" /><span class="marginnote"><img class="fullwidth" src="https://raw.githubusercontent.com/minhuanli/imagehost/master/img/graphic_model.png" /><br />A graphic representation of the latent model, points are parameters, hollow circle is latent variable and solid circle is observed variable</span>: 
+\(\begin{aligned}
+Z_n &amp;\sim P(Z | \theta) \\
+Y_n &amp;\sim P(Y| Z, \phi) \end{aligned}\tag{1}\)
+The interpretation is that, a latent<label for="4" class="margin-toggle sidenote-number"></label><input type="checkbox" id="4" class="margin-toggle" /><span class="sidenote">latent means this variable is not observable, but it will determine the observables behaviour </span> variable \(Z\) is subject to a distribution \(P(Z|\theta)\) parameterized by \(\theta\). For each data point \(n\), its observable variable \(Y_n\) is determined by the latent \(Z_n\) plus extra parameters \(\phi\): \(P(Y|Z,\phi)\).</p>
+
+<p>Assume we have observed \(N\) data points \(\{y_n\}, n=1,\dots,N\). Our task is, given data \(\{y_n\}\), what are the most suitable parameters value \(\theta, \phi\) in the model<label for="6" class="margin-toggle sidenote-number"></label><input type="checkbox" id="6" class="margin-toggle" /><span class="sidenote">This is a maximum likelihood point estimate task, we could also extend it to a probablistic target like \(p(\theta,\phi|y_n)\) or a posterior task \(p(Z_n|y_n)\), and add the prior information to make it bayesian </span> ?</p>
+
+<p class="redbox">
+For example, a gaussian mixture model is a typical latent model: all data points are generated by a mixture of different gaussian distributions. We could only observe the coordinations of data points, which are \(Y_n\), but these variables are determined by the cluster this point belongs to, which is latent \(Z_n\) and unobservable. So a gaussian mixture model can be formalized as:
+$$\begin{aligned}Z_n &amp;\sim Cat(\pi)\\
+Y_n|Z_n &amp;\sim \mathcal{N}(\mu_{Z_n},\sigma^2_{Z_n})
+\end{aligned}\tag{2}$$
+where \(Cat\) is a catogorical distribution and \(\mathcal{N}\) is a guassian distribution.<br />
+The inference task is, given a bunch of observed data point positions, what are the best means and variances of all gaussian clusters? See <a href="https://scikit-learn.org/stable/modules/generated/sklearn.mixture.GaussianMixture.html">sklearn's implementation</a> to solve such task.
+</p>
+
+<p>Generally, we want to maximize the observed likelihood of the model given data:</p>
+
+\[\begin{aligned}\log \prod_{n=1}^{N} P\left(y_{n} \mid \theta, \phi\right) &amp;=\sum_{n=1}^{N} \log P\left(y_{n} \mid \theta, \phi\right) \\&amp;=\sum_{n=1}^{N} \log \int p\left(y_{n} \mid z_{n}, \phi\right) p\left(z_{n} \mid \theta\right) d z_{n} \\&amp;= \underbrace{\sum_{n=1}^{N} \log \underset{z_{n} \sim P\left(z_{n} \mid \theta\right)}{\mathbb{E}}\left[p\left(y_{n} \mid z_{n}, \phi\right)\right]}_{l_y(\theta,\phi)}\end{aligned}\tag{3}\]
+
+<p>The \(l_y(\theta,\phi)\) is the observed likelihood, also called <strong>evidence</strong>. Our MLE target could be formalized as:</p>
+
+\[\begin{aligned}
+\phi_{M L E}, \theta_{M L E}&amp;=\arg\max_{\theta, \phi} l_{y}(\theta, \phi) \\&amp;= \arg\max _{\theta, \phi} \sum_{n=1}^{N} \log \underset{z_n\sim P\left(z_{n} \mid \theta\right)}{\mathbb{E}}\left[P\left(y_{n} \mid z_{n}, \phi\right)\right]\end{aligned}\tag{4}\]
+
+<h3 id="the-computational-trouble"><i class="contrast">The computational trouble</i></h3>
+<p>As our inference target can be foramlized as a maximization task in equation (4), the practical solution to such issue involves gradient calculation, say we have to gradient \(l_y(\theta,\phi)\) with respect to \(\theta,\phi\):</p>
+
+\[\begin{aligned}
+\nabla_{\theta,\phi}l_{y}(\theta,\phi) &amp;= \nabla_{\theta,\phi}  \sum_{n=1}^{N} \log \underset{z_n\sim P\left(z_{n} \mid \theta\right)}{\mathbb{E}}\left[P\left(y_{n} \mid z_{n}, \phi\right)\right]\\ &amp;= \sum_{n=1}^{N} \nabla_{\theta,\phi} \log \underset{z_n\sim P\left(z_{n} \mid \theta\right)}{\mathbb{E}}\left[P\left(y_{n} \mid z_{n}, \phi\right)\right] \\ &amp;= \sum_{n=1}^{N} \frac{\nabla_{\theta,\phi} \underset{z_n\sim P\left(z_{n} \mid \theta\right)}{\mathbb{E}}\left[P\left(y_{n} \mid z_{n}, \phi\right)\right]}{\underset{z_n\sim P\left(z_{n} \mid \theta\right)}{\mathbb{E}}\left[P\left(y_{n} \mid z_{n}, \phi\right)\right]} 
+\end{aligned}\tag{5}\]
+
+<p>Look at the numerator of the last step <label for="7" class="margin-toggle"> ⊕</label><input type="checkbox" id="7" class="margin-toggle" /><span class="marginnote">The term \(\underset{z_n\sim P\left(z_{n} \mid \theta\right)}{\mathbb{E}}\left[P\left(y_{n} \mid z_{n}, \phi\right)\right]\) itself can be calcualted in a MC estimate approach </span>, the gradient operator and the expectation operator are not commutable, as the \(\mathbb{E}\) has to do with the parameter \(\theta\). So the direct gradient of the evidence \(l_y(\theta,\phi)\) is almost computational impossible, we have to think another way out.</p>
+
+<h3 id="elbo-via-an-auxillary-distribution"><i class="contrast">ELBO via an auxillary distribution</i></h3>
+<p>Here is how we construct ELBO, the main idea is to make the expectation operator irrelevant to the parameter \(\theta\) by introducing an auxillary distribution \(q(z)\): <label for="mn3" class="margin-toggle"> ⊕</label><input type="checkbox" id="mn3" class="margin-toggle" /><span class="marginnote">At the last step of deduction, we exchange \(\log\) and \(\mathbb{E}\), so \(q(Z)\) can not be cancelled out. Then the maximization has to be taken over \(q (Z)\) too. </span></p>
+
+\[\begin{aligned}\underset{\theta, \phi}{\mathrm{max}}\; l_y(\theta, \phi) &amp;= \underset{\theta, \phi}{\mathrm{max}}\; \log \prod_{n=1}^N\int_{\Omega_Z} \left(\frac{p(y_n, z_n|\theta, \phi)}{q(z_n)}q(z_n)\right) dz\\&amp;= \underset{\theta, \phi}{\mathrm{max}}\; \log\,\prod_{n=1}^N\mathbb{E}_{Z\sim q(Z)} \left[  \frac{p(y_n, Z|\theta, \phi)}{q(Z)}\right]\\&amp;= \underset{\theta, \phi}{\mathrm{max}}\; \sum_{n=1}^N \log \mathbb{E}_{Z\sim q(Z)} \left[\,\left( \frac{p(y_n, Z|\theta, \phi)}{q(Z)}\right)\right]\\&amp;\geq \underset{\theta, \phi, q}{\mathrm{max}}\; \underbrace{\sum_{n=1}^N\mathbb{E}_{Z_n\sim q(Z)} \left[  \log\,\left(\frac{p(y_n, Z_n|\theta, \phi)}{q(Z_n)}\right)\right]}_{ELBO(\theta, \phi, q)}, \quad (\text{Jensen's Inequality})\\\end{aligned}\tag{6}\]
+
+<p>See, ELBO is the lower bound to our true evidence \(l_y(\theta,\phi)\), so when we change to maximize the ELBO, we are in some degree maximize the evidence. And as the expectation \(\mathbb{E}_{Z_n\sim q(Z)}\) in ELBO is no more related to \(\theta\), so we can gradient ELBO as the expectation operator and the gradient operator with respect to parameters are commutable:</p>
+
+\[\begin{aligned}
+\nabla_{\theta, \phi} ELBO(\theta, \phi, q) &amp;= \nabla_{\theta, \phi} \sum_{n=1}^N\mathbb{E}_{Z_n\sim q(Z)} \left[  \log\,\left(\frac{p(y_n, Z_n|\theta, \phi)}{q(Z_n)}\right)\right]
+\\ &amp;= \sum_{n=1}^N\mathbb{E}_{Z_n\sim q(Z)}\left[\nabla_{\theta, \phi}  \log\,\left(\frac{p(y_n, Z_n|\theta, \phi)}{q(Z_n)}\right)\right]
+\end{aligned}\tag{7}\]
+
+<p>We still have to maximize ELBO with respect to \(q(z)\), whose gradient is not commutable with the expectation operator. We will show how to solve this in the next section, an EM alogorithm.</p>
+<p class="orangebox">
+Clearly, miaximizing the ELBO is not equal to maximizing the evidence. When ELBO is maximized, we can say the \(l_y(\theta,\phi)\) is as big, but can still be far from optimized, like the following picture:
+
+<img class="center" src="https://raw.githubusercontent.com/minhuanli/imagehost/master/img/elbo_scheme.png" width="90%" />
+</p>
+
+<h3 id="maximize-elbo--em-algorithm"><i class="contrast">Maximize ELBO – EM algorithm</i></h3>
+<p>As mentioned above, ELBO has to be maximized with respect to \(\theta,\phi\) and \(q\). As they are not correlated<label for="meanfield" class="margin-toggle sidenote-number"></label><input type="checkbox" id="meanfield" class="margin-toggle" /><span class="sidenote">This is the same idea of mean field assumption in variational inference </span>, we can optimize them in a coordinate ascent manner: optimize over degrees of freedom one by one. For a MLE task over a latent model, this is usually called <strong>EM (Expectation Maximization) algorithm:</strong> <label for="EM" class="margin-toggle">⊕</label><input type="checkbox" id="EM" class="margin-toggle" /><span class="marginnote"><img class="fullwidth" src="https://raw.githubusercontent.com/minhuanli/imagehost/master/img/elbo_iterative.png" /><br />An illustration of the iterative EM algorithm to maximize ELBO</span></p>
+
+<p class="bluebox">
+<i style="font-weight: bold">M-Step</i>: Maximize \(\theta,\phi\), fix \(q^*\)<br />
+This is solved as discussed in equation (7)
+$$\begin{aligned}\theta^*, \phi^* &amp;= \underset{\theta, \phi}{\mathrm{max}}\; ELBO(\theta, \phi, q) = \underset{\theta, \phi}{\mathrm{max}}\; \sum_{n=1}^N\mathbb{E}_{Z_n\sim q(Z)} \left[  \log\,\left(\frac{p(y_n, Z_n|\theta, \phi)}{q(Z_n)}\right)\right]\\&amp;= \underset{\theta, \phi}{\mathrm{max}}\;  \sum_{n=1}^N \int_{\Omega_Z} \log\,\left(\frac{p(y_n, z_n|\theta, \phi)}{q(z_n)}\right)q(z_n) dz_n\\&amp;= \underset{\theta, \phi}{\mathrm{max}}\; \sum_{n=1}^N \int_{\Omega_Z} \log\,\left(p(y_n, z_n|\theta, \phi)\right) q(z_n)dz_n - \underbrace{\int_{\Omega_Z} \log \left(q(z_n)\right)q(z_n) dz_n}_{\text{constant with respect to }\theta, \phi}\\&amp;\equiv \underset{\theta, \phi}{\mathrm{max}}\;\sum_{n=1}^N \int_{\Omega_Z} \log\,\left(p(y_n, z_n|\theta, \phi)\right) q(z_n)dz_n\\&amp;= \underset{\theta, \phi}{\mathrm{max}}\;\sum_{n=1}^N \mathbb{E}_{Z_n\sim q(Z)} \left[ \log\left(p(y_n, z_n|\theta, \phi)\right)\right]\end{aligned}$$
+</p>
+<p class="bluebox">
+<i style="font-weight: bold">E-Step</i>: Maximize \(q\), fix \(\theta^*,\phi^*\)<br />
+Rather than optimizing the ELBO with respect to q, which seems hard (as the gradient is not commutable with the expectation operator), we will argue that optimizing the ELBO is equivalent to optimizing another function of q, one whose optimum is easy for us to compute.
+$$\begin{aligned}l_y(\theta, \phi) &amp;- ELBO(\theta, \phi, q) \\&amp;= \sum_{n=1}^N \log p(y_n| \theta, \phi) - \sum_{n=1}^N \int_{\Omega_Z} \log\left(\frac{p(y_n, z_n|\theta, \phi)}{q(z_n)}\right)q(z_n) dz_n\\&amp;=  \sum_{n=1}^N \int_{\Omega_Z} \log\left(p(y_n| \theta, \phi)\right) q(z_n) dz_n - \sum_{n=1}^N \int_{\Omega_Z} \log\left(\frac{p(y_n, z_n|\theta, \phi)}{q(z_n)}\right)q(z_n) dz_n\\&amp;=  \sum_{n=1}^N \int_{\Omega_Z}  \left(\log\left(p(y_n| \theta, \phi)\right) - \log\left(\frac{p(y_n, z_n|\theta, \phi)}{q(z_n)}\right) \right)q(z_n) dz_n\\&amp;= \sum_{n=1}^N \int_{\Omega_Z}  \log\left(\frac{p(y_n| \theta, \phi)q(z_n)}{p(y_n, z_n|\theta, \phi)} \right)q(z_n) dz_n\\&amp;= \sum_{n=1}^N \int_{\Omega_Z}  \log\left(\frac{q(z_n)}{p(z_n| y_n, \theta, \phi)} \right)q(z_n) dz_n \\&amp;= \sum_{n=1}^N D_{\text{KL}} \left[ q(z_n) \| p(z_n| y_n, \theta, \phi)\right].\end{aligned}$$
+As \(l_y(\theta, \phi)\) is not a function of \(q\), so maximize the ELBO with respect to \(q\) is equivalent to minimize the KL divergence between \(q\) and posterior:
+$$\underset{q}{\mathrm{argmax}}\, ELBO(\theta^*, \phi^*, q) = \underset{q}{\mathrm{argmin}}\sum_{n=1}^N D_{\text{KL}} \left[ q(z_n) \| p(z_n| y_n, \theta^*, \phi^*)\right].$$
+So we could just choose \(q^*\) to be the posterior<label for="pos" class="margin-toggle sidenote-number"></label><input type="checkbox" id="pos" class="margin-toggle" /><span class="sidenote">Sometimes the posterior is intractable as it involves an integration over the whole latent space, e.g. VAE. We have to use variational inference tools to approximate the posterior. </span>:
+$$\begin{aligned}q^*(z_n) &amp;= \underset{q}{\mathrm{argmax}}\; ELBO(\theta^*, \phi^*, q) \\&amp;= \underset{q}{\mathrm{argmin}}\sum_{n=1}^N D_{\text{KL}} \left[ q(z_n) \| p(z_n| y_n, \theta^*, \phi^*)\right] \\&amp;= p(z_n| y_n, \theta^*, \phi^*)\end{aligned}$$
+</p>
+<ol>
+  <li><strong>Initialization</strong>: pick \(\theta_0\), \(\phi_0\)</li>
+  <li>Repeat \(i = 1,\dots,I\) times:<br />
+ <strong>E-step</strong>:<br />
+ \(q_{\text{new}}(Z_n) = \underset{q}{\mathrm{argmax}}\; ELBO(\theta_{\text{old}}, \phi_{\text{old}}, q) = p(Z_n|Y_n, \theta_{\text{old}}, \phi_{\text{old}})\)<br />
+ <strong>M-step</strong>:<br />
+ \(\begin{aligned}
+ \theta_{\text{new}}, \phi_{\text{new}} &amp;= \underset{\theta, \phi}{\mathrm{argmax}}\; ELBO(\theta, \phi, q_{\text{new}})\\
+ &amp;= \underset{\theta, \phi}{\mathrm{argmax}}\; \sum_{n=1}^N\mathbb{E}_{Z_n\sim p(Z_n|Y_n, \theta_{\text{old}}, \phi_{\text{old}})}\left[\log \left( p(y_n, Z_n | \phi, \theta\right) \right].
+ \end{aligned}\)</li>
+</ol>
+
+
+
+
+  <h3>Comments</h3>
+  <div id="disqus_thread"></div>
+<script>
+    /**
+    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+    /*
+    var disqus_config = function () {
+    this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+    this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    */
+    (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = 'https://minhuanli-blog.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+
+
+    </article>
+    <span class="print-footer">ELBO and EM algorithm - January 21, 2021 - Minhuan Li</span>
+    <footer>
+  <hr class="slender">
+  <ul class="footer-links">
+    <li><a href="mailto:minhuanli@g.harvard.edu"><span class="icon-mail3"></span></a></li>
+    
+      <li>
+        <a href="https://github.com/minhuanli"><span class="icon-github"></span></a>
+      </li>
+      
+  </ul>
+<div class="credits">
+<span>&copy; 2021 &nbsp;Minhuan Li &middot; <a href="//minhuanli.github.io">Main Blog</a></span></br> <br>
+Icon credit to <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>. Site created with <a href="//jekyllrb.com">Jekyll</a> using the <a href="//github.com/clayh53/tufte-jekyll">Tufte theme</a>.
+</div>  
+</footer>
+  </body>
+</html>

@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>ODE and PDE, Basics I &middot; Minhuan Li</title>
+  <meta name="description" content="Research and learning notes">
+
+  <!-- Google Fonts loaded here depending on setting in _data/options.yml true loads font, blank does not-->
+  
+    <link href='//fonts.googleapis.com/css?family=Lato:400,400italic' rel='stylesheet' type='text/css'>
+  
+  
+  <!-- Load up MathJax script if needed ... specify in /_data/options.yml file-->
+  
+    <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: [
+      "MathMenu.js",
+      "MathZoom.js",
+      "AssistiveMML.js",
+      "a11y/accessibility-menu.js"
+    ],
+    jax: ["input/TeX", "output/CommonHTML"],
+    TeX: {
+      extensions: [
+        "AMSmath.js",
+        "AMSsymbols.js",
+        "noErrors.js",
+        "noUndefined.js",
+      ]
+    }
+  });
+</script>
+
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+ <!--   <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+  
+
+  <link rel="stylesheet" type="text/css" href="/notes/css/tufte.css">
+  <!-- <link rel="stylesheet" type="text/css" href="/notes/css/print.css" media="print"> -->
+
+  <link rel="canonical" href="/notes/am105/part1/">
+
+  <link rel="alternate" type="application/rss+xml" title="Notes" href="/notes/feed.xml" />
+</head>
+
+  <body>
+    <!--- Header and nav template site-wide -->
+<header>
+    <nav class="group">
+	<a href="/notes/"><img class="badge" src="/notes/assets/img/einstein.png" alt="CH"></a>
+	<a href="/notes/">Home</a>
+    
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+              <a href="/notes/archive">archive</a>
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    <a href="http://github.com/minhuanli/notes">GitHub</a>
+    <a href="http://minhuanli.github.io">Main Blog</a>
+	</nav>
+</header>
+    <article class="group">
+      <h1>ODE and PDE, Basics I</h1>
+<p class="subtitle">January 15, 2021</p>
+
+
+  <div class="progress" data-label="100% Complete">
+    <span class="value" style="width:100%;"></span>
+  </div>
+
+
+<p><a href="https://minhuanli.github.io/notes/">Content</a></p>
+
+<ul id="markdown-toc">
+  <li><a href="#1-classification-of-differential-equations" id="markdown-toc-1-classification-of-differential-equations">1. Classification of Differential Equations</a></li>
+  <li><a href="#2-order-and-solutions" id="markdown-toc-2-order-and-solutions">2. Order and Solutions</a></li>
+  <li><a href="#3-first-order-linear-ode-integrating-factors" id="markdown-toc-3-first-order-linear-ode-integrating-factors">3. First-Order Linear ODE: Integrating Factors</a></li>
+  <li><a href="#4-initial-value-problem-ivp" id="markdown-toc-4-initial-value-problem-ivp">4. Initial value problem (IVP)</a></li>
+</ul>
+
+<h3 id="1-classification-of-differential-equations">1. Classification of Differential Equations</h3>
+
+<p>Only ordinary derivatives appear in the differential equation, and it is said to be an <strong>ordinary differential equation (ODE)</strong>, like:</p>
+
+\[L \frac{d^{2} Q(t)}{d t^{2}}+R \frac{d Q(t)}{d t}+\frac{1}{C} Q(t)=E(t) \tag{1.1}\]
+
+<p>the derivatives are partial derivatives, and the equation is called a <strong>partial differential equation(PDE)</strong>, like:</p>
+
+\[\alpha^{2} \frac{\partial^{2} u(x, t)}{\partial x^{2}}=\frac{\partial u(x, t)}{\partial t} \tag{1.2}\]
+
+<p>Let’s focus on ODE at this moment. For an ODE:</p>
+
+\[F\left(t, y, y^{\prime}, \ldots, y^{(n)}\right)=0 \tag{1.3}\]
+
+<p>where \(F\) is a linear function of the variables \(y, y', \dots, y^{(n)}\), like:</p>
+
+\[F(\cdot)= a_{0}(t) y^{(n)}+a_{1}(t) y^{(n-1)}+\cdots+a_{n}(t) y+g(t) = 0\tag{1.4}\]
+
+<p>This ODE is said to be <strong>linear</strong>. An equation which is not in the form of equation (1.4) is <strong>nonlinear</strong>, like an oscillating pendulum system in physics:</p>
+
+\[\frac{d^{2} \theta}{d t^{2}}+\frac{g}{L} \sin \theta=0 \tag{1.5}\]
+
+<p>The \(\sin\theta\) term is nonlinear.</p>
+
+<h3 id="2-order-and-solutions">2. Order and Solutions</h3>
+<p>The order of a differential equation is the order of the highest derivative that appears in the equation. Generally speaking,</p>
+
+\[F\left(t, u(t), u^{\prime}(t), \ldots, u^{(n)}(t)\right)=0 \tag{2.1}\]
+
+<p>is a \(n^{th}\) order ODE.</p>
+
+<p>A <strong>solution</strong> of the \(n^{th}\) order ODE on the interval \(\alpha&lt; t &lt; \beta\) is a function \(\phi\) such that \(\phi', \phi'',\dots, \phi^{(n)}\) <strong>exist</strong> and satisfy:</p>
+
+\[\phi^{(n)}(t)=f\left(t, \phi(t), \phi^{\prime}(t), \ldots, \phi^{(n-1)}(t)\right)\tag{2.2}\]
+
+<p>for every \(t\) in \(\alpha&lt; t &lt; \beta\).</p>
+
+<p><strong>Existence</strong> and <strong>uniqueness</strong> are two important questions of differential equation solutions that we are interested in. Existence is the qeustion to answer if the equation has a solution, and uniqueness is trying to answer how many solutions it has. In general, solutions of differential equations contain one or more arbitrary constants of integration. So a following third question, which is also important, is how can we actually determine a solution of a differential equation? We need the help of initial value or boundary conditions.</p>
+
+<h3 id="3-first-order-linear-ode-integrating-factors">3. First-Order Linear ODE: Integrating Factors</h3>
+<p>Let’s dive into a discussion about how to solve first-order linear ODE. In general, a first-order linear ODE can be written in the form:</p>
+
+\[P(t) \frac{d y}{d t}+Q(t) y=G(t)\tag{3.1}\]
+
+<p>where \(P\), \(Q\), and \(G\) are given as functions of independent variable \(t\). Trivially, as long as \(P(t)\ne 0\)<label for="1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="1" class="margin-toggle" /><span class="sidenote">or it is not a first-order ODE </span>, the equation (3.1) can be converted into the following form by dividing both sides by \(P(t)\):</p>
+
+\[\frac{d y}{d t}+p(t) y=g(t)\tag{3.2}\]
+
+<p class="redbox">
+In some case, a first-order linear ODE can be solved easily by integrating the equation, like<label for="2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="2" class="margin-toggle" /><span class="sidenote">Boyce book, Page 25, Section 2.1, Example 1 </span>:
+
+$$
+\left(4+t^{2}\right) \frac{d y}{d t}+2 t y=4 t\tag{3.3}
+$$
+
+can be solved immediately:
+
+$$
+(3.3)\implies\frac{d}{d t}\left(\left(4+t^{2}\right) y\right)=4 t\implies\left(4+t^{2}\right) y=2 t^{2}+c\\
+\implies y=\frac{2 t^{2}}{4+t^{2}}+\frac{c}{4+t^{2}}
+$$
+</p>
+
+<p>The above solution method requires the linear ODEs have the property that their left-hand sides can be written as the derivative of the product of y and some other function, meaning a ODE in form (3.1) satisfies:</p>
+
+\[\frac{d}{dt}[P(t)y]=P(t)\frac{dy}{dt}+Q(t)y \implies \frac{dP(t)}{dt}=Q(t)\tag{3.4}\]
+
+<p>Unfortunately, most first-order linear differential equations do <strong>not</strong> have such property. However, as discovered by Leibniz, we can multiply the differential equation by a certain function \(\mu(t)\):</p>
+
+\[P(t) \frac{d y}{d t}+Q(t) y=G(t)\\
+\implies P(t)\mu(t) \frac{d y}{d t}+Q(t)\mu(t) y=G(t)\mu(t) \tag{3.5}\]
+
+<p>then the new linear ODE could satisify the property (3.4), such that:</p>
+
+\[\frac{d}{dt}[P(t)\mu(t)]=Q(t)\mu(t)\tag{3.6}\]
+
+<p>Then the new ODE (3.5) can be solved with the immediate integrating method. The function \(\mu(t)\) is called <strong>integrating factors</strong> and our task now shifts to finding a function \(\mu(t)\) to make equation (3.6) true.</p>
+
+<p>Rewrite the equation (3.6) with the product rule for derivatives<label for="3" class="margin-toggle sidenote-number"></label><input type="checkbox" id="3" class="margin-toggle" /><span class="sidenote">Think about the conditions to make the following deductions true. </span>:</p>
+
+\[P(t)\frac{d}{dt}\mu(t) + \mu(t)\frac{d}{dt}P(t) = Q(t)\mu(t)\\[2ex]
+\implies [Q(t)-\frac{d}{dt}P(t)]\mu(t) = P(t)\frac{d}{dt}\mu(t)\\[2ex]
+\implies \frac{Q(t)}{P(t)} - \frac{1}{P(t)}\frac{dP(t)}{dt} = \frac{1}{\mu(t)}\frac{d\mu(t)}{dt}\\[2ex]
+\implies \frac{Q(t)}{P(t)}dt - \frac{dP(t)}{P(t)} = \frac{d\mu(t)}{\mu(t)}\\
+\implies \int \frac{Q(t)}{P(t)} dt - \ln P(t) + \text{Const} = \ln \mu(t) \tag{3.7}\]
+
+<p>So we have the integrating factor form:</p>
+
+\[\mu(t) = Ce^{\int \frac{Q(t)}{P(t)} dt - \ln P(t)}\tag{3.8}\]
+
+<p>where C is a constant. If we use the ODE form (3.2), or where \(P(t) = 1\) and \(Q(t)=p(t)\), then the integrating factor is<label for="4" class="margin-toggle sidenote-number"></label><input type="checkbox" id="4" class="margin-toggle" /><span class="sidenote">This is the same as Boyce book Page 28, Equation 30 </span>:</p>
+
+\[\mu(t) = Ce^{\int p(t)dt}\tag{3.9}\]
+
+<p>Multiply both side of Equation (3.2) by (3.9) then integrate, we can find a general solution to equation (3.3)<label for="ques-" class="margin-toggle sidenote-number"></label><input type="checkbox" id="ques-" class="margin-toggle" /><span class="sidenote">Think about if and when could this general solution fail? </span>:</p>
+
+\[y=\frac{1}{\mu(t)}\left(\int_{t_{0}}^{t} \mu(s) g(s) d s+c\right)\tag{3.10}\]
+
+<p>where we have to intergrate out \(\mu(t)\) by equation (3.9) <label for="5" class="margin-toggle sidenote-number"></label><input type="checkbox" id="5" class="margin-toggle" /><span class="sidenote">You can drop the constant C in equation (3.9) at the moment </span>, then use (3.10). The lower limit \(t_0\) as well as the constant \(c\) is determined by given initial value.</p>
+
+<h3 id="4-initial-value-problem-ivp">4. Initial value problem (IVP)</h3>
+<p>As you might have mentioned above, direct solving of differential equations always involves some undertermined constants. The ituition for this phenomenon is, a differention operation applied to any constant would always give 0, so you can’t tell the difference about two constants from a differentiated equations. This is usually solved by the given initial value.</p>
+
+<p>Think about the example 5 on Boyce book page 30, we want to solve the equation:</p>
+
+\[2y'+ty=2\tag{4.1}\]
+
+<p>With the intergrating factor tool we established last section, the solution is:</p>
+
+\[y=e^{-t^{2} / 4} \int_{0}^{t} e^{s^{2} / 4} d s+c e^{-t^{2} / 4}\tag{4.2}\]
+
+<p>See, an undetermined constant \(c\) here. So here we need another fact, which is called <strong>Initial Value</strong><label for="7" class="margin-toggle sidenote-number"></label><input type="checkbox" id="7" class="margin-toggle" /><span class="sidenote">or boundary condition in higher dimensional, or more physics-related, problems </span>, like:</p>
+
+\[y(0)=1 \tag{4.3}\]
+
+<p>Take this into (4.2), we could simply solve \(c=1\). This can be illustrated with the figure</p>
+
+<figure><img src="https://cdn.mathpix.com/snip/images/zd6fcJZlGZlP2E6yykznEb9-sZMyRfmBPAjQ98XysLc.original.fullsize.png" /><figcaption class="maincolumn-figure">Integral curves of equation (4.1); the green curve is the particular solution satisfying the initial condition</figcaption></figure>
+
+<p>As all the curves satisfy the solution (4.2), but only the green one meets the initial value \(y(0)=1\).</p>
+
+<p><a href="https://minhuanli.github.io/notes/am105/part2/">Next</a></p>
+
+
+
+
+  <h3>Comments</h3>
+  <div id="disqus_thread"></div>
+<script>
+    /**
+    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+    /*
+    var disqus_config = function () {
+    this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+    this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    */
+    (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = 'https://minhuanli-blog.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+
+
+    </article>
+    <span class="print-footer">ODE and PDE, Basics I - January 15, 2021 - Minhuan Li</span>
+    <footer>
+  <hr class="slender">
+  <ul class="footer-links">
+    <li><a href="mailto:minhuanli@g.harvard.edu"><span class="icon-mail3"></span></a></li>
+    
+      <li>
+        <a href="https://github.com/minhuanli"><span class="icon-github"></span></a>
+      </li>
+      
+  </ul>
+<div class="credits">
+<span>&copy; 2021 &nbsp;Minhuan Li &middot; <a href="//minhuanli.github.io">Main Blog</a></span></br> <br>
+Icon credit to <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>. Site created with <a href="//jekyllrb.com">Jekyll</a> using the <a href="//github.com/clayh53/tufte-jekyll">Tufte theme</a>.
+</div>  
+</footer>
+  </body>
+</html>

@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>ODE and PDE, Critial Points and Linearization &middot; Minhuan Li</title>
+  <meta name="description" content="Research and learning notes">
+
+  <!-- Google Fonts loaded here depending on setting in _data/options.yml true loads font, blank does not-->
+  
+    <link href='//fonts.googleapis.com/css?family=Lato:400,400italic' rel='stylesheet' type='text/css'>
+  
+  
+  <!-- Load up MathJax script if needed ... specify in /_data/options.yml file-->
+  
+    <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: [
+      "MathMenu.js",
+      "MathZoom.js",
+      "AssistiveMML.js",
+      "a11y/accessibility-menu.js"
+    ],
+    jax: ["input/TeX", "output/CommonHTML"],
+    TeX: {
+      extensions: [
+        "AMSmath.js",
+        "AMSsymbols.js",
+        "noErrors.js",
+        "noUndefined.js",
+      ]
+    }
+  });
+</script>
+
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+ <!--   <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+  
+
+  <link rel="stylesheet" type="text/css" href="/notes/css/tufte.css">
+  <!-- <link rel="stylesheet" type="text/css" href="/notes/css/print.css" media="print"> -->
+
+  <link rel="canonical" href="/notes/am105/part8/">
+
+  <link rel="alternate" type="application/rss+xml" title="Notes" href="/notes/feed.xml" />
+</head>
+
+  <body>
+    <!--- Header and nav template site-wide -->
+<header>
+    <nav class="group">
+	<a href="/notes/"><img class="badge" src="/notes/assets/img/einstein.png" alt="CH"></a>
+	<a href="/notes/">Home</a>
+    
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+              <a href="/notes/archive">archive</a>
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    <a href="http://github.com/minhuanli/notes">GitHub</a>
+    <a href="http://minhuanli.github.io">Main Blog</a>
+	</nav>
+</header>
+    <article class="group">
+      <h1>ODE and PDE, Critial Points and Linearization</h1>
+<p class="subtitle">June 1, 2021</p>
+
+
+  <div class="progress" data-label="100% Complete">
+    <span class="value" style="width:100%;"></span>
+  </div>
+
+
+<p><a href="https://minhuanli.github.io/notes/">Content</a></p>
+
+<p>This Note borrowed a lot from section notes by Lan.</p>
+
+<ul id="markdown-toc">
+  <li><a href="#classification-of-critial-points" id="markdown-toc-classification-of-critial-points"><i class="contrast">Classification of Critial Points</i></a></li>
+  <li><a href="#autonomous-system" id="markdown-toc-autonomous-system"><i class="contrast">Autonomous System</i></a></li>
+  <li><a href="#local-linearization" id="markdown-toc-local-linearization"><i class="contrast">Local Linearization</i></a></li>
+</ul>
+
+<h3 id="classification-of-critial-points"><i class="contrast">Classification of Critial Points</i></h3>
+
+<p>Consider the two-dimensional system of first-order linear homogeneous equations with constant coefficients. Such a system has the form:</p>
+
+\[\frac{d \mathbf{x}}{d t}=\mathbf{A x}\]
+
+<p>where \(\mathbf{A}\) is a \(2 \times 2\) matrix and \(\mathbf{x}\) is a \(2 \times 1\) vector. By substituting \(\mathbf{x}(t)=\boldsymbol{\xi} e^{r t}\) into the above system, we obtain:</p>
+
+\[(\mathbf{A}-r \mathbf{I}) \boldsymbol{\xi}=\mathbf{0}\]
+
+<p>We thus know that \(r\) and \(\boldsymbol{\xi}\) are an eigenvalue-eigenvector pair of the coefficient matrix \(\mathbf{A}\). The eigenvalues \(r\) are the roots of the polynomial equation:</p>
+
+\[\operatorname{det}(\mathbf{A}-r \mathbf{I})=0\]
+
+<p>and the eigenvectors \(\boldsymbol{\xi}\) can then be determined from the equation \((\mathbf{A}-r \mathbf{I}) \boldsymbol{\xi}=\mathbf{0}\) up to some multiplicative constant.</p>
+
+<p>The <strong><i class="contrast">critical points</i></strong> (or equilibrium solutions) of the system are points \(\mathbf{x}\) where:</p>
+
+\[\frac{d \mathbf{x}}{d t}=\mathbf{A} \mathbf{x}=\mathbf{0}\]
+
+<p>Assume \(\det \mathbf{A} \ne 0\),it follows that \(\mathbf{x}=\mathbf{0}\) is the only critical point of the system. The nature of the eigenvalues of \(\mathbf{A}\) allows us to characterize the differential equation according to the geometric pattern formed by its trajectories in a phase portrait.</p>
+
+<p>I. Suppose the eigenvalues of \(\mathbf{A}\) are real and distinct, with \(r_{1} \neq r_{2} \in \mathbb{R} .\) The origin \(\mathbf{x}=\mathbf{0}\) can be classified as follows:</p>
+
+<ul>
+  <li>
+    <p>If \(r_{1}, r_{2}&gt;0\), the origin \(\mathbf{x}=\mathbf{0}\) is an <strong>unstable node</strong></p>
+  </li>
+  <li>
+    <p>If \(r_{1}, r_{2}&lt;0\), the origin \(\mathbf{x}=\mathbf{0}\) is an <strong>asymptotically stable node</strong>.</p>
+  </li>
+  <li>
+    <p>If \(r_{1}\) and \(r_{2}\) have opposite signs, the origin \(\mathbf{x}=\mathbf{0}\) is an <strong>unstable saddle</strong>.</p>
+  </li>
+</ul>
+
+<p>II. Suppose the eigenvalues of \(\mathbf{A}\) are complex, with \(r_{1,2}=\lambda \pm i \mu .\) The origin \(\mathbf{x}=\mathbf{0}\) can be classified as follows:</p>
+
+<ul>
+  <li>
+    <p>If \(\lambda&gt;0\), the origin \(\mathbf{x}=\mathbf{0}\) is an <strong>unstable spiral</strong>.</p>
+  </li>
+  <li>
+    <p>If \(\lambda&lt;0\), the origin the origin \(\mathbf{x}=\mathbf{0}\) is an <strong>asymptotically stable spiral</strong>.</p>
+  </li>
+  <li>
+    <p>If \(\lambda=0\), the origin \(\mathbf{x}=\mathbf{0}\) is a <strong>stable center</strong>.</p>
+  </li>
+</ul>
+
+<p>III. Suppose the eigenvalues of \(\mathbf{A}\) are equal, with \(r_{1}=r_{2}=r\). The origin \(\mathbf{x}=\mathbf{0}\) can be classified as follows:</p>
+
+<ul>
+  <li>
+    <p>If \(r&gt;0\), the origin \(\mathbf{x}=\mathbf{0}\) is a <strong>unstable improper node</strong>.</p>
+  </li>
+  <li>
+    <p>If \(r&lt;0\), the origin \(\mathbf{x}=\mathbf{0}\) is a <strong>stable improper node</strong>.</p>
+  </li>
+</ul>
+
+<h3 id="autonomous-system"><i class="contrast">Autonomous System</i></h3>
+
+<p>We are concerned with systems of two simultaneous differential equations of the form:</p>
+
+\[\begin{array}{l}
+\frac{d x}{d t}=F(x, y) \\
+\frac{d y}{d t}=G(x, y)
+\end{array}\]
+
+<p><strong><i class="contrast">Autonomous</i></strong> means : The functions \(F\) and \(G\) in the above system do not depend on the independent variable \(t\), but only on the dependent variables \(x\) and \(y .\)</p>
+
+<p>We can rewrite the system into:</p>
+
+\[\frac{d \mathbf{x}}{d t}=\mathbf{f}(\mathbf{x}), \quad \mathbf{x}\left(t_{0}\right)=\mathbf{x}^{0}\]
+
+<p>where \(\mathbf{x}=(x, y)^{T}, \mathbf{f}(\mathbf{x})=(F(x, y), G(x, y))^{T},\) and \(\mathbf{x}^{0}=\left(x_{0}, y_{0}\right)^{T}\)</p>
+
+<p class="bluebox">
+<i style="font-weight: bold">Existence and Uniqueness Theorem</i><br />
+
+Assume that the functions \(F\) and \(G\) are continuous and have continuous partial derivatives in some domain \(D\) of the \(x y\) -plane. If \(\left(x_{0}, y_{0}\right)\) is a point in this domain, then there exists a unique solution \(x=x(t), y=y(t)\) of the system satisfying the initial conditions \(x\left(t_{0}\right)=x_{0}, y\left(t_{0}\right)=y_{0} ;\) this solution is defined in some time interval \(I\) that contains the point \(t_0\)
+</p>
+
+<p>The points, if any, where \(\mathbf{f}(\mathbf{x})=\mathbf{0}\) are called critical points of the autonomous system. At such points, \(\mathbf{x}^{\prime}=\mathbf{0}\), so critical points correspond to constant, or equilibrium, solutions of the system of differential equations. We can characterize the stability of these critical points to understand the behavior of the autonomous system.</p>
+
+<h3 id="local-linearization"><i class="contrast">Local Linearization</i></h3>
+
+<p>Consider the general autonomous nonlinear system:</p>
+
+\[\begin{array}{l}
+\frac{d x}{d t}=F(x, y) \\
+\frac{d y}{d t}=G(x, y)
+\end{array}\]
+
+<p>To find the critical points \(\left(x^{*}, y^{*}\right)\) of the above system, we find points \(\left(x^{*}, y^{*}\right)\) such that \(x^{\prime}=\) \(F\left(x^{*}, y^{*}\right)=0\) and \(y^{\prime}=G\left(x^{*}, y^{*}\right)=0\) simultaneously.</p>
+
+<p>To classify the stability of these critical points, we examine the behavior of small pertubations \(u(t)\) and \(v(t)\) around \(x^{*}\) and \(y^{*}\), respectively. Let:</p>
+
+\[\begin{array}{l}
+x=x^{*}+u(t) \\
+y=y^{*}+v(t)
+\end{array}\]
+
+<p>Plugging in \((x, y)=\left(x^{*}+u(t), y^{*}+v(t)\right)\) into the above system, we have</p>
+
+\[\begin{array}{l}
+\frac{d x}{d t}=\frac{d}{d t}\left(x^{*}+u(t)\right)=\frac{d x^{*}}{d t}+\frac{d u}{d t}=F\left(x^{*}+u(t), y^{*}+v(t)\right) \\
+\frac{d y}{d t}=\frac{d}{d t}\left(y^{*}+v(t)\right)=\frac{d y^{*}}{d t}+\frac{d v}{d t}=G\left(x^{*}+u(t), y^{*}+v(t)\right)
+\end{array}\]
+
+<p>since \(\frac{d x^{*}}{d t}=0\) and \(F\left(x^{*}, y^{*}\right)=0\), and we ignore smaller order terms in the Taylor Series expansion.</p>
+
+<p>Similarly we have:</p>
+
+\[\begin{aligned}
+\frac{d y^{*}}{d t}+\frac{d v}{d t}=&amp; G\left(x^{*}, y^{*}\right)+G_{x}\left(x^{*}, y^{*}\right) u+G_{y}\left(x^{*}, y^{*}\right) v+\ldots \\
+&amp; \frac{d v}{d t} \approx G_{x}\left(x^{*}, y^{*}\right) u+G_{y}\left(x^{*}, y^{*}\right) v
+\end{aligned}\]
+
+<p>So we have:</p>
+
+\[\begin{array}{l}
+\frac{d u}{d t} \approx F_{x}\left(x^{*}, y^{*}\right) u+F_{y}\left(x^{*}, y^{*}\right) v \\
+\frac{d v}{d t} \approx G_{x}\left(x^{*}, y^{*}\right) u+G_{y}\left(x^{*}, y^{*}\right) v
+\end{array}\]
+
+<p>Rewrite into <u>a homegeneous linear system</u>:</p>
+
+\[\mathbf{u}^{\prime}=\left(\begin{array}{ll}
+F_{x}\left(x^{*}, y^{*}\right) &amp; F_{y}\left(x^{*}, y^{*}\right) \\
+G_{x}\left(x^{*}, y^{*}\right) &amp; G_{y}\left(x^{*}, y^{*}\right)
+\end{array}\right) \mathbf{u}\]
+
+<p>So we classification the critical points \((x^*,y^*)\) based on the Jacobian matrix:</p>
+
+\[\mathbf{J}=\mathbf{J}[F, G](x, y)=\left(\begin{array}{ll}
+F_{x}\left(x^{*}, y^{*}\right) &amp; F_{y}\left(x^{*}, y^{*}\right) \\
+G_{x}\left(x^{*}, y^{*}\right) &amp; G_{y}\left(x^{*}, y^{*}\right)
+\end{array}\right)\]
+
+<p>Say the eigenvalues of \(\mathbf{J}\) are \(r_1,r_2\)<label for="1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="1" class="margin-toggle" /><span class="sidenote">Table 9.3.1 of Boyce &amp; DiPrima </span>:</p>
+
+<p><img class="center" src="https://raw.githubusercontent.com/minhuanli/imagehost/master/img/image-20210305164529044.png" width="90%" /></p>
+
+
+
+
+  <h3>Comments</h3>
+  <div id="disqus_thread"></div>
+<script>
+    /**
+    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+    /*
+    var disqus_config = function () {
+    this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+    this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    */
+    (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = 'https://minhuanli-blog.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+
+
+    </article>
+    <span class="print-footer">ODE and PDE, Critial Points and Linearization - June 1, 2021 - Minhuan Li</span>
+    <footer>
+  <hr class="slender">
+  <ul class="footer-links">
+    <li><a href="mailto:minhuanli@g.harvard.edu"><span class="icon-mail3"></span></a></li>
+    
+      <li>
+        <a href="https://github.com/minhuanli"><span class="icon-github"></span></a>
+      </li>
+      
+  </ul>
+<div class="credits">
+<span>&copy; 2021 &nbsp;Minhuan Li &middot; <a href="//minhuanli.github.io">Main Blog</a></span></br> <br>
+Icon credit to <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>. Site created with <a href="//jekyllrb.com">Jekyll</a> using the <a href="//github.com/clayh53/tufte-jekyll">Tufte theme</a>.
+</div>  
+</footer>
+  </body>
+</html>

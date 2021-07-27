@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Hamiltonian Monte Carlo &middot; Minhuan Li</title>
+  <meta name="description" content="Research and learning notes">
+
+  <!-- Google Fonts loaded here depending on setting in _data/options.yml true loads font, blank does not-->
+  
+    <link href='//fonts.googleapis.com/css?family=Lato:400,400italic' rel='stylesheet' type='text/css'>
+  
+  
+  <!-- Load up MathJax script if needed ... specify in /_data/options.yml file-->
+  
+    <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: [
+      "MathMenu.js",
+      "MathZoom.js",
+      "AssistiveMML.js",
+      "a11y/accessibility-menu.js"
+    ],
+    jax: ["input/TeX", "output/CommonHTML"],
+    TeX: {
+      extensions: [
+        "AMSmath.js",
+        "AMSsymbols.js",
+        "noErrors.js",
+        "noUndefined.js",
+      ]
+    }
+  });
+</script>
+
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+ <!--   <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+  
+
+  <link rel="stylesheet" type="text/css" href="/notes/css/tufte.css">
+  <!-- <link rel="stylesheet" type="text/css" href="/notes/css/print.css" media="print"> -->
+
+  <link rel="canonical" href="/notes/stat/HMC/">
+
+  <link rel="alternate" type="application/rss+xml" title="Notes" href="/notes/feed.xml" />
+</head>
+
+  <body>
+    <!--- Header and nav template site-wide -->
+<header>
+    <nav class="group">
+	<a href="/notes/"><img class="badge" src="/notes/assets/img/einstein.png" alt="CH"></a>
+	<a href="/notes/">Home</a>
+    
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+              <a href="/notes/archive">archive</a>
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    <a href="http://github.com/minhuanli/notes">GitHub</a>
+    <a href="http://minhuanli.github.io">Main Blog</a>
+	</nav>
+</header>
+    <article class="group">
+      <h1>Hamiltonian Monte Carlo</h1>
+<p class="subtitle">June 5, 2021</p>
+
+
+  <div class="progress" data-label="100% Complete">
+    <span class="value" style="width:100%;"></span>
+  </div>
+
+
+<p>Hamiltonian monte carlo is a physics-inspired sampling algorithm. This is a note based on Harvard AM207 course<label for="1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="1" class="margin-toggle" /><span class="sidenote">20 Fall, taught by Weiwei Pan </span> about the HMC motivation and algorithm.</p>
+
+<ul id="markdown-toc">
+  <li><a href="#motivation" id="markdown-toc-motivation"><i class="contrast">Motivation</i></a></li>
+  <li><a href="#hmc-with-exact-integration" id="markdown-toc-hmc-with-exact-integration"><i class="contrast">HMC with exact integration</i></a></li>
+  <li><a href="#hmc-with-the-leap-frog-integrator" id="markdown-toc-hmc-with-the-leap-frog-integrator"><i class="contrast">HMC with the leap frog Integrator</i></a></li>
+</ul>
+
+<h3 id="motivation"><i class="contrast">Motivation</i></h3>
+
+<p>When we are dealing with sampling from target distribution \(\pi(q)\) in a complex model, naive Metropolic-Hastings MCMC might be inefficient as most proposed new samplers might be rejected. Hamiltonian Monte Carlo, perhaps, is the least complicated algorithm to fix such issues.</p>
+
+<p>In statistical physics, system energy \(U(q)\) can be related to the probability \(\pi(q)\) with Gibbs distribution (or Boltzmann distribution):</p>
+
+\[\pi(q)=\frac{1}{Z} \exp \left\{-\frac{U(q)}{T}\right\}, \quad T \text { is a constant } \tag{1}\]
+
+<p>where \(Z\) is the normalizing constant of the exponential part<label for="2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="2" class="margin-toggle" /><span class="sidenote">“partition function” in physics field </span>. The Gibbs distribution has a physical interpretation: \(\pi(q)\) is the likelihood of being in state \(q\) given the energy \(U(q)\) of state \(q\) and the temperature \(T\). For now, we set \(T=1\).</p>
+
+<p>Using the same relationship, we can turn a probability distribution into an energy function:</p>
+
+\[U(q)=-\log \pi(q) \tag{2}\]
+
+<p>Such energy form can thus define a Hamiltonian system, which we can use as a dynamic rule to propose new states.</p>
+
+<p class="redbox">
+<i style="font-weight: bold">Hamiltomian system</i><br />
+A physical properties of system with position \(q(t)\) and momentum \(p(t)\) is described by a function \(H(q, p)\) called the Hamiltonian. We will always choose a Hamiltonian that decomposes as the sum of potential and kinetic energy as follows:
+
+$$
+\underbrace{H(q, p)}_{\text {total }}=\underbrace{U(q(t))}_{\text {potential }}+\underbrace{K(p(t))}_{\text {kinetic }}
+$$
+
+How the system \((q, p)\) changes over time is described by the partial derivatives of \(H\) :
+
+$$\frac{d q}{d t}=\underbrace{\frac{\partial H}{\partial p}}_{\text {function of } t}, \quad \frac{d p}{d t}=\underbrace{-\frac{\partial H}{\partial q}}_{\text {function of } t}$$
+
+The time-reversal symmetry and Liouville's theorem in Hamiltonian system corresponds to the reversibility and volume preserving properties used to endorsing the correctness of HMC sampler.
+</p>
+
+<h3 id="hmc-with-exact-integration"><i class="contrast">HMC with exact integration</i></h3>
+
+<p>Let \(\pi(q)\) be our target distribution with \(q \in \mathbb{R}^{D}\). We turn \(\pi\) into an energy function \(U(q)\) by \(U(q)=-\log (\pi(q))\). We choose a kinetic energy function \(K(p) .\) We fix \(t=T\).</p>
+
+<p>\(\;\) I. Start with a random \(q^{(0)} \in \mathbb{R}^{D}\)</p>
+
+<p>\(\;\) II. Repeat:</p>
+
+<ol>
+  <li>
+    <p>(<strong>kick-off</strong>) sample a random momentum from the Gibbs distribution of \(K(p)\), i.e. \(p^{(\text {current })} \sim \frac{1}{Z} \exp \{-K(p)\}\).</p>
+  </li>
+  <li>
+    <p>(<strong>simulate movment</strong>) simulate Hamiltonian motion for a time interval of length \(T\), i.e. start at \(\left(q^{(\text {current })}, p^{(\text {current })}\right)\) and find \(\left(q^{(\text {time } T)}, p^{(\text {time } T)}\right)\). You need to integrate \(\frac{d q}{d t}=\frac{\partial H}{\partial p}, \frac{d p}{d t}=-\frac{\partial H}{\partial q} !\)</p>
+  </li>
+  <li>
+    <p>accept \(q^{(\text {current })}\) as a new sample: \(q^{(\text {current })} \leftarrow q^{(\text {time } T)}\).</p>
+  </li>
+</ol>
+
+<p class="greenbox">
+<i style="font-weight: bold">Note</i>: 
+Generally, MD simulation can also be viewed as a HMC sampler.
+</p>
+
+<h3 id="hmc-with-the-leap-frog-integrator"><i class="contrast">HMC with the leap frog Integrator</i></h3>
+
+<p>The analytical integration in the above II.2 step is intractable, so we have to use some approximation methods like discretizing the time period \([0, T]\) into \(L\) chunks each with length \(\epsilon\). But as the approximation (especially for long time \(T\)) is not accurate, to ensure the correctness of the sampling, we need to <strong>add a Metropolis-Hastings step</strong> so that we can potentially reject the sample from the approximation.</p>
+
+<p>Let \(\pi(q)\) be our target distribution with \(q \in \mathbb{R}^{D}\). We turn \(\pi\) into an energy function \(U(q)\) by \(U(q)=-\log (\pi(q)) .\) We choose a kinetic energy function \(K(p)\).</p>
+
+<p>\(\;\) I. start with a random \(q^{(0)} \in \mathbb{R}^{D}\)</p>
+
+<p>\(\;\) II. repeat:</p>
+
+<p>\(\quad\)1. (<strong>kick-off</strong>) sample a random momentum from the Gibbs distribution of \(K(p)\), i.e. \(p^{(\text {current })} \sim \frac{1}{Z} \exp (-K(p))\)</p>
+
+<p>\(\quad\)2. (<strong>simulate movement</strong>) simulate Hamiltonian motion for \(L\) steps each with time interval \(\epsilon\), using the leap-frog integrator:</p>
+
+<p>\(\qquad \quad\) a. Repeat for \(\mathrm{T}-1\) times<label for="3" class="margin-toggle sidenote-number"></label><input type="checkbox" id="3" class="margin-toggle" /><span class="sidenote">for \(p^{(\text {step } 0)}=p^{(\text {current })}, q^{(\text {step } 0)}=q^{(\text {current })}\) </span>:</p>
+
+<p>\(\qquad \quad \quad\) i. \(p^{(\text {step } t+1 / 2)} \leftarrow p^{(\text {step } t)}-\epsilon / 2 \frac{\partial U}{\partial a}\left(q^{(\text {step } t)}\right)\)<label for="4" class="margin-toggle sidenote-number"></label><input type="checkbox" id="4" class="margin-toggle" /><span class="sidenote">half-step update for momentum </span></p>
+
+<p>\(\qquad \quad \quad\) ii. \(q^{(\text {step } t+1)} \leftarrow q^{(\text {step } t)}+\epsilon \frac{\partial K}{\partial p}\left(p^{(\text {step } t)}\right)\)<label for="5" class="margin-toggle sidenote-number"></label><input type="checkbox" id="5" class="margin-toggle" /><span class="sidenote">full-step update for position </span></p>
+
+<p>\(\qquad \quad \quad\) iii. \(p^{(\text {step } t+1)} \leftarrow p^{(\text {step } t+1 / 2)}-\epsilon / 2 \frac{\partial U}{\partial q}\left(q^{(\text {step } t+1)}\right)\)<label for="6" class="margin-toggle sidenote-number"></label><input type="checkbox" id="6" class="margin-toggle" /><span class="sidenote">half-step update for momentum </span></p>
+
+<p>\(\qquad \quad\) b. (<strong>reverse momentum</strong>) \(p^{(\text {step } T)} \leftarrow-p^{(\text {step } T)}\)</p>
+
+<p>\(\quad\)3. (<strong>correction for error</strong>) implement Metropolis-Hasting accept mechanism:</p>
+
+<p>\(\qquad \quad\) a. compute \(\alpha=\min \left(1, \exp \left\{-\Delta H\right\}\right)\)<label for="7" class="margin-toggle sidenote-number"></label><input type="checkbox" id="7" class="margin-toggle" /><span class="sidenote">\(\Delta H = H\left(q^{(\text {step } T)}, p^{(\text {step } T)}\right)-H\left(q^{(\text {current })}, p^{(\text {current })}\right)\) </span></p>
+
+<p>\(\qquad \quad\) b. sample \(U \sim U(0,1)\), if \(U \leq \alpha\) then accept, else keep old sample.</p>
+
+
+
+
+  <h3>Comments</h3>
+  <div id="disqus_thread"></div>
+<script>
+    /**
+    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+    /*
+    var disqus_config = function () {
+    this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+    this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    */
+    (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = 'https://minhuanli-blog.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+
+
+    </article>
+    <span class="print-footer">Hamiltonian Monte Carlo - June 5, 2021 - Minhuan Li</span>
+    <footer>
+  <hr class="slender">
+  <ul class="footer-links">
+    <li><a href="mailto:minhuanli@g.harvard.edu"><span class="icon-mail3"></span></a></li>
+    
+      <li>
+        <a href="https://github.com/minhuanli"><span class="icon-github"></span></a>
+      </li>
+      
+  </ul>
+<div class="credits">
+<span>&copy; 2021 &nbsp;Minhuan Li &middot; <a href="//minhuanli.github.io">Main Blog</a></span></br> <br>
+Icon credit to <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>. Site created with <a href="//jekyllrb.com">Jekyll</a> using the <a href="//github.com/clayh53/tufte-jekyll">Tufte theme</a>.
+</div>  
+</footer>
+  </body>
+</html>

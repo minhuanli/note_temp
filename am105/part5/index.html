@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>ODE and PDE, Homogeneous ODEs &middot; Minhuan Li</title>
+  <meta name="description" content="Research and learning notes">
+
+  <!-- Google Fonts loaded here depending on setting in _data/options.yml true loads font, blank does not-->
+  
+    <link href='//fonts.googleapis.com/css?family=Lato:400,400italic' rel='stylesheet' type='text/css'>
+  
+  
+  <!-- Load up MathJax script if needed ... specify in /_data/options.yml file-->
+  
+    <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: [
+      "MathMenu.js",
+      "MathZoom.js",
+      "AssistiveMML.js",
+      "a11y/accessibility-menu.js"
+    ],
+    jax: ["input/TeX", "output/CommonHTML"],
+    TeX: {
+      extensions: [
+        "AMSmath.js",
+        "AMSsymbols.js",
+        "noErrors.js",
+        "noUndefined.js",
+      ]
+    }
+  });
+</script>
+
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+ <!--   <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+  
+
+  <link rel="stylesheet" type="text/css" href="/notes/css/tufte.css">
+  <!-- <link rel="stylesheet" type="text/css" href="/notes/css/print.css" media="print"> -->
+
+  <link rel="canonical" href="/notes/am105/part5/">
+
+  <link rel="alternate" type="application/rss+xml" title="Notes" href="/notes/feed.xml" />
+</head>
+
+  <body>
+    <!--- Header and nav template site-wide -->
+<header>
+    <nav class="group">
+	<a href="/notes/"><img class="badge" src="/notes/assets/img/einstein.png" alt="CH"></a>
+	<a href="/notes/">Home</a>
+    
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+              <a href="/notes/archive">archive</a>
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    <a href="http://github.com/minhuanli/notes">GitHub</a>
+    <a href="http://minhuanli.github.io">Main Blog</a>
+	</nav>
+</header>
+    <article class="group">
+      <h1>ODE and PDE, Homogeneous ODEs</h1>
+<p class="subtitle">February 13, 2021</p>
+
+
+  <div class="progress" data-label="100% Complete">
+    <span class="value" style="width:100%;"></span>
+  </div>
+
+
+<p><a href="https://minhuanli.github.io/notes/">Content</a></p>
+
+<ul id="markdown-toc">
+  <li><a href="#1-general" id="markdown-toc-1-general">1. General</a></li>
+  <li><a href="#2-principle-of-superpositions" id="markdown-toc-2-principle-of-superpositions">2. Principle of Superpositions</a></li>
+  <li><a href="#3-wronskian-determinant" id="markdown-toc-3-wronskian-determinant">3. Wronskian Determinant</a></li>
+  <li><a href="#4-constant-coefficients-homogeneous-odes" id="markdown-toc-4-constant-coefficients-homogeneous-odes">4. Constant Coefficients Homogeneous ODEs</a></li>
+</ul>
+
+<h3 id="1-general">1. General</h3>
+
+<p>A general form of second order <strong>Linear</strong> ODE:</p>
+
+\[y^{\prime \prime}+p(t) y^{\prime}+q(t) y=g(t)\tag{1}\]
+
+<p>If we have \(g(t)=0\), it is a subset of the odes, called <strong>Homogeneous</strong>, such that:</p>
+
+\[y^{\prime \prime}+p(t) y^{\prime}+q(t) y=0\tag{2}\]
+
+<h3 id="2-principle-of-superpositions">2. Principle of Superpositions</h3>
+
+<p>Given \(y^{\prime \prime}+p(t) y^{\prime}+q(t) y=0\), if \(y_1\) and \(y_2\) are two solutions of the equation. We have that:</p>
+
+\[y=c_{1} y_{1}(t)+c_{2} y_{2}(t) \tag{3}\]
+
+<p>is also a solution for any values of the constants.</p>
+
+<p>Because the derivative operators are linear operators, and the equation itself is Linear.</p>
+
+<h3 id="3-wronskian-determinant">3. Wronskian Determinant</h3>
+
+<p>Given that equation (3) with arbitary constants \(c_1, c_2\) are also the solution for equation (2), we can ask a question: <em>if all solutions are included in equation (3)?</em></p>
+
+<p>This can be answered with help of Wronskian determinant of \(y_1\) and \(y_2\) at some point \(t_0\):</p>
+
+\[W=\left|\begin{array}{ll}
+y_{1}\left(t_{0}\right) &amp; y_{2}\left(t_{0}\right) \\
+y_{1}^{\prime}\left(t_{0}\right) &amp; y_{2}^{\prime}\left(t_{0}\right)
+\end{array}\right|=y_{1}\left(t_{0}\right) y_{2}^{\prime}\left(t_{0}\right)-y_{1}^{\prime}\left(t_{0}\right) y_{2}\left(t_{0}\right)\tag{4}\]
+
+<p>If and only if there is a point \(t_0\) in the interval where \(W\) is <strong>not zero</strong>, we can say all solutions are included in the above equation (3) <label for="1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="1" class="margin-toggle" /><span class="sidenote">think it as independent bases in 2d spaces </span></p>
+
+<h3 id="4-constant-coefficients-homogeneous-odes">4. Constant Coefficients Homogeneous ODEs</h3>
+
+<p>Given an equaion in form:</p>
+
+\[a y^{\prime \prime}+b y^{\prime}+c y=0 \tag{5}\]
+
+<p>Let \(r_1\) and \(r_2\) be the roots of the cooresponding characteristic equation:</p>
+
+\[a r^{2}+b r+c=0 \tag{6}\]
+
+<p>It falls into three types:</p>
+
+<ol>
+  <li>
+    <p>\(r_1\) and \(r_2\) are real and not equal<label for="2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="2" class="margin-toggle" /><span class="sidenote">positive discriminant </span>, the general solution of equation (5) is:</p>
+
+\[y=c_{1} e^{r_{1} t}+c_{2} e^{r_{2} t}\tag{7}\]
+  </li>
+  <li>
+    <p>\(r_1\) and \(r_2\) are complex numbers<label for="3" class="margin-toggle sidenote-number"></label><input type="checkbox" id="3" class="margin-toggle" /><span class="sidenote">negative discriminant </span>, the general solution of equation (5) is:</p>
+
+\[y=c_{1} e^{\lambda t} \cos (\mu t)+c_{2} e^{\lambda t} \sin (\mu t)\tag{8}\]
+  </li>
+  <li>
+    <p>\(r_1=r_2\) <label for="4" class="margin-toggle sidenote-number"></label><input type="checkbox" id="4" class="margin-toggle" /><span class="sidenote">zero discriminant </span>, the general solution is:</p>
+
+\[y=c_{1} e^{r_{1} t}+c_{2} t e^{r_{1} t}\tag{9}\]
+  </li>
+</ol>
+
+
+
+
+
+  <h3>Comments</h3>
+  <div id="disqus_thread"></div>
+<script>
+    /**
+    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+    /*
+    var disqus_config = function () {
+    this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+    this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    */
+    (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = 'https://minhuanli-blog.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+
+
+    </article>
+    <span class="print-footer">ODE and PDE, Homogeneous ODEs - February 13, 2021 - Minhuan Li</span>
+    <footer>
+  <hr class="slender">
+  <ul class="footer-links">
+    <li><a href="mailto:minhuanli@g.harvard.edu"><span class="icon-mail3"></span></a></li>
+    
+      <li>
+        <a href="https://github.com/minhuanli"><span class="icon-github"></span></a>
+      </li>
+      
+  </ul>
+<div class="credits">
+<span>&copy; 2021 &nbsp;Minhuan Li &middot; <a href="//minhuanli.github.io">Main Blog</a></span></br> <br>
+Icon credit to <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>. Site created with <a href="//jekyllrb.com">Jekyll</a> using the <a href="//github.com/clayh53/tufte-jekyll">Tufte theme</a>.
+</div>  
+</footer>
+  </body>
+</html>

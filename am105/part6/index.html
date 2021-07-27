@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>ODE and PDE, Nonhomogeneous ODEs &middot; Minhuan Li</title>
+  <meta name="description" content="Research and learning notes">
+
+  <!-- Google Fonts loaded here depending on setting in _data/options.yml true loads font, blank does not-->
+  
+    <link href='//fonts.googleapis.com/css?family=Lato:400,400italic' rel='stylesheet' type='text/css'>
+  
+  
+  <!-- Load up MathJax script if needed ... specify in /_data/options.yml file-->
+  
+    <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: [
+      "MathMenu.js",
+      "MathZoom.js",
+      "AssistiveMML.js",
+      "a11y/accessibility-menu.js"
+    ],
+    jax: ["input/TeX", "output/CommonHTML"],
+    TeX: {
+      extensions: [
+        "AMSmath.js",
+        "AMSsymbols.js",
+        "noErrors.js",
+        "noUndefined.js",
+      ]
+    }
+  });
+</script>
+
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+ <!--   <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+  
+
+  <link rel="stylesheet" type="text/css" href="/notes/css/tufte.css">
+  <!-- <link rel="stylesheet" type="text/css" href="/notes/css/print.css" media="print"> -->
+
+  <link rel="canonical" href="/notes/am105/part6/">
+
+  <link rel="alternate" type="application/rss+xml" title="Notes" href="/notes/feed.xml" />
+</head>
+
+  <body>
+    <!--- Header and nav template site-wide -->
+<header>
+    <nav class="group">
+	<a href="/notes/"><img class="badge" src="/notes/assets/img/einstein.png" alt="CH"></a>
+	<a href="/notes/">Home</a>
+    
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+              <a href="/notes/archive">archive</a>
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    <a href="http://github.com/minhuanli/notes">GitHub</a>
+    <a href="http://minhuanli.github.io">Main Blog</a>
+	</nav>
+</header>
+    <article class="group">
+      <h1>ODE and PDE, Nonhomogeneous ODEs</h1>
+<p class="subtitle">February 18, 2021</p>
+
+
+  <div class="progress" data-label="100% Complete">
+    <span class="value" style="width:100%;"></span>
+  </div>
+
+
+<p><a href="https://minhuanli.github.io/notes/">Content</a></p>
+
+<ul id="markdown-toc">
+  <li><a href="#1-methods-of-undetermined-coefficients" id="markdown-toc-1-methods-of-undetermined-coefficients">1. Methods of undetermined coefficients</a></li>
+  <li><a href="#2-variation-of-parameters" id="markdown-toc-2-variation-of-parameters">2. Variation of parameters</a></li>
+  <li><a href="#3-forced-vibration" id="markdown-toc-3-forced-vibration">3. Forced Vibration</a></li>
+</ul>
+
+<h3 id="1-methods-of-undetermined-coefficients">1. Methods of undetermined coefficients</h3>
+
+<p>For a nonhomogeneous second-order ODE:</p>
+
+\[y^{\prime \prime}+p(t) y^{\prime}+q(t) y=g(t) \tag{1}\]
+
+<p>where \(g(t)\) is nonzero. We can write out the general solution as:</p>
+
+\[y=\phi(t)=c_{1} y_{1}(t)+c_{2} y_{2}(t)+Y(t)\tag{2}\]
+
+<p>\(y_1\) and \(y_2\) are the two solutions for the homogeneous form<label for="1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="1" class="margin-toggle" /><span class="sidenote">set \(g(t)=0\) </span>  of equation (1). Our task now is finding the specific solution \(Y(t)\).</p>
+
+<p>Say, if \(g(t)\) involves only polynomials, sines, cosines, or exponential functions, or sums or products of any of these functions.<label for="2" class="margin-toggle sidenote-number"></label><input type="checkbox" id="2" class="margin-toggle" /><span class="sidenote">Think about why. Take equation (2) back to (1) </span></p>
+
+<p>We can get the general solution with the following four steps:</p>
+
+<ol>
+  <li>
+    <p>Get the solution to the homogeneous equation \(y_1(t)\) and \(y_2(t)\)</p>
+  </li>
+  <li>
+    <p>Assume an appropriate form for the particular solution \(Y(t) .\) If \(g(t)=\exp (\alpha t),\) assume \(Y(t)=\) \(A \exp (\alpha t) .\) If \(g(t)=\sin (\beta t)\) or \(\cos (\beta t),\) assume \(Y(t)=A \cos (\beta t)+B \sin (\beta t) .\) If \(g(t)\) is a polynomial of order \(n,\) then assume \(Y(t)\) is a polynomial of order \(n\). If \(g(t)\) is a sum or product of the aforementioned functions, assume \(Y(t)\) is also a sum or product of those same functions. It may be necessary to multiply by \(t\) or \(t^{2}\) to avoid duplicating the homogeneous solution.</p>
+  </li>
+  <li>
+    <p>Plug the assumed \(Y (t)\) into the differential equation to determine the necessary coefficients.</p>
+  </li>
+  <li>
+    <p>Take the sum of the homogeneous and particular solutions to get the general solution of the non-homogeneous differential equation.</p>
+  </li>
+</ol>
+
+<h3 id="2-variation-of-parameters">2. Variation of parameters</h3>
+
+<p>If \(g(t)\) is not the case mentioned above, we need a more general method to solve, here are the general solution for equation (1):</p>
+
+\[y=c_{1} y_{1}(t)+c_{2} y_{2}(t)+u_{1}(t) y_{1}(t)+u_{2}(t) y_{2}(t)\tag{3}\]
+
+<p>\(y_1\) and \(y_2\) are the two solutions for the homogeneous form<label for="3" class="margin-toggle sidenote-number"></label><input type="checkbox" id="3" class="margin-toggle" /><span class="sidenote">set \(g(t)=0\) </span>  of equation (1).</p>
+
+<p>where:</p>
+
+\[u_{1}(t)=-\int \frac{y_{2}(t) g(t)}{W\left[y_{1}, y_{2}\right](t)} d t , \   u_{2}(t)=\int \frac{y_{1}(t) g(t)}{W\left[y_{1}, y_{2}\right](t)} d t \tag{4}\]
+
+<p>and the Wronskian is:</p>
+
+\[W\left[y_{1}, y_{2}\right](t)=\left|\begin{array}{ll}
+y_{1}(t) &amp; y_{2}(t) \\
+y_{1}^{\prime}(t) &amp; y_{2}^{\prime}(t)
+\end{array}\right|=y_{1}(t) y_{2}^{\prime}(t)-y_{1}^{\prime}(t) y_{2}(t)\tag{5}\]
+
+<h3 id="3-forced-vibration">3. Forced Vibration</h3>
+
+<p>The typical example of 2nd Nonhomogeneous ODE is forced periodic vibrations. Assume a general spring-mass system is subject to an external force \(F(t)\)<label for="4" class="margin-toggle sidenote-number"></label><input type="checkbox" id="4" class="margin-toggle" /><span class="sidenote">\(\gamma\) is damping force, k is spring constant, m is mass </span>:</p>
+
+\[m u^{\prime \prime}(t)+\gamma u^{\prime}(t)+k u(t)=F(t)=F_{0} \cos (\omega t)\tag{6}\]
+
+<p>The general solution must have the form:</p>
+
+\[u=c_{1} u_{1}(t)+c_{2} u_{2}(t)+A \cos (\omega t)+B \sin (\omega t)=u_{c}(t)+U(t) \tag{7}\]
+
+<p>The solution \(u_1(t)\) and \(u_{2}(t)\) of the homogeneous equation depend on the roots \(r_{1}\) and \(r_{2}\) of the characteristic equation \(m r^{2}+\gamma r+k=0 .\) Since \(m, \gamma\), and \(k\) are all positive, it follows that \(r_{1}\) and \(r_{2}\) either are real and negative or are complex conjugates with a negative real part<label for="5" class="margin-toggle sidenote-number"></label><input type="checkbox" id="5" class="margin-toggle" /><span class="sidenote">Think about why </span>. In either case, both \(u_{1}(t)\) and \(u_{2}(t)\) approach zero as \(t \rightarrow \infty\). Since \(u_{c}(t)\) dies out as \(t\) increases, it is called the <strong>transient solution</strong><label for="7" class="margin-toggle sidenote-number"></label><input type="checkbox" id="7" class="margin-toggle" /><span class="sidenote">In many applications, it is of little importance and (depending on the value of \(\gamma\) ) may well be undetectable after only a few seconds. </span>.</p>
+
+<p>\(U(t)\) represents a steady oscillation with the same frequency as the external force and are called the steady-state solution or the forced response of the system, which can be written as:</p>
+
+\[U(t)=R \cos (\omega t-\delta)\tag{8}\]
+
+<p>The amplitude \(R\) and phase \(\delta\) are:</p>
+
+\[R=\frac{F_{0}}{\Delta}, \quad \cos \delta=\frac{m\left(\omega_{0}^{2}-\omega^{2}\right)}{\Delta}, \quad \text{and} \quad \sin \delta=\frac{\gamma \omega}{\Delta} \tag{9}\]
+
+<p>where</p>
+
+\[\Delta=\sqrt{m^{2}\left(\omega_{0}^{2}-\omega^{2}\right)^{2}+\gamma^{2} \omega^{2}} \quad \text{and} \quad \omega_{0}^{2}=\frac{k}{m}\tag{10}\]
+
+<p>We now investigate how the amplitude \(R\) of the steady-state oscillation depends on the frequency \(\omega\) of the external force. With some alegebra, we find that:</p>
+
+\[\frac{R k}{F_{0}}=\left(\left(1-\left(\frac{\omega}{\omega_{0}}\right)^{2}\right)^{2}+\Gamma\left(\frac{\omega}{\omega_{0}}\right)^{2}\right)^{-1 / 2} \text { where } \Gamma=\frac{\gamma^{2}}{m k}\]
+
+<p>For low frequency excitation -$that is, as \(\omega \rightarrow 0\) -it follows that \(R k / F_{0} \rightarrow 1\) or \(R \rightarrow F_{0} / k .\) At the other extreme, for very high frequency excitation, \(R \rightarrow 0\) as \(\omega \rightarrow \infty\). At an intermediate value of \(\omega = \omega_{\max}\) the amplitude may have a maximum:</p>
+
+\[\omega_{\max }^{2}=\omega_{0}^{2}-\frac{\gamma^{2}}{2 m^{2}}=\omega_{0}^{2}\left(1-\frac{\gamma^{2}}{2 m k}\right)\]
+
+<p>Note that \(\omega_{\max }&lt;\omega_{0}\) and that \(\omega_{\max }\) is close to \(\omega_{0}\) when \(\gamma\) is small. The maximum value of \(R\) is:</p>
+
+\[R_{\max }=\frac{F_{0}}{\gamma \omega_{0} \sqrt{1-\left(\gamma^{2} / 4 m k\right)}} \cong \frac{F_{0}}{\gamma \omega_{0}}\left(1+\frac{\gamma^{2}}{8 m k}\right)\]
+
+<p>where the last expression is an approximation that is valid when \(\gamma\) is small. If \(\frac{\gamma^{2}}{m k}&gt;2\), then \(\omega_{\max }\) is imaginary; in this case the maximum value of \(R\) occurs for \(\omega=0\), and \(R\) is a monotone decreasing function of \(\omega .\) Recall that critical damping occurs when \(\frac{\gamma^{2}}{m k}=4\).</p>
+
+<figure><img src="https://raw.githubusercontent.com/minhuanli/imagehost/master/img/Screen%20Shot%202021-04-11%20at%2012.38.29%20AM.png" /><figcaption class="maincolumn-figure">Plots of amplitude-frequency, from B&amp;D Section 3.8</figcaption></figure>
+
+
+
+
+
+  <h3>Comments</h3>
+  <div id="disqus_thread"></div>
+<script>
+    /**
+    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+    /*
+    var disqus_config = function () {
+    this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+    this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    */
+    (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = 'https://minhuanli-blog.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+
+
+    </article>
+    <span class="print-footer">ODE and PDE, Nonhomogeneous ODEs - February 18, 2021 - Minhuan Li</span>
+    <footer>
+  <hr class="slender">
+  <ul class="footer-links">
+    <li><a href="mailto:minhuanli@g.harvard.edu"><span class="icon-mail3"></span></a></li>
+    
+      <li>
+        <a href="https://github.com/minhuanli"><span class="icon-github"></span></a>
+      </li>
+      
+  </ul>
+<div class="credits">
+<span>&copy; 2021 &nbsp;Minhuan Li &middot; <a href="//minhuanli.github.io">Main Blog</a></span></br> <br>
+Icon credit to <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>. Site created with <a href="//jekyllrb.com">Jekyll</a> using the <a href="//github.com/clayh53/tufte-jekyll">Tufte theme</a>.
+</div>  
+</footer>
+  </body>
+</html>

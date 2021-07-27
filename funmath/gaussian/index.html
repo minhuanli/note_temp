@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Gaussain Related Intergration Trick &middot; Minhuan Li</title>
+  <meta name="description" content="Research and learning notes">
+
+  <!-- Google Fonts loaded here depending on setting in _data/options.yml true loads font, blank does not-->
+  
+    <link href='//fonts.googleapis.com/css?family=Lato:400,400italic' rel='stylesheet' type='text/css'>
+  
+  
+  <!-- Load up MathJax script if needed ... specify in /_data/options.yml file-->
+  
+    <script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    extensions: [
+      "MathMenu.js",
+      "MathZoom.js",
+      "AssistiveMML.js",
+      "a11y/accessibility-menu.js"
+    ],
+    jax: ["input/TeX", "output/CommonHTML"],
+    TeX: {
+      extensions: [
+        "AMSmath.js",
+        "AMSsymbols.js",
+        "noErrors.js",
+        "noUndefined.js",
+      ]
+    }
+  });
+</script>
+
+<script type="text/javascript" async
+  src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+
+ <!--   <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script> -->
+  
+
+  <link rel="stylesheet" type="text/css" href="/notes/css/tufte.css">
+  <!-- <link rel="stylesheet" type="text/css" href="/notes/css/print.css" media="print"> -->
+
+  <link rel="canonical" href="/notes/funmath/gaussian/">
+
+  <link rel="alternate" type="application/rss+xml" title="Notes" href="/notes/feed.xml" />
+</head>
+
+  <body>
+    <!--- Header and nav template site-wide -->
+<header>
+    <nav class="group">
+	<a href="/notes/"><img class="badge" src="/notes/assets/img/einstein.png" alt="CH"></a>
+	<a href="/notes/">Home</a>
+    
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+              <a href="/notes/archive">archive</a>
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+          
+        
+      
+        
+      
+        
+          
+        
+      
+        
+      
+        
+      
+    <a href="http://github.com/minhuanli/notes">GitHub</a>
+    <a href="http://minhuanli.github.io">Main Blog</a>
+	</nav>
+</header>
+    <article class="group">
+      <h1>Gaussain Related Intergration Trick</h1>
+<p class="subtitle">January 27, 2021</p>
+
+
+  <div class="progress" data-label="20% Complete">
+    <span class="value" style="width:20%;"></span>
+  </div>
+
+
+<p>Some math tricks related to gaussain intergrations.</p>
+
+<ul id="markdown-toc">
+  <li><a href="#saddle-point-integration" id="markdown-toc-saddle-point-integration"><i class="contrast">Saddle point integration</i></a></li>
+  <li><a href="#linearize-term" id="markdown-toc-linearize-term"><i class="contrast">Linearize term</i></a></li>
+</ul>
+
+<h3 id="saddle-point-integration"><i class="contrast">Saddle point integration</i></h3>
+
+<p>Target integration function: \(I= \int dx \exp{[N\phi(x)]}\), \(N\) is large. we can expand \(\phi(x)\) at its maximum point<label for="id1" class="margin-toggle sidenote-number"></label><input type="checkbox" id="id1" class="margin-toggle" /><span class="sidenote">\(\phi'(x_{max})=0\) </span>:</p>
+
+\[\begin{aligned} I &amp;= \int dx \exp{[N\phi(x_{max})-N\frac{1}{2}\phi''(x_{max})(x-x_{max})^2]} \\ &amp;= e^{N\phi(x_{max})}\cdot\underbrace{\int dx \exp{[-N\frac{1}{2}\phi''(x_{max})(x-x_{max})^2]}}_{\text{gaussian integration}} \\ &amp;= e^{N\phi(x_{max})}\sqrt{\frac{2\pi}{N\phi''(x_{max})}} \end{aligned}\]
+
+<p class="bluebox">
+One important application of saddle point integration is Stirling Approximation. We have the \(\Gamma\) function form<label for="gammanote" class="margin-toggle sidenote-number"></label><input type="checkbox" id="gammanote" class="margin-toggle" /><span class="sidenote">This can be achieved by differentiate the equation \(\int_{0}^{\infty} d x e^{-\alpha x}=\frac{1}{\alpha}\) for \(N\) times with respect to \(\alpha\) and set \(\alpha=1\) </span>:
+
+$$N!=\int_{0}^{\infty} d x x^{N+1} e^{-x}$$
+
+Try yourself with saddle point integration trick to prove that:
+
+$$\log N !=N \log N-N+\frac{1}{2} \log (2 \pi N)$$
+
+</p>
+
+<h3 id="linearize-term"><i class="contrast">Linearize term</i></h3>
+
+<p>This trick appears in the replica trick to solve the Gardner’s capacity:</p>
+
+\[e^{-\frac{q}{2}(\sum_au_a)^2} = \int \frac{dt}{\sqrt{2\pi}}e^{-t^2/2+it\sqrt{q}\sum_{a=1}^nu_a}\]
+
+
+
+
+  <h3>Comments</h3>
+  <div id="disqus_thread"></div>
+<script>
+    /**
+    *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+    *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+    /*
+    var disqus_config = function () {
+    this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+    this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+    };
+    */
+    (function() { // DON'T EDIT BELOW THIS LINE
+    var d = document, s = d.createElement('script');
+    s.src = 'https://minhuanli-blog.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', +new Date());
+    (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+
+
+
+    </article>
+    <span class="print-footer">Gaussain Related Intergration Trick - January 27, 2021 - Minhuan Li</span>
+    <footer>
+  <hr class="slender">
+  <ul class="footer-links">
+    <li><a href="mailto:minhuanli@g.harvard.edu"><span class="icon-mail3"></span></a></li>
+    
+      <li>
+        <a href="https://github.com/minhuanli"><span class="icon-github"></span></a>
+      </li>
+      
+  </ul>
+<div class="credits">
+<span>&copy; 2021 &nbsp;Minhuan Li &middot; <a href="//minhuanli.github.io">Main Blog</a></span></br> <br>
+Icon credit to <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>. Site created with <a href="//jekyllrb.com">Jekyll</a> using the <a href="//github.com/clayh53/tufte-jekyll">Tufte theme</a>.
+</div>  
+</footer>
+  </body>
+</html>
